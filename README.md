@@ -3,7 +3,7 @@
 ## < future contenue >
 
 ## by :
-** Fritzi FROIES
-** Baptiste ROY
-** Enzo MOITA
-** Axel BARBELLION
+** Fritzi FROIES **
+** Baptiste ROY **
+** Enzo MOITA **
+** Axel BARBELLION **
