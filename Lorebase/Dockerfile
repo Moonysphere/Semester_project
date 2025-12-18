@@ -1,10 +1,14 @@
 FROM php:8.4-apache
 
 # PHP
-RUN apt-get update -y && apt-get upgrade -y
-RUN apt-get install -y zlib1g-dev libwebp-dev libpng-dev && docker-php-ext-install gd
-RUN apt-get install libzip-dev -y && docker-php-ext-install zip
-RUN docker-php-ext-install pdo pdo_mysql mysqli
+RUN apt-get update && apt-get install -y \
+    zlib1g-dev \
+    libwebp-dev \
+    libpng-dev \
+    libzip-dev \
+    libpq-dev \
+  && docker-php-ext-install gd zip pdo_pgsql pgsql \
+  && rm -rf /var/lib/apt/lists/*
 
 # Composer
 #COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
