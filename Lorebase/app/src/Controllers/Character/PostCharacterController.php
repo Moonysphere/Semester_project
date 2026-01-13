@@ -61,10 +61,6 @@ class PostCharacterController extends AbstractController
             );
         }
 
-        return new Response(
-            json_encode($character),
-            201,
-            ['Content-Type' => 'application/json']
-        );
+        return new Response('', 302, ['Location' => '/character']);
     }
 }
