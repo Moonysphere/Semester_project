@@ -1,27 +1,33 @@
 [
   {
-    "path": "/artist",
+    "path": "/character/create",
     "method": "GET",
-    "controller": "GetArtistsController"
+    "controller": "Character\\GetCreateCharacterController"
   },
   {
-    "path": "/artist/:id",
+    "path": "/character",
     "method": "GET",
-    "controller": "GetArtistController"
+    "controller": "Character\\GetCharactersController"
+  },
+
+  {
+    "path": "/character/:id",
+    "method": "GET",
+    "controller": "Character\\GetCharacterController"
   },
   {
-    "path": "/artist",
+    "path": "/character",
     "method": "POST",
-    "controller": "PostArtistController"
+    "controller": "Character\\PostCharacterController"
   },
   {
-    "path": "/artist/:id",
+    "path": "/character/:id",
     "method": "PATCH",
-    "controller": "PatchArtistController"
+    "controller": "Character\\PatchCharacterController"
   },
   {
-    "path": "/artist/:id",
+    "path": "/character/:id",
     "method": "DELETE",
-    "controller": "DeleteArtistController"
+    "controller": "Character\\DeleteCharacterController"
   }
 ]

@@ -31,18 +31,20 @@ abstract class AbstractRepository
         $dsn->addHostToDsn();
         $dsn->addPortToDsn();
         $dsn->addDbnameToDsn();
-        
+
         $db = new DatabaseConnexion();
         $db->setConnexion($dsn);
-        
+
         $this->db = $db;
     }
 
-    public function getTable(): string {
-        return str_replace('repository','',strtolower((new \ReflectionClass($this))->getShortName()));
+    public function getTable(): string
+    {
+        return str_replace('repository', '', strtolower((new \ReflectionClass($this))->getShortName()));
     }
 
-    private function getFields(AbstractEntity $entity): string {
+    private function getFields(AbstractEntity $entity): string
+    {
         $fields = [];
         foreach ($entity->toArray() as $key => $value) {
             $fields[] = $key;
@@ -51,7 +53,8 @@ abstract class AbstractRepository
         return implode(', ', $fields);
     }
 
-    private function getValues(AbstractEntity $entity): string {
+    private function getValues(AbstractEntity $entity): string
+    {
         $values = [];
         foreach ($entity->toArray() as $key => $value) {
             $values[] = ':' . $key;
@@ -60,15 +63,17 @@ abstract class AbstractRepository
         return implode(', ', $values);
     }
 
-    public function queryBuilder(): self {
+    public function queryBuilder(): self
+    {
         $this->queryString = "";
         return $this;
     }
 
-    public function select(...$fields): self {
+    public function select(...$fields): self
+    {
         $this->queryString .= "SELECT";
 
-        if(count($fields) === 0) {
+        if (count($fields) === 0) {
             $this->queryString .= ' *';
             return $this;
         }
@@ -77,54 +82,63 @@ abstract class AbstractRepository
         return $this;
     }
 
-    public function insert(AbstractEntity $entity): self {
+    public function insert(AbstractEntity $entity): self
+    {
         $this->queryString .= "INSERT INTO {$this->getTable()} ({$this->getFields($entity)})";
         return $this;
     }
 
-    public function delete(): self {
+    public function delete(): self
+    {
         $this->queryString .= "DELETE";
         return $this;
     }
 
-    public function updateTable(): self {
+    public function updateTable(): self
+    {
         $this->queryString .= "UPDATE {$this->getTable()}";
         return $this;
     }
 
-    public function values(AbstractEntity $entity): self {
+    public function values(AbstractEntity $entity): self
+    {
         $this->queryString .= " VALUES ({$this->getValues($entity)})";
         return $this;
     }
 
-    public function from(string $tableAlias): self {
+    public function from(string $tableAlias): self
+    {
         $table = $this->getTable();
         $this->queryString .= " FROM $table";
 
         return $this->as($tableAlias);
     }
 
-    public function as(string $tableAlias): self {
+    public function as(string $tableAlias): self
+    {
         $this->queryString .= " AS $tableAlias";
         $this->tableAlias = $tableAlias;
         return $this;
     }
 
-    public function andWhere(string $field, string $condition, ?string $table = null): self {
+    public function andWhere(string $field, string $condition, ?string $table = null): self
+    {
         $this->queryString .= " AND  ";
         return $this->where($field, $condition, $table);
     }
 
-    public function orWhere(string $field, string $condition, ?string $table = null): self {
+    public function orWhere(string $field, string $condition, ?string $table = null): self
+    {
         $this->queryString .= " OR  ";
         return $this->where($field, $condition, $table);
     }
 
-    public function where(string $field, string $condition, ?string $table = null): self {
+    public function where(string $field, string $condition, ?string $table = null): self
+    {
         $this->queryString .= " WHERE ";
-        if($table !== null) {
+        if ($table !== null) {
             $this->queryString .= "$table.";
-        }else {
+        } else {
             $this->queryString .= "$this->tableAlias.";
         }
 
@@ -132,42 +146,50 @@ abstract class AbstractRepository
         return $this;
     }
 
-    public function addParam(string $key, $value): self {
+    public function addParam(string $key, $value): self
+    {
         $this->params[$key] = $value;
         return $this;
     }
 
-    public function setParams(array $params): self {
+    public function setParams(array $params): self
+    {
         $this->params = $params;
         return $this;
     }
 
-    public function executeQuery(): self {
+    public function executeQuery(): self
+    {
         $this->query = $this->db->getConnexion()->prepare($this->queryString);
 
         $this->query->execute($this->params);
         return $this;
     }
 
-    public function getOneResult() {
+    public function getOneResult()
+    {
         $this->query->setFetchMode(\PDO::FETCH_CLASS, 'App\Entities\\' . ucfirst($this->getTable()));
         return $this->query->fetch();
     }
 
-    public function getAllResults(): array {
+    public function getAllResults(): array
+    {
         $this->query->setFetchMode(\PDO::FETCH_CLASS, 'App\Entities\\' . ucfirst($this->getTable()));
         return $this->query->fetchAll();
     }
 
-    public function find(string | int $id) {
+    public function find(string | int $id)
+    {
         return $this->findOneBy(['id' => $id]);
     }
 
-    public function findAll(): array {
+    public function findAll(): array
+    {
         return $this->findBy([]);
     }
 
-    public function findBy(array $criteria) {
+    public function findBy(array $criteria)
+    {
         $this->queryBuilder()
             ->select()
             ->from(substr($this->getTable(), 0, 1))
@@ -179,27 +201,29 @@ abstract class AbstractRepository
             ->getAllResults();
     }
 
-    public function findOneBy(array $criteria) {
+    public function findOneBy(array $criteria)
+    {
         $this->queryBuilder()
             ->select()
             ->from(substr($this->getTable(), 0, 1))
-            ;
+        ;
 
         $this->addWhereAccordingToCriterias($criteria);
 
         $data = $this->executeQuery()
             ->getOneResult();
 
-        if($data === false) {
+        if ($data === false) {
             return null;
         }
 
         return $data;
     }
 
-    private function addWhereAccordingToCriterias(array $criterias) {
-        foreach($criterias as $key => $value) {
-            if(strpos($this->queryString, 'WHERE') === false) {
+    private function addWhereAccordingToCriterias(array $criterias)
+    {
+        foreach ($criterias as $key => $value) {
+            if (strpos($this->queryString, 'WHERE') === false) {
                 $this->where($key, self::CONDITIONS['eq']);
             } else {
                 $this->andWhere($key, self::CONDITIONS['eq']);
@@ -208,7 +232,8 @@ abstract class AbstractRepository
         }
     }
 
-    public function set(AbstractEntity $entity): self {
+    public function set(AbstractEntity $entity): self
+    {
 
         $this->queryString .= " SET";
         foreach ($entity->toArray() as $key => $value) {
@@ -220,7 +245,8 @@ abstract class AbstractRepository
         return $this;
     }
 
-    public function save(AbstractEntity $entity): string {
+    public function save(AbstractEntity $entity): string
+    {
         $this->queryBuilder()
             ->insert($entity)
             ->values($entity)
@@ -231,7 +257,8 @@ abstract class AbstractRepository
         return $this->db->getConnexion()->lastInsertId();
     }
 
-    public function update(AbstractEntity $entity) {
+    public function update(AbstractEntity $entity)
+    {
         $this->queryBuilder()
             ->updateTable()
             ->as(substr($this->getTable(), 0, 1))
@@ -242,7 +269,8 @@ abstract class AbstractRepository
         $this->executeQuery();
     }
 
-    public function remove(AbstractEntity $entity) {
+    public function remove(AbstractEntity $entity)
+    {
         $this->queryBuilder()
             ->delete()
             ->from($this->getTable())
