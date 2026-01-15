@@ -1,29 +1,26 @@
 <?php
 
-
 namespace App\Controllers;
 
 use App\Lib\Http\Request;
 use App\Lib\Http\Response;
 use App\Lib\Controllers\AbstractController;
-use App\Repositories\ArtistRepository;
+use App\Repositories\PlaceRepository;
 
-class DeleteArtistController extends AbstractController {
+class DeletePlaceController extends AbstractController
+{
     public function process(Request $request): Response
     {
-        $artistRepository = new ArtistRepository();
+        $placeRepository = new PlaceRepository();
 
-        $artist = $artistRepository->find($request->getSlug('id'));
+        $place = $placeRepository->find($request->getSlug('id'));
 
-        if(empty($artist)) {
+        if (empty($place)) {
             return new Response(json_encode(['error' => 'not found']), 404, ['Content-Type' => 'application/json']);
         }
 
-        $artistRepository->remove($artist);
+        $placeRepository->remove($place);
 
         return new Response('', 204, ['Content-Type' => 'application/json']);
     }
-    
 }
-
-?>
