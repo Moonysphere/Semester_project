@@ -1,7 +1,5 @@
 <?php
 
-
-
 namespace App\Controllers\Character;
 
 use App\Forms\CharacterForm;

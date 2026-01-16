@@ -5,6 +5,11 @@
     "controller": "Character\\GetCreateCharacterController"
   },
   {
+    "path": "/character/:id/edit",
+    "method": "GET",
+    "controller": "Character\\GetEditCharacterController"
+  },
+  {
     "path": "/character",
     "method": "GET",
     "controller": "Character\\GetCharactersController"
