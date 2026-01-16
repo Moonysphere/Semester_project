@@ -4,10 +4,11 @@ namespace App\Entities;
 
 use App\Lib\Annotations\ORM\Column;
 use App\Lib\Annotations\ORM\Id;
+use App\Lib\Annotations\ORM\ORM;
 use App\Lib\Entities\AbstractEntity;
 
-
-class Univers
+#[ORM]
+class Univers extends AbstractEntity
 {
     #[Id]
     #[Column(type: 'serial')]
@@ -17,11 +18,10 @@ class Univers
     public string $name;
 
     #[Column(type: 'text', nullable: true)]
-    public ?string $description;
+    public ?string $description = null;
 
     #[Column(type: 'date', nullable: true)]
-    public ?\DateTimeImmutable $createDate;
-
+    public ?\DateTimeImmutable $createDate = null;
 
     /* =======================
        GETTERS
@@ -41,6 +41,7 @@ class Univers
     {
         return $this->description;
     }
+
     public function getCreateDate(): ?\DateTimeImmutable
     {
         return $this->createDate;
