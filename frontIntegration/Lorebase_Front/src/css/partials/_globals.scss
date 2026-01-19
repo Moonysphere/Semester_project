@@ -1,0 +1,57 @@
+@use "fonts" as f;
+@use "variables" as v;
+@use "sass:color";
+@layer base {
+  :root {
+    --spacing: #{v.$spacing};
+
+    @each $name, $value in v.$colors {
+      --#{$name}: #{$value};
+      --#{$name}-hover: #{color.scale($value, $lightness: 20%)};
+
+      @if ($name != "black" and $name != "white") {
+        $hue: color.channel($value, "hue", hsl);
+        $saturation: color.channel($value, "saturation", hsl);
+        $lightness: color.channel($value, "lightness", hsl);
+
+        $prevLightness: 0%;
+        @each $suffix, $percent in v.$shades {
+          @if ($lightness > $prevLightness and $lightness <= $percent) {
+            --#{$name}-#{$suffix}: #{hsl(
+                $hue,
+                $saturation,
+                $lightness
+              )}; /* Couleur originale */
+          } @else {
+            --#{$name}-#{$suffix}: #{hsl($hue, $saturation, $percent)};
+          }
+          $prevLightness: $percent;
+        }
+      }
+    }
+
+    // couleurs agnostiques
+    --bg-color: var(--primary);
+    --text-color: var(--font-color); // nom de variable bizarre... faisons avec
+
+    @media (prefers-color-scheme: dark) {
+      --bg-color: var(--primary-dark);
+      --text-color: var(--font-color-dark);
+    }
+  }
+
+  body {
+    font-family: f.$mainFont;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+  }
+
+  button {
+    all: unset;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+}

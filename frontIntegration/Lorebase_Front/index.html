@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Design guide</title>
+    <link rel="stylesheet" href="/src/css/main.scss" />
+    <script type="module" src="/src/js/main.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <section>
+        <h2>.button</h2>
+        <p>
+          <button class="button button--lg button--primary">Bouton</button>
+          <button class="button button--primary">Bouton</button>
+          <button class="button button--sm button--primary">Bouton</button>
+        </p>
+        <p>
+          <button class="button button--lg button--secondary">Bouton</button>
+          <button class="button button--secondary">Bouton</button>
+          <button class="button button--sm button--secondary">Bouton</button>
+        </p>
+        <p>
+          <a href="#" class="button button--lg button--danger">Bouton</a>
+          <a href="#" class="button button--danger">Bouton</a>
+          <a href="#" class="button button--sm button--danger">Bouton</a>
+        </p>
+      </section>
+      <section>
+        <h2>.card</h2>
+        <div style="display: flex; gap: 1rem; align-items: flex-start">
+          <article class="card">
+            <div class="card__content">
+              <h2 class="card__title_main-font">CHARACTER</h2>
+              <h2 class="card__title_secondary-font">NAME</h2>
+              <p class="card__text">
+                Some quick example text to build on the card title and make up
+                the bulk of the card's content.
+              </p>
+              <a href="#" class="button button--primary p--6">Button</a>
+            </div>
+            <img src=" " alt="" class="card__image" />
+          </article>
+        </div>
+      </section>
+    </div>
+  </body>
+</html>
