@@ -7,6 +7,12 @@ use App\Repositories\UniversRepository;
 
 class UniversForm extends AbstractForm
 {
+    protected array $fieldTypes = [
+        'name' => 'string',
+        'description' => 'optional',
+        'createdate' => 'date',
+    ];
+
     public function mapToEntity(): ?Univers
     {
         if (!$this->validateAllFields()) {
@@ -14,9 +20,27 @@ class UniversForm extends AbstractForm
         }
 
         $univers = new Univers();
-        $univers->name = $this->data['name'] ?? null;
-        $univers->description = $this->data['type'] ?? null;
-        $univers->createDate = $this->data['origin'] ?? null;
+        $univers->name = (string)($this->data['name'] ?? '');
+       $univers->description = $this->data['description'] ?? null;
+       $value = $this->data['createdate'] ?? null;
+
+if ($value) {
+    // si ça vient d’un <input type="datetime-local"> => "YYYY-mm-ddTHH:ii"
+    $value = str_replace('T', ' ', $value);
+
+    // si c’est "YYYY-mm-dd HH:ii" on complète
+    if (strlen($value) === 16) {
+        $value .= ':00';
+    }
+
+    // ta colonne est type "date" => idéalement on ne garde que YYYY-mm-dd
+    // si tu veux garder l'heure, change la colonne en datetime/timestamp
+    $value = substr($value, 0, 10);
+
+    $univers->createdate = new \DateTimeImmutable($value);
+} else {
+    $univers->createdate = null;
+}
 
         return $univers;
     }
@@ -24,13 +48,12 @@ class UniversForm extends AbstractForm
     public function save(): ?Univers
     {
         $univers = $this->mapToEntity();
-
         if ($univers === null) {
             return null;
         }
 
         $repository = new UniversRepository();
-        $univers->id = $repository->save($univers);
+        $univers->id = (int)$repository->save($univers);
 
         return $univers;
     }
@@ -41,10 +64,6 @@ class UniversForm extends AbstractForm
 
         if (empty($this->data['name'])) {
             $this->errors[] = 'Name is required';
-        }
-
-        if (empty($this->data['type'])) {
-            $this->errors[] = 'Type is required';
         }
 
         return empty($this->errors);
