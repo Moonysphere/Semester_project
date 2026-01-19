@@ -34,5 +34,36 @@
     "path": "/character/:id",
     "method": "DELETE",
     "controller": "Character\\DeleteCharacterController"
+
+  },
+  {
+    "path": "/univers/create",
+    "method": "GET",
+    "controller": "Univers\\GetCreateUniversController"
+  },
+  {
+    "path": "/univers",
+    "method": "GET",
+    "controller": "Univers\\GetUniversController"
+  },
+  {
+    "path": "/univers/:id",
+    "method": "GET",
+    "controller": "Univers\\GetUniversController"
+  },
+  {
+    "path": "/univers",
+    "method": "POST",
+    "controller": "Univers\\PostUniversController"
+  },
+  {
+    "path": "/univers/:id",
+    "method": "PATCH",
+    "controller": "Univers\\PatchUniversController"
+  },
+  {
+    "path": "/univers/:id",
+    "method": "DELETE",
+    "controller": "Univers\\DeleteUniversController"
   }
 ]
