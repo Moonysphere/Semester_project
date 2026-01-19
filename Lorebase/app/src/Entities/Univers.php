@@ -21,7 +21,7 @@ class Univers extends AbstractEntity
     public ?string $description = null;
 
     #[Column(type: 'date', nullable: true)]
-    public ?\DateTimeImmutable $createDate = null;
+    public ?\DateTimeImmutable $createdate = null;
 
     /* =======================
        GETTERS
@@ -44,7 +44,7 @@ class Univers extends AbstractEntity
 
     public function getCreateDate(): ?\DateTimeImmutable
     {
-        return $this->createDate;
+        return $this->createdate;
     }
 
     /* =======================
@@ -61,8 +61,8 @@ class Univers extends AbstractEntity
         $this->description = $description;
     }
 
-    public function setCreateDate(?\DateTimeImmutable $createDate): void
+    public function setCreateDate(?\DateTimeImmutable $createdate): void
     {
-        $this->createDate = $createDate;
+        $this->createdate = $createdate;
     }
 }
