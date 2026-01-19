@@ -41,10 +41,15 @@
     "method": "GET",
     "controller": "Univers\\GetCreateUniversController"
   },
+   {
+    "path": "/univers/:id/edit",
+    "method": "GET",
+    "controller": "Univers\\GetEditUnivers"
+  },
   {
     "path": "/univers",
     "method": "GET",
-    "controller": "Univers\\GetUniversController"
+    "controller": "Univers\\GetUniversAllController"
   },
   {
     "path": "/univers/:id",
