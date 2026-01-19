@@ -99,7 +99,7 @@
     <div class="container">
         <h1>Créer une nouvelle place</h1>
 
-        <form action="/places" method="POST">
+        <form action="/place" method="POST">
             <div class="form-group">
                 <label for="name">Nom de la place</label>
                 <input type="text" id="name" name="name" required placeholder="Ex : Château d’Argelune">
@@ -111,12 +111,18 @@
                     placeholder="Décrivez cette place (histoire, ambiance, particularités...)"></textarea>
             </div>
 
+            <div class="form-group">
+                <label for="type">Type</label>
+                <textarea id="type" name="type" placeholder="Quel type de place?"></textarea>
+            </div>
+
+
             <div class="actions">
                 <button type="submit" class="btn btn-primary">
                     Créer la place
                 </button>
 
-                <a href="/views/Places/index.html" class="btn btn-secondary">
+                <a href="/place" class="btn btn-secondary">
                     Annuler
                 </a>
             </div>

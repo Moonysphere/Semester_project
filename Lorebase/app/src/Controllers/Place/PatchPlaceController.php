@@ -12,17 +12,32 @@ class PatchPlaceController extends AbstractController
     public function process(Request $request): Response
     {
         $placeRepository = new PlaceRepository();
-
         $place = $placeRepository->find($request->getSlug('id'));
 
         if (empty($place)) {
             return new Response(json_encode(['error' => 'not found']), 404, ['Content-Type' => 'application/json']);
         }
 
-        $place->name = 'New name';
+        $data = json_decode(file_get_contents('php://input'), true);
+
+        if (!is_array($data)) {
+            return new Response(
+                json_encode(['error' => 'Invalid request format']),
+                400,
+                ['Content-Type' => 'application/json']
+            );
+        }
+
+        $place->name = $data['name'] ?? $place->name;
+        $place->type = $data['type'] ?? $place->type;
+        $place->description = $data['description'] ?? $place->description;
 
         $placeRepository->update($place);
 
-        return new Response(json_encode($place), 200, ['Content-Type' => 'application/json']);
+        return new Response(
+            json_encode(['success' => true, 'id' => $place->getId()]),
+            200,
+            ['Content-Type' => 'application/json']
+        );
     }
 }
