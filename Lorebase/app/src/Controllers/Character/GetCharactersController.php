@@ -15,6 +15,6 @@ class GetCharactersController extends AbstractController
         $characterRepository = new CharacterRepository();
         $characters = $characterRepository->findAll();
 
-        return $this->render('list', ['characters' => $characters]);
+        return $this->render('character','list', ['characters' => $characters]);
     }
 }
