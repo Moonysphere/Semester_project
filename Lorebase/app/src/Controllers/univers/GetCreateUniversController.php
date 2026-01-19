@@ -10,7 +10,7 @@ class GetCreateUniversController extends AbstractController
 {
     public function process(Request $request): Response
     {
-        $filePath = __DIR__ . '/../../../views/CreateUnivers.html';
+        $filePath = __DIR__ . '/../../../views/univers/CreateUnivers.html';
 
         if (!file_exists($filePath)) {
             return new Response(
