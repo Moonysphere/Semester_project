@@ -34,7 +34,6 @@ class PatchUniversController extends AbstractController
 
         $universRepository->update($univers);
 
-        // Retourne un succès JSON (pas de redirection)
         return new Response(
             json_encode(['success' => true, 'id' => $univers->getId()]),
             200,
