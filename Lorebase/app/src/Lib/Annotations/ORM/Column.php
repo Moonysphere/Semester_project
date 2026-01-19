@@ -7,7 +7,8 @@ use App\Lib\Annotations\AbstractAnnotation;
 use Attribute;
 
 #[Attribute(Attribute::TARGET_PROPERTY)]
-class Column extends AbstractAnnotation{
+class Column extends AbstractAnnotation
+{
     public function __construct(
         public string $type,
         public bool $nullable = false,
@@ -15,6 +16,5 @@ class Column extends AbstractAnnotation{
         public string|null $name = null,
         public mixed $default = null
     ){}
-}
 
-?>
+}

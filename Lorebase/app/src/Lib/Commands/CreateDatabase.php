@@ -7,26 +7,21 @@ use App\Lib\Database\DatabaseConnexion;
 use App\Lib\Database\Dsn;
 
 
-class CreateDatabase extends AbstractCommand {
-    
+class CreateDatabase extends AbstractCommand
+{
+
     public function execute(): void
     {
         $db = new DatabaseConnexion();
         $dsn = new Dsn();
         $dsn->addHostToDsn()
-            ->addPortToDsn();
+            ->addPortToDsn()
+            ->addDbnameToDsn();
         $db->setConnexion($dsn);
-        $db->getConnexion()->exec("CREATE DATABASE IF NOT EXISTS {$dsn->getDbName()};");
+        $db->getConnexion()->exec("CREATE DATABASE {$dsn->getDbName()};");
     }
 
-    public function undo(): void
-    {
-    }
+    public function undo(): void {}
 
-    public function redo(): void
-    {
-    }
-    
+    public function redo(): void {}
 }
-
-?>
