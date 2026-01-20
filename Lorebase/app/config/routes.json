@@ -70,5 +70,39 @@
     "path": "/univers/:id",
     "method": "DELETE",
     "controller": "Univers\\DeleteUniversController"
+  },
+   {
+    "path": "/ruler",
+    "method": "GET",
+    "controller": "Ruler\\GetRulerAllController"
+  },
+  {
+    "path": "/ruler/create",
+    "method": "GET",
+    "controller": "Ruler\\GetCreateRulerController"
+  },
+  {
+    "path": "/ruler",
+    "method": "POST",
+    "controller": "Ruler\\PostRulerController"
+  },{
+    "path": "/ruler/:id",
+    "method": "DELETE",
+    "controller": "Ruler\\DeleteRulerController"
+  },
+  {
+    "path": "/ruler/:id",
+    "method": "GET",
+    "controller": "Ruler\\GetRulerController"
+  },
+  {
+    "path": "/ruler/:id/edit",
+    "method": "GET",
+    "controller": "Ruler\\GetEditRuler"
+  },  
+  {
+    "path": "/ruler/:id",
+    "method": "PATCH",
+    "controller": "Ruler\\PatchRulerController"
   }
 ]
