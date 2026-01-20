@@ -1,0 +1,38 @@
+$spacing: 0.25rem;
+
+// Colors //
+
+$colors: (
+  "primary": #7954ff,
+  "secondary": #b3b9ff,
+  "font-color": #141414,
+  "primary-dark": #01031a,
+  "secondary-dark": #17016c,
+  "font-color-dark": #fafafa,
+  "black": #000,
+  "white": #fff,
+);
+
+$shades: (
+  950: 12%,
+  900: 20%,
+  800: 28%,
+  700: 35%,
+  600: 50%,
+  500: 60%,
+  400: 71%,
+  300: 82%,
+  200: 90%,
+  100: 95%,
+  50: 97%,
+);
+
+// Breakpoints //
+
+$breakpoints: (
+  "sm": 576px,
+  "md": 768px,
+  "lg": 992px,
+  "xl": 1200px,
+  "xxl": 1400px,
+);

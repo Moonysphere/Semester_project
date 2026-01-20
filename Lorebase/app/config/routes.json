@@ -70,5 +70,41 @@
     "path": "/quest/:id",
     "method": "DELETE",
     "controller": "Quest\\DeleteQuestController"
+
+  },
+  {
+    "path": "/univers/create",
+    "method": "GET",
+    "controller": "Univers\\GetCreateUniversController"
+  },
+   {
+    "path": "/univers/:id/edit",
+    "method": "GET",
+    "controller": "Univers\\GetEditUnivers"
+  },
+  {
+    "path": "/univers",
+    "method": "GET",
+    "controller": "Univers\\GetUniversAllController"
+  },
+  {
+    "path": "/univers/:id",
+    "method": "GET",
+    "controller": "Univers\\GetUniversController"
+  },
+  {
+    "path": "/univers",
+    "method": "POST",
+    "controller": "Univers\\PostUniversController"
+  },
+  {
+    "path": "/univers/:id",
+    "method": "PATCH",
+    "controller": "Univers\\PatchUniversController"
+  },
+  {
+    "path": "/univers/:id",
+    "method": "DELETE",
+    "controller": "Univers\\DeleteUniversController"
   }
 ]

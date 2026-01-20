@@ -1,0 +1,43 @@
+@use "variables" as v;
+
+$positions: (
+  t: top,
+  b: bottom,
+  l: left,
+  r: right,
+);
+
+@layer utilities {
+  @for $i from 0 through 6 {
+    $value: calc($i * var(--spacing));
+    .m--#{$i} {
+      margin: $value;
+    }
+    .p--#{$i} {
+      padding: $value;
+    }
+  }
+  @for $i from 0 through 6 {
+    $value: calc($i * var(--spacing));
+    @each $letter, $position in $positions {
+      .m#{$letter}--#{$i} {
+        margin-#{$position}: $value;
+      }
+      .p#{$letter}--#{$i} {
+        padding-#{$position}: $value;
+      }
+    }
+  }
+
+  @each $name, $value in v.$colors {
+    .bg--#{$name} {
+      background-color: var(--#{$name});
+    }
+    .text--#{$name} {
+      color: var(--#{$name});
+    }
+    .border--#{$name} {
+      border-color: var(--#{$name});
+    }
+  }
+}

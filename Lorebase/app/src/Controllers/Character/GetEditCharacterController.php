@@ -18,6 +18,6 @@ class GetEditCharacterController extends AbstractController
             return new Response('Personnage non trouvé', 404, ['Content-Type' => 'text/html']);
         }
 
-        return $this->render('edit', ['character' => $character]);
+        return $this->render('character','edit', ['character' => $character]);
     }
 }
