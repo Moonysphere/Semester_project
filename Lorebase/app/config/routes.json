@@ -14,7 +14,6 @@
     "method": "GET",
     "controller": "Character\\GetCharactersController"
   },
-
   {
     "path": "/character/:id",
     "method": "GET",
@@ -34,14 +33,13 @@
     "path": "/character/:id",
     "method": "DELETE",
     "controller": "Character\\DeleteCharacterController"
-
   },
   {
     "path": "/univers/create",
     "method": "GET",
     "controller": "Univers\\GetCreateUniversController"
   },
-   {
+  {
     "path": "/univers/:id/edit",
     "method": "GET",
     "controller": "Univers\\GetEditUnivers"
@@ -71,7 +69,7 @@
     "method": "DELETE",
     "controller": "Univers\\DeleteUniversController"
   },
-   {
+  {
     "path": "/ruler",
     "method": "GET",
     "controller": "Ruler\\GetRulerAllController"
@@ -85,7 +83,8 @@
     "path": "/ruler",
     "method": "POST",
     "controller": "Ruler\\PostRulerController"
-  },{
+  },
+  {
     "path": "/ruler/:id",
     "method": "DELETE",
     "controller": "Ruler\\DeleteRulerController"
@@ -99,10 +98,45 @@
     "path": "/ruler/:id/edit",
     "method": "GET",
     "controller": "Ruler\\GetEditRuler"
-  },  
+  },
   {
     "path": "/ruler/:id",
     "method": "PATCH",
     "controller": "Ruler\\PatchRulerController"
+  },
+  {
+    "path": "/place/create",
+    "method": "GET",
+    "controller": "Place\\GetCreatePlaceController"
+  },
+  {
+    "path": "/place/:id/edit",
+    "method": "GET",
+    "controller": "Place\\GetEditPlaceController"
+  },
+  {
+    "path": "/place",
+    "method": "GET",
+    "controller": "Place\\GetPlacesController"
+  },
+  {
+    "path": "/place/:id",
+    "method": "GET",
+    "controller": "Place\\GetPlaceController"
+  },
+  {
+    "path": "/place",
+    "method": "POST",
+    "controller": "Place\\PostPlaceController"
+  },
+  {
+    "path": "/place/:id",
+    "method": "PATCH",
+    "controller": "Place\\PatchPlaceController"
+  },
+  {
+    "path": "/place/:id",
+    "method": "DELETE",
+    "controller": "Place\\DeletePlaceController"
   }
 ]
