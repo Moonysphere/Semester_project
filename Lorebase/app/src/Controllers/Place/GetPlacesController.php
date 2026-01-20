@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Controllers\Place;
 
 use App\Lib\Http\Request;

@@ -1,6 +1,8 @@
 <?php
 
+
 namespace App\Controllers\Place;
+
 
 use App\Lib\Http\Request;
 use App\Lib\Http\Response;
@@ -20,5 +22,6 @@ class GetPlaceController extends AbstractController
         }
 
         return $this->render('place', 'detail', ['place' => $place]);
+
     }
 }

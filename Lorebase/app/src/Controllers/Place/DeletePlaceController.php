@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Controllers\Place;
 
 use App\Lib\Http\Request;
@@ -20,7 +21,7 @@ class DeletePlaceController extends AbstractController
         }
 
         $placeRepository->remove($place);
-
+      
         return new Response('Place supprimé', 204, ['Content-Type' => 'application/json', 'Location' => '/places']);
     }
 }

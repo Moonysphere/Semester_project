@@ -17,7 +17,7 @@ class PatchPlaceController extends AbstractController
         if (empty($place)) {
             return new Response(json_encode(['error' => 'not found']), 404, ['Content-Type' => 'application/json']);
         }
-
+      
         $data = json_decode(file_get_contents('php://input'), true);
 
         if (!is_array($data)) {
