@@ -14,6 +14,6 @@ class GetQuestsController extends AbstractController
         $questRepository = new QuestRepository();
         $quests = $questRepository->findAll();
 
-        return $this->render('/Quest_views/list', ['quests' => $quests]);
+        return $this->render('Quest_views', 'list', ['quests' => $quests]);
     }
 }

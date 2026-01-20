@@ -10,5 +10,5 @@ class GetCreateQuestController extends AbstractController
 {
     public function process(Request $request): Response
     {
-    return $this->render('/Quest_views/Quest');    }
+    return $this->render('Quest_views', 'Quest');    }
 }
