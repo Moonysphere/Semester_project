@@ -18,6 +18,6 @@ class GetEditQuestController extends AbstractController
             return new Response('Quête non trouvée', 404, ['Content-Type' => 'text/html']);
         }
 
-        return $this->render('quest/edit', ['quest' => $quest]);
+        return $this->render('Quest_views', 'edit', ['quest' => $quest]);
     }
 }

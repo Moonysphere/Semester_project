@@ -19,6 +19,6 @@ class GetQuestController extends AbstractController
             return new Response('Personnage non trouvé', 404, ['Content-Type' => 'application/json']);
         }
 
-        return $this->render('/Quest_views/detail', ['quest' => $quest]);
+        return $this->render('Quest_views', 'detail', ['quest' => $quest]);
     }
 }
