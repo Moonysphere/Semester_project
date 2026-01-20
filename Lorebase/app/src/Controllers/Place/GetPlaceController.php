@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Controllers;
+
+namespace App\Controllers\Place;
+
 
 use App\Lib\Http\Request;
 use App\Lib\Http\Response;
@@ -16,9 +18,10 @@ class GetPlaceController extends AbstractController
         $place = $placeRepository->find($request->getSlug('id'));
 
         if (empty($place)) {
-            return new Response(json_encode(['error' => 'not found']), 404, ['Content-Type' => 'application/json']);
+            return new Response('Place non trouvé', 404, ['Content-Type' => 'text/html']);
         }
 
-        return new Response(json_encode($place), 200, ['Content-Type' => 'application/json']);
+        return $this->render('place', 'detail', ['place' => $place]);
+
     }
 }

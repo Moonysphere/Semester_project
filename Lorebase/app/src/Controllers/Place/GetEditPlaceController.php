@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Controllers\Place;
 
 use App\Lib\Http\Request;
@@ -8,20 +7,17 @@ use App\Lib\Http\Response;
 use App\Lib\Controllers\AbstractController;
 use App\Repositories\PlaceRepository;
 
-class DeletePlaceController extends AbstractController
+class GetEditPlaceController extends AbstractController
 {
     public function process(Request $request): Response
     {
         $placeRepository = new PlaceRepository();
-
         $place = $placeRepository->find($request->getSlug('id'));
 
         if (empty($place)) {
-            return new Response(json_encode(['error' => 'not found']), 404, ['Content-Type' => 'application/json']);
+            return new Response('Place non trouvé', 404, ['Content-Type' => 'text/html']);
         }
 
-        $placeRepository->remove($place);
-      
-        return new Response('Place supprimé', 204, ['Content-Type' => 'application/json', 'Location' => '/places']);
+        return $this->render('place', 'edit', ['place' => $place]);
     }
 }

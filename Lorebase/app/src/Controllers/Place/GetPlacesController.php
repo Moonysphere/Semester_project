@@ -1,7 +1,6 @@
 <?php
 
-
-namespace App\Controllers;
+namespace App\Controllers\Place;
 
 use App\Lib\Http\Request;
 use App\Lib\Http\Response;
@@ -12,10 +11,9 @@ class GetPlacesController extends AbstractController
 {
     public function process(Request $request): Response
     {
-        $placesRepository = new PlaceRepository();
+        $placeRepository = new PlaceRepository();
+        $places = $placeRepository->findAll();
 
-        $places = $placesRepository->findAll();
-
-        return new Response(json_encode($places), 200, ['Content-Type' => 'application/json']);
+        return $this->render('place', 'list', ['places' => $places]);
     }
 }

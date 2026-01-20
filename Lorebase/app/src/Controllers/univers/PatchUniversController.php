@@ -1,23 +1,23 @@
 <?php
 
-namespace App\Controllers\Place;
+namespace App\Controllers\Univers;
 
 use App\Lib\Http\Request;
 use App\Lib\Http\Response;
 use App\Lib\Controllers\AbstractController;
-use App\Repositories\PlaceRepository;
+use App\Repositories\UniversRepository;
 
-class PatchPlaceController extends AbstractController
+class PatchUniversController extends AbstractController
 {
     public function process(Request $request): Response
     {
-        $placeRepository = new PlaceRepository();
-        $place = $placeRepository->find($request->getSlug('id'));
+        $universRepository = new UniversRepository();
+        $univers = $universRepository->find($request->getSlug('id'));
 
-        if (empty($place)) {
+        if (empty($univers)) {
             return new Response(json_encode(['error' => 'not found']), 404, ['Content-Type' => 'application/json']);
         }
-      
+
         $data = json_decode(file_get_contents('php://input'), true);
 
         if (!is_array($data)) {
@@ -28,14 +28,14 @@ class PatchPlaceController extends AbstractController
             );
         }
 
-        $place->name = $data['name'] ?? $place->name;
-        $place->type = $data['type'] ?? $place->type;
-        $place->description = $data['description'] ?? $place->description;
+        $univers->name = (string)($data['name'] ?? $univers->name);
+        $univers->description = $data['description'] ?? $univers->description;
 
-        $placeRepository->update($place);
+
+        $universRepository->update($univers);
 
         return new Response(
-            json_encode(['success' => true, 'id' => $place->getId()]),
+            json_encode(['success' => true, 'id' => $univers->getId()]),
             200,
             ['Content-Type' => 'application/json']
         );

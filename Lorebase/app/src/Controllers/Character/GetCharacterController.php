@@ -20,6 +20,6 @@ class GetCharacterController extends AbstractController
             return new Response('Personnage non trouvé', 404, ['Content-Type' => 'text/html']);
         }
 
-        return $this->render('detail', ['character' => $character]);
+        return $this->render('character','detail', ['character' => $character]);
     }
 }

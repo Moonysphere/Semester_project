@@ -10,6 +10,6 @@ class GetCreateCharacterController extends AbstractController
 {
     public function process(Request $request): Response
     {
-        return $this->render('CreateCharacter');
+        return $this->render('character','CreateCharacter');
     }
 }
