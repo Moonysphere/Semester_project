@@ -34,14 +34,13 @@
     "path": "/character/:id",
     "method": "DELETE",
     "controller": "Character\\DeleteCharacterController"
-
   },
   {
     "path": "/univers/create",
     "method": "GET",
     "controller": "Univers\\GetCreateUniversController"
   },
-   {
+  {
     "path": "/univers/:id/edit",
     "method": "GET",
     "controller": "Univers\\GetEditUnivers"
@@ -71,7 +70,7 @@
     "method": "DELETE",
     "controller": "Univers\\DeleteUniversController"
   },
-   {
+  {
     "path": "/ruler",
     "method": "GET",
     "controller": "Ruler\\GetRulerAllController"
@@ -85,7 +84,8 @@
     "path": "/ruler",
     "method": "POST",
     "controller": "Ruler\\PostRulerController"
-  },{
+  },
+  {
     "path": "/ruler/:id",
     "method": "DELETE",
     "controller": "Ruler\\DeleteRulerController"
@@ -99,10 +99,45 @@
     "path": "/ruler/:id/edit",
     "method": "GET",
     "controller": "Ruler\\GetEditRuler"
-  },  
+  },
   {
     "path": "/ruler/:id",
     "method": "PATCH",
     "controller": "Ruler\\PatchRulerController"
+  },
+  {
+    "path": "/role/create",
+    "method": "GET",
+    "controller": "Role\\GetCreateRoleController"
+  },
+  {
+    "path": "/role/:id/edit",
+    "method": "GET",
+    "controller": "Role\\GetEditRoleController"
+  },
+  {
+    "path": "/role",
+    "method": "GET",
+    "controller": "Role\\GetRolesController"
+  },
+  {
+    "path": "/role/:id",
+    "method": "GET",
+    "controller": "Role\\GetRoleController"
+  },
+  {
+    "path": "/role",
+    "method": "POST",
+    "controller": "Role\\PostRoleController"
+  },
+  {
+    "path": "/role/:id",
+    "method": "PATCH",
+    "controller": "Role\\PatchRoleController"
+  },
+  {
+    "path": "/role/:id",
+    "method": "DELETE",
+    "controller": "Role\\DeleteRoleController"
   }
 ]
