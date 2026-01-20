@@ -34,6 +34,43 @@
     "method": "DELETE",
     "controller": "Character\\DeleteCharacterController"
   },
+
+  {
+    "path": "/quest/create",
+    "method": "GET",
+    "controller": "Quest\\GetCreateQuestController"
+  },
+  {
+    "path": "/quest/:id/edit",
+    "method": "GET",
+    "controller": "Quest\\GetEditQuestController"
+  },
+  {
+    "path": "/quest",
+    "method": "GET",
+    "controller": "Quest\\GetQuestsController"
+  },
+  {
+    "path": "/quest/:id",
+    "method": "GET",
+    "controller": "Quest\\GetQuestController"
+  },
+  {
+    "path": "/quest",
+    "method": "POST",
+    "controller": "Quest\\PostQuestController"
+  },
+  {
+    "path": "/quest/:id",
+    "method": "PATCH",
+    "controller": "Quest\\PatchQuestController"
+  },
+  {
+    "path": "/quest/:id",
+    "method": "DELETE",
+    "controller": "Quest\\DeleteQuestController"
+
+  },
   {
     "path": "/univers/create",
     "method": "GET",
