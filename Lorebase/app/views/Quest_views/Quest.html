@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Créer une quête</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 20px;
+      }
+      form {
+        border: 1px solid #ccc;
+        padding: 20px;
+        border-radius: 5px;
+      }
+      .form-group {
+        margin-bottom: 15px;
+      }
+      label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+      }
+      input,
+      textarea {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
+      textarea {
+        resize: vertical;
+        min-height: 100px;
+      }
+      button {
+        background-color: #4caf50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+      button:hover {
+        background-color: #45a049;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Créer une quête</h1>
+    <form method="POST" action="/quest">
+      <div class="form-group">
+        <label for="title">Titre :</label>
+        <input type="text" id="title" name="title" required />
+      </div>
+      <div class="description">
+        <label for="description">Description :</label>
+        <textarea id="description" name="description" required></textarea>
+      </div>
+      <div class="statut">
+        <label for="statut">Statut :</label>
+        <input type="text" id="statut" name="statut" required />
+      </div>
+      <div class="levelrequirements">
+        <label for="levelrequirements">Level Requirement :</label>
+        <input
+          type="text"
+          id="levelrequirements"
+          name="levelrequirements"
+          required />
+      </div>
+      <button type="submit">Créer le Personnage</button>
+    </form>
+  </body>
+</html>

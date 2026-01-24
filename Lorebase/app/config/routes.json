@@ -14,7 +14,6 @@
     "method": "GET",
     "controller": "Character\\GetCharactersController"
   },
-
   {
     "path": "/character/:id",
     "method": "GET",
@@ -34,6 +33,45 @@
     "path": "/character/:id",
     "method": "DELETE",
     "controller": "Character\\DeleteCharacterController"
+
+  },
+
+  {
+    "path": "/quest/create",
+    "method": "GET",
+    "controller": "Quest\\GetCreateQuestController"
+  },
+  {
+    "path": "/quest/:id/edit",
+    "method": "GET",
+    "controller": "Quest\\GetEditQuestController"
+  },
+  {
+    "path": "/quest",
+    "method": "GET",
+    "controller": "Quest\\GetQuestsController"
+  },
+  {
+    "path": "/quest/:id",
+    "method": "GET",
+    "controller": "Quest\\GetQuestController"
+  },
+  {
+    "path": "/quest",
+    "method": "POST",
+    "controller": "Quest\\PostQuestController"
+  },
+  {
+    "path": "/quest/:id",
+    "method": "PATCH",
+    "controller": "Quest\\PatchQuestController"
+  },
+  {
+    "path": "/quest/:id",
+    "method": "DELETE",
+    "controller": "Quest\\DeleteQuestController"
+
+
   },
   {
     "path": "/univers/create",
@@ -139,5 +177,38 @@
     "path": "/role/:id",
     "method": "DELETE",
     "controller": "Role\\DeleteRoleController"
+    "path": "/place/create",
+    "method": "GET",
+    "controller": "Place\\GetCreatePlaceController"
+  },
+  {
+    "path": "/place/:id/edit",
+    "method": "GET",
+    "controller": "Place\\GetEditPlaceController"
+  },
+  {
+    "path": "/place",
+    "method": "GET",
+    "controller": "Place\\GetPlacesController"
+  },
+  {
+    "path": "/place/:id",
+    "method": "GET",
+    "controller": "Place\\GetPlaceController"
+  },
+  {
+    "path": "/place",
+    "method": "POST",
+    "controller": "Place\\PostPlaceController"
+  },
+  {
+    "path": "/place/:id",
+    "method": "PATCH",
+    "controller": "Place\\PatchPlaceController"
+  },
+  {
+    "path": "/place/:id",
+    "method": "DELETE",
+    "controller": "Place\\DeletePlaceController"
   }
 ]
