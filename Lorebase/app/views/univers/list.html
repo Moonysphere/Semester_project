@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
@@ -32,7 +32,9 @@
         padding: 20px;
         text-align: center;
         cursor: pointer;
-        transition: transform 0.2s, box-shadow 0.2s;
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s;
         text-decoration: none;
         color: inherit;
         background-color: white;
@@ -64,19 +66,48 @@
     <h1>Univers</h1>
 
     <div class="characters-container">
-      <!-- Carte d'ajout -->
       <a href="/univers/create" class="character-card add-card">+</a>
 
-      <!-- Cartes des personnages -->
-      <?php foreach ($univers as $univers): ?>
+      <?php foreach ($univers as $univers): ?><?php if ($univers->status ===
+      'published'): ?>
       <a
         href="/univers/<?php echo htmlspecialchars($univers->id); ?>"
-        class="character-card"
-      >
+        class="character-card">
         <h3><?php echo htmlspecialchars($univers->name); ?></h3>
         <p><?php echo htmlspecialchars($univers->description); ?></p>
       </a>
-      <?php endforeach; ?>
+      <?php endif; ?> <?php endforeach; ?>
+    </div>
+    <hr style="margin: 40px 0" />
+    <h2 style="text-align: center; margin-bottom: 10px">Brouillons :</h2>
+
+    <div class="characters-container">
+      <?php foreach ($univers as $univer): ?> <?php if ($univer->status ===
+      'draft'): ?>
+      <a
+        href="/univers/<?php echo htmlspecialchars($univer->id); ?>"
+        class="character-card"
+        style="opacity: 0.6">
+        <h3><?php echo htmlspecialchars($univer->name); ?></h3>
+        <p><?php echo htmlspecialchars($univer->description); ?></p>
+      </a>
+      <?php endif; ?> <?php endforeach; ?>
+    </div>
+
+    <hr style="margin: 40px 0" />
+    <h2 style="text-align: center; margin-bottom: 10px">Archivées :</h2>
+
+    <div class="characters-container">
+      <?php foreach ($univers as $univer): ?> <?php if ($univer->status ===
+      'archived'): ?>
+      <a
+        href="/univers/<?php echo htmlspecialchars($univer->id); ?>"
+        class="character-card"
+        style="opacity: 0.4">
+        <h3><?php echo htmlspecialchars($univer->name); ?></h3>
+        <p><?php echo htmlspecialchars($univer->description); ?></p>
+      </a>
+      <?php endif; ?> <?php endforeach; ?>
     </div>
   </body>
 </html>

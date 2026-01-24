@@ -32,6 +32,29 @@ class PatchPlaceController extends AbstractController
         $place->type = $data['type'] ?? $place->type;
         $place->description = $data['description'] ?? $place->description;
 
+        if (isset($data['toggle_status']) && $data['toggle_status']) {
+        $newStatus = ($place->status === 'published') ? 'draft' : 'published';
+        $placeRepository->setStatut($place->getId(), $newStatus);
+
+        return new Response(
+            json_encode(['success' => true, 'id' => $place->getId(), 'status' => $newStatus]),
+            200,
+            ['Content-Type' => 'application/json']
+        );
+    }
+
+    if (array_key_exists('status', $data) && count($data) === 1) {
+        $placeRepository->setStatut($place->getId(), $data['status']);
+
+        return new Response(
+            json_encode(['success' => true, 'id' => $place->getId(), 'status' => $data['status']]),
+            200,
+            ['Content-Type' => 'application/json']
+        );
+    }
+
+    $place->status = $data['status'] ?? $place->status;
+
         $placeRepository->update($place);
 
         return new Response(

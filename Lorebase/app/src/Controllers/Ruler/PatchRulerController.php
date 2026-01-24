@@ -32,6 +32,29 @@ class PatchRulerController extends AbstractController
         $ruler->categorie = $data['categorie'] ?? $ruler ->categorie;
         $ruler->description = $data['description'] ?? $ruler ->description;
 
+        if (isset($data['toggle_status']) && $data['toggle_status']) {
+        $newStatus = ($ruler->status === 'published') ? 'draft' : 'published';
+        $rulerRepository->setStatut($ruler->getId(), $newStatus);
+
+        return new Response(
+            json_encode(['success' => true, 'id' => $ruler->getId(), 'status' => $newStatus]),
+            200,
+            ['Content-Type' => 'application/json']
+        );
+    }
+
+    if (array_key_exists('status', $data) && count($data) === 1) {
+        $rulerRepository->setStatut($ruler->getId(), $data['status']);
+
+        return new Response(
+            json_encode(['success' => true, 'id' => $ruler->getId(), 'status' => $data['status']]),
+            200,
+            ['Content-Type' => 'application/json']
+        );
+    }
+
+    $ruler->status = $data['status'] ?? $ruler->status;
+
         $rulerRepository->update($ruler);
 
             // Retourne un succès JSON (pas de redirection)

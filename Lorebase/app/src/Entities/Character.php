@@ -33,6 +33,8 @@ class Character extends AbstractEntity
     #[Column(type: 'varchar', size: 255)]
     public string $description;
 
+    #[Column(type:'varchar', size: 255)]
+    public string $status;
 
     public function getId(): int
     {

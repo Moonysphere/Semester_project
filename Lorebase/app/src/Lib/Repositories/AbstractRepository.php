@@ -321,4 +321,26 @@ public function addParam(string $key, $value): self
             ->addParam('id', $entity->getId())
             ->executeQuery();
     }
+
+    public function setField(string $field, string $paramName): self
+    {
+        $this->queryString .= " SET $field = :$paramName";
+        return $this;
+    }
+
+    public function setStatut(int $id, string $status) : void
+    {
+        $this->queryBuilder()
+            ->updateTable()
+            ->as(substr($this->getTable(), 0, 1))
+            ->setField('status', 'status')
+            ->where('id', self::CONDITIONS['eq'])
+            ->setParams([
+                'id' => $id,
+                'status' => $status
+            ])
+      
+            ->executeQuery();
+    }
+
 }

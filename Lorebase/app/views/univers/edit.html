@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
@@ -62,6 +62,20 @@
       .btn-submit:hover {
         background-color: #218838;
       }
+      .btn-draft {
+        background-color: #f0ad4e;
+        color: white;
+      }
+      .btn-draft:hover {
+        background-color: #ec971f;
+      }
+      .btn-archived {
+        background-color: #dc3545;
+        color: white;
+      }
+      .btn-archived:hover {
+        background-color: #c82333;
+      }
       .btn-cancel {
         background-color: #6c757d;
         color: white;
@@ -75,10 +89,7 @@
   </head>
   <body>
     <div class="container">
-      <h1>
-        Modifier
-        <?php echo htmlspecialchars($univers->name); ?>
-      </h1>
+      <h1>Modifier <?php echo htmlspecialchars($univers->name); ?></h1>
       <form id="editForm">
         <div class="form-group">
           <label for="name">Nom :</label>
@@ -87,8 +98,7 @@
             id="name"
             name="name"
             value="<?php echo htmlspecialchars($univers->name); ?>"
-            required
-          />
+            required />
         </div>
         <div class="form-group">
           <label for="description">description :</label>
@@ -97,17 +107,35 @@
             id="description"
             name="description"
             value="<?php echo htmlspecialchars($univers->description); ?>"
-            required
-          />
-        </div>
-        
+            required />
         <div class="buttons">
-          <button type="submit" class="btn btn-submit">Sauvegarder</button>
-          <a
-            href="/univers/<?php echo $univers->id; ?>"
-            class="btn btn-cancel"
-            >Annuler</a
-          >
+          <button
+            type="submit"
+            class="btn btn-submit"
+            name="status"
+            value="published">
+            Publier
+          </button>
+
+          <button
+            type="submit"
+            class="btn btn-draft"
+            name="status"
+            value="draft">
+            Brouillon
+          </button>
+
+          <button
+            type="submit"
+            class="btn btn-archived"
+            name="status"
+            value="archived">
+            Archiver
+          </button>
+
+          <a href="/univers/<?php echo $univers->id; ?>" class="btn btn-cancel">
+            Annuler
+          </a>
         </div>
       </form>
     </div>
@@ -117,8 +145,20 @@
         .getElementById("editForm")
         .addEventListener("submit", function (e) {
           e.preventDefault();
+
+          const submitter = e.submitter;
+          const statusValue = submitter ? submitter.value : null;
+
+          // Récupérer tous les champs du formulaire
           const formData = new FormData(this);
           const data = Object.fromEntries(formData);
+
+          // Si un bouton status est cliqué, ajouter/écraser le status
+          if (statusValue && submitter.name === "status") {
+            data.status = statusValue;
+          }
+
+          // Envoyer tous les champs + le status
           fetch(`/univers/<?php echo $univers->id; ?>`, {
             method: "PATCH",
             headers: { "Content-Type": "application/json" },

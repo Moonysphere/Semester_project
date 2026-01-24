@@ -23,10 +23,13 @@ class Quest extends AbstractEntity
     public string $description;
 
     #[Column(type: 'varchar', size: 50)]
-    public string $statut;
+    public string $statut_quest;
 
     #[Column(type: 'int')]
     public int $levelrequirements;
+
+    #[Column(type:'varchar', size: 255)]
+    public string $status;
 
 
     public function getId(): int

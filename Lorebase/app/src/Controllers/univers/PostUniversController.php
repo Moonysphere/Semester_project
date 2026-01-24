@@ -41,6 +41,16 @@ class PostUniversController extends AbstractController
             );
         }
 
+        $data['status'] = $data['status'] ?? 'draft';
+
+        if (!in_array($data['status'], ['draft', 'published', 'archived'], true)) {
+            return new Response(
+                json_encode(['error' => 'Invalid status']),
+                400,
+                ['Content-Type' => 'application/json']
+            );
+        }
+
         $form->setData($data);
 
         if (!$form->validateRequiredFields()) {

@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Créer une regle</title>
+    <title>Créer une Règle</title>
     <style>
       body {
         font-family: Arial, sans-serif;
@@ -48,6 +48,22 @@
       button:hover {
         background-color: #45a049;
       }
+      .brouillon {
+        background-color: #f0ad4e;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+      .brouillon:hover {
+        background-color: #ec971f;
+      }
+      .archived {
+        background-color: #dc3545;
+        color: white;
+      }
     </style>
   </head>
   <body>
@@ -65,11 +81,18 @@
       </div>
 
       <div class="form-group">
-        <label for="categorie">Categorie :</label>
+        <label for="categorie">Catégorie :</label>
         <textarea id="categorie" name="categorie"></textarea>
       </div>
-
-      <button type="submit">Créer la regle</button>
+      <button class="create" type="submit" name="status" value="published">
+        Créer la règle
+      </button>
+      <button class="brouillon" type="submit" name="status" value="draft">
+        Brouillon
+      </button>
+      <button class="archived" type="submit" name="status" value="archived">
+        Archiver
+      </button>
     </form>
   </body>
 </html>

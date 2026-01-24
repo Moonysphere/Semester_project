@@ -38,6 +38,16 @@ class PostPlaceController extends AbstractController
                 ['Content-Type' => 'application/json']
             );
         }
+        // Draft = brouillon donc je sais pas en quel langue le mettre comme dans la BDD on parle anglais
+        $data['status'] = $data['status'] ?? 'draft';
+
+        if (!in_array($data['status'], ['draft', 'published'], true)) {
+            return new Response(
+                json_encode(['error' => 'Invalid status']),
+                400,
+                ['Content-Type' => 'application/json']
+            );
+        }
 
         $form->setData($data);
 

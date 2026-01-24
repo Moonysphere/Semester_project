@@ -11,6 +11,7 @@ class UniversForm extends AbstractForm
         'name' => 'string',
         'description' => 'optional',
         'createdate' => 'date',
+        'status' => 'string',
     ];
 
     public function mapToEntity(): ?Univers
@@ -23,6 +24,7 @@ class UniversForm extends AbstractForm
         $univers->name = (string)($this->data['name'] ?? '');
        $univers->description = $this->data['description'] ?? null;
        $value = $this->data['createdate'] ?? null;
+        $univers->status = $this->data['status']; // 'draft' ou 'published' pas confondre avec le statut de la quête
 
 if ($value) {
     $value = str_replace('T', ' ', $value);
@@ -61,6 +63,9 @@ if ($value) {
 
         if (empty($this->data['name'])) {
             $this->errors[] = 'Name is required';
+        }
+        if (empty($this->data['status'])) {
+            $this->errors[] = 'Status is required';
         }
 
         return empty($this->errors);

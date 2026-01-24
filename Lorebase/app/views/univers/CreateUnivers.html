@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
@@ -48,28 +48,60 @@
       button:hover {
         background-color: #45a049;
       }
+      .create {
+        background-color: #4caf50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+      .create:hover {
+        background-color: #45a049;
+      }
+      .brouillon {
+        background-color: #f0ad4e;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+      .brouillon:hover {
+        background-color: #ec971f;
+      }
+      .archived {
+        background-color: #dc3545;
+        color: white;
+      }
     </style>
   </head>
   <body>
     <h1>Créer un Univers</h1>
-
     <form method="POST" action="/univers">
       <div class="form-group">
         <label for="name">Nom de l’univers :</label>
         <input type="text" id="name" name="name" required />
       </div>
-
       <div class="form-group">
         <label for="description">Description :</label>
         <textarea id="description" name="description"></textarea>
       </div>
-
       <div class="form-group">
         <label for="createDate">Date de création :</label>
-<input type="date" name="createdate">
+        <input type="date" name="createdate" />
       </div>
-
-      <button type="submit">Créer l’univers</button>
+      <button class="create" type="submit" name="status" value="published">
+        Créer l'univers
+      </button>
+      <button class="brouillon" type="submit" name="status" value="draft">
+        Brouillon
+      </button>
+      <button class="archived" type="submit" name="status" value="archived">
+        Archiver
+      </button>
     </form>
   </body>
 </html>
