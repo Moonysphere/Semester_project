@@ -162,12 +162,13 @@ abstract class AbstractRepository
     
 
 
-private function normalizeParams(array $params): array
-{
-    foreach ($params as $k => $v) {
-        if ($v instanceof \DateTimeInterface) {
-            // type DATE
-            $params[$k] = $v->format('Y-m-d');
+ private function normalizeParams(array $params): array
+    {
+        foreach ($params as $k => $v) {
+            if ($v instanceof \DateTimeInterface) {
+                // type DATE
+                $params[$k] = $v->format('Y-m-d');
+            }
         }
         return $params;
     }
@@ -226,27 +227,7 @@ private function normalizeParams(array $params): array
     return $entity;
 }
 
-  public function getAllResults(): array
-{
-    $rows = $this->query->fetchAll(\PDO::FETCH_ASSOC);
-
-    $class = 'App\\Entities\\' . ucfirst($this->getTable());
-
-        $class = 'App\\Entities\\' . ucfirst($this->getTable());
-        $entity = new $class();
-
-        foreach ($row as $key => $value) {
-            if ($key === 'createdate' && $value !== null && $value !== '') {
-                $entity->$key = new \DateTimeImmutable($value);
-            } else {
-                $entity->$key = $value;
-            }
-        }
-
-        return $entity;
-    }
-
-
+ 
     public function getAllResults(): array
     {
         $rows = $this->query->fetchAll(\PDO::FETCH_ASSOC);
@@ -366,12 +347,15 @@ $result = $result->executeQuery()->first();
 
     
 
-   public function set(AbstractEntity $entity): self
-{
-    $this->queryString .= " SET";
-    foreach ($entity->toArray() as $key => $value) {
-        if ($key === 'id') continue; 
-        $this->queryString .= " $key = :$key,";
+       public function set(AbstractEntity $entity): self
+    {
+        $this->queryString .= " SET";
+        foreach ($entity->toArray() as $key => $value) {
+            if ($key === 'id') continue;
+            $this->queryString .= " $key = :$key,";
+        }
+        $this->queryString = rtrim($this->queryString, ',');
+        return $this;
     }
 
 
@@ -431,3 +415,4 @@ $result = $result->executeQuery()->first();
     }
 
 }
+
