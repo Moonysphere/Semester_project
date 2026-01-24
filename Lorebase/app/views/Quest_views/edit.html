@@ -81,19 +81,21 @@
           <label for="title">Titre :</label>
           <input
             type="text"
-            id="name"
-            name="name"
+            id="title"
+            name="title"
             value="<?php echo htmlspecialchars($quest->title); ?>"
-            required />
+            required
+          />
         </div>
         <div class="form-group">
           <label for="description">Description :</label>
           <input
             type="text"
-            id="role"
-            name="role"
+            id="description"
+            name="description"
             value="<?php echo htmlspecialchars($quest->description); ?>"
-            required />
+            required
+          />
         </div>
         <div class="form-group">
           <label for="statut">Statut :</label>
@@ -102,16 +104,19 @@
             id="statut"
             name="statut"
             value="<?php echo htmlspecialchars($quest->statut); ?>"
-            required />
+            required
+          />
         </div>
         <div class="form-group">
-          <label for="levelrequirements">Level Requirement :</label>
+          <label for="levelrequirement">Level Requirement :</label>
           <input
             type="number"
-            id="levelrequirements"
-            name="levelrequirements"
-            value="<?php echo htmlspecialchars($quest->levelrequirements); ?>"
-            required />
+            id="levelrequirement"
+            name="levelrequirement"
+            value="<?php echo htmlspecialchars($quest->levelrequirement); ?>"
+            required
+          />
+
         </div>
         <div class="buttons">
           <button type="submit" class="btn btn-submit">Sauvegarder</button>
@@ -135,7 +140,7 @@
           })
             .then((response) => {
               if (response.ok) {
-                window.location.href = `/quest/<?php echo $quest->id; ?>`;
+                window.location.href = `/quest/<?php echo $quest->slug; ?>`;
               } else {
                 alert("Erreur lors de la modification");
               }

@@ -22,6 +22,9 @@ class Character extends AbstractEntity
     public string $name;
 
     #[Column(type: 'varchar', size: 255)]
+    public string $slug;
+    
+    #[Column(type: 'varchar', size: 255)]
     public string $role;
 
     #[Column(type: 'varchar', size: 255)]

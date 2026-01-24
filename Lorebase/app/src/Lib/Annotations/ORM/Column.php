@@ -14,6 +14,7 @@ class Column extends AbstractAnnotation
         public bool $nullable = false,
         public int|null $size = null,
         public string|null $name = null,
+        public bool $unique = false,  
     ){}
 
 }

@@ -70,7 +70,7 @@
       <!-- Cartes des personnages -->
       <?php foreach ($univers as $univers): ?>
       <a
-        href="/univers/<?php echo htmlspecialchars($univers->id); ?>"
+        href="/univers/<?php echo htmlspecialchars($univers->slug); ?>"
         class="character-card"
       >
         <h3><?php echo htmlspecialchars($univers->name); ?></h3>

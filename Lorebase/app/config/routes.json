@@ -10,7 +10,7 @@
     "controller": "Character\\GetCreateCharacterController"
   },
   {
-    "path": "/character/:id/edit",
+    "path": "/character/:slug/edit",
     "method": "GET",
     "controller": "Character\\GetEditCharacterController"
   },
@@ -20,7 +20,7 @@
     "controller": "Character\\GetCharactersController"
   },
   {
-    "path": "/character/:id",
+    "path": "/character/:slug",
     "method": "GET",
     "controller": "Character\\GetCharacterController"
   },
@@ -47,7 +47,7 @@
     "controller": "Quest\\GetCreateQuestController"
   },
   {
-    "path": "/quest/:id/edit",
+    "path": "/quest/:slug/edit",
     "method": "GET",
     "controller": "Quest\\GetEditQuestController"
   },
@@ -57,7 +57,7 @@
     "controller": "Quest\\GetQuestsController"
   },
   {
-    "path": "/quest/:id",
+    "path": "/quest/:slug",
     "method": "GET",
     "controller": "Quest\\GetQuestController"
   },
@@ -84,7 +84,7 @@
     "controller": "Univers\\GetCreateUniversController"
   },
   {
-    "path": "/univers/:id/edit",
+    "path": "/univers/:slug/edit",
     "method": "GET",
     "controller": "Univers\\GetEditUnivers"
   },
@@ -94,7 +94,7 @@
     "controller": "Univers\\GetUniversAllController"
   },
   {
-    "path": "/univers/:id",
+    "path": "/univers/:slug",
     "method": "GET",
     "controller": "Univers\\GetUniversController"
   },
@@ -134,12 +134,12 @@
     "controller": "Ruler\\DeleteRulerController"
   },
   {
-    "path": "/ruler/:id",
+    "path": "/ruler/:slug",
     "method": "GET",
     "controller": "Ruler\\GetRulerController"
   },
   {
-    "path": "/ruler/:id/edit",
+    "path": "/ruler/:slug/edit",
     "method": "GET",
     "controller": "Ruler\\GetEditRuler"
   },
@@ -214,7 +214,7 @@
     "controller": "Place\\GetCreatePlaceController"
   },
   {
-    "path": "/place/:id/edit",
+    "path": "/place/:slug/edit",
     "method": "GET",
     "controller": "Place\\GetEditPlaceController"
   },
@@ -224,7 +224,7 @@
     "controller": "Place\\GetPlacesController"
   },
   {
-    "path": "/place/:id",
+    "path": "/place/:slug",
     "method": "GET",
     "controller": "Place\\GetPlaceController"
   },

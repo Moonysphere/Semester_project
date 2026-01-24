@@ -20,6 +20,7 @@ abstract class AbstractController
 
         return $response;
     }
+    
     protected function isLoggedIn(): bool
     {
         return isset($_SESSION['user']);

@@ -72,7 +72,7 @@
       <!-- Cartes des personnages -->
       <?php foreach ($quests as $quest): ?>
       <a
-        href="/quest/<?php echo htmlspecialchars($quest->id); ?>"
+        href="/quest/<?php echo htmlspecialchars($quest->slug); ?>"
         class="character-card">
         <h3><?php echo htmlspecialchars($quest->title); ?></h3>
         <p><?php echo htmlspecialchars($quest->description); ?></p>

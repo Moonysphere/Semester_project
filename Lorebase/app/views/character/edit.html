@@ -148,13 +148,15 @@
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(data),
           })
-            .then((response) => {
-              if (response.ok) {
-                window.location.href = `/character/<?php echo $character->id; ?>`;
-              } else {
-                alert("Erreur lors de la modification");
-              }
-            })
+            .then(async (response) => {
+          if (!response.ok) {
+            throw new Error("Erreur serveur");
+          }
+
+          const result = await response.json();
+
+          window.location.href = `/character/${result.slug}`;
+        })
             .catch((error) => {
               console.error("Erreur:", error);
               alert("Erreur lors de la modification");

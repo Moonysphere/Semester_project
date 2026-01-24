@@ -71,7 +71,7 @@
 
         <!-- Cartes des personnages -->
         <?php foreach ($places as $place): ?>
-        <a href="/place/<?php echo htmlspecialchars($place->id); ?>" class="place-card">
+        <a href="/place/<?php echo htmlspecialchars($place->slug); ?>" class="place-card">
             <h3>
                 <?php echo htmlspecialchars($place->name); ?>
             </h3>
