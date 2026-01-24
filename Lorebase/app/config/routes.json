@@ -1,5 +1,10 @@
 [
   {
+    "path": "/",
+    "method": "GET",
+    "controller": "Homepage\\GetHomepageController"
+  },
+  {
     "path": "/character/create",
     "method": "GET",
     "controller": "Character\\GetCreateCharacterController"
@@ -33,6 +38,7 @@
     "path": "/character/:id",
     "method": "DELETE",
     "controller": "Character\\DeleteCharacterController"
+
   },
 
   {
@@ -69,6 +75,7 @@
     "path": "/quest/:id",
     "method": "DELETE",
     "controller": "Quest\\DeleteQuestController"
+
 
   },
   {
@@ -140,6 +147,66 @@
     "path": "/ruler/:id",
     "method": "PATCH",
     "controller": "Ruler\\PatchRulerController"
+  },
+  {
+    "path": "/register",
+    "method": "POST",
+    "controller": "Auth\\RegisterController"
+  },
+  {
+    "path": "/register",
+    "method": "GET",
+    "controller": "Auth\\RegisterViewController"
+  },
+  {
+    "path": "/login",
+    "method": "POST",
+    "controller": "Auth\\LoginController"
+  },
+  {
+    "path": "/login",
+    "method": "GET",
+    "controller": "Auth\\LoginViewController"
+  },
+  {
+    "path": "/logout",
+    "method": "POST",
+    "controller": "Auth\\LogoutController"
+  },
+  {
+    "path": "/role/create",
+    "method": "GET",
+    "controller": "Role\\GetCreateRoleController"
+  },
+  {
+    "path": "/role/:id/edit",
+    "method": "GET",
+    "controller": "Role\\GetEditRoleController"
+  },
+  {
+    "path": "/role",
+    "method": "GET",
+    "controller": "Role\\GetRolesController"
+  },
+  {
+    "path": "/role/:id",
+    "method": "GET",
+    "controller": "Role\\GetRoleController"
+  },
+  {
+    "path": "/role",
+    "method": "POST",
+    "controller": "Role\\PostRoleController"
+  },
+  {
+    "path": "/role/:id",
+    "method": "PATCH",
+    "controller": "Role\\PatchRoleController"
+  },
+  {
+    "path": "/role/:id",
+    "method": "DELETE",
+    "controller": "Role\\DeleteRoleController"
   },
   {
     "path": "/place/create",

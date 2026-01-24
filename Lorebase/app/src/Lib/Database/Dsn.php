@@ -63,6 +63,16 @@ class Dsn
         return $this->dbname;
     }
 
+    public function getHost(): string
+    {
+        return $this->host;
+    }
+
+    public function getPort(): int
+    {
+        return $this->port;
+    }
+
     private static function getConfig(): array
     {
         $file = file_get_contents(self::DATABASE_CONFIG_PATH);
