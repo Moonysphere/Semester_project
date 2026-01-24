@@ -1,86 +1,97 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Place</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-            background-color: #f5f5f5;
-        }
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+        background-color: #f5f5f5;
+      }
 
-        h1 {
-            text-align: center;
-            margin-bottom: 30px;
-        }
+      h1 {
+        text-align: center;
+        margin-bottom: 30px;
+      }
 
-        .place-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px;
-            padding: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
+      .place-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 20px;
+        padding: 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
 
-        .place-card {
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 20px;
-            text-align: center;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-            text-decoration: none;
-            color: inherit;
-            background-color: white;
-        }
+      .place-card {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 20px;
+        text-align: center;
+        cursor: pointer;
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s;
+        text-decoration: none;
+        color: inherit;
+        background-color: white;
+      }
 
-        .place-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
+      .place-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
 
-        .place-card h3 {
-            margin: 10px 0;
-        }
+      .place-card h3 {
+        margin: 10px 0;
+      }
 
-        .add-card {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 48px;
-            background-color: #f0f0f0;
-        }
+      .add-card {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 48px;
+        background-color: #f0f0f0;
+      }
 
-        .add-card:hover {
-            background-color: #e0e0e0;
-        }
+      .add-card:hover {
+        background-color: #e0e0e0;
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <h1>Place</h1>
 
     <div class="place-container">
-        <!-- Carte d'ajout -->
-        <a href="/place/create" class="place-card add-card">+</a>
-
-        <!-- Cartes des personnages -->
-        <?php foreach ($places as $place): ?>
-        <a href="/place/<?php echo htmlspecialchars($place->slug); ?>" class="place-card">
-            <h3>
-                <?php echo htmlspecialchars($place->name); ?>
-            </h3>
-            <p>
-                <?php echo htmlspecialchars($place->description); ?>
-            </p>
-        </a>
-        <?php endforeach; ?>
+      <a href="/place/create" class="place-card add-card">+</a>
+      <?php foreach ($places as $place): ?> <?php if ($place->status ===
+      'published'): ?>
+      <a
+        href="/place/<?php echo htmlspecialchars($place->id); ?>"
+        class="place-card">
+        <h3><?php echo htmlspecialchars($place->name); ?></h3>
+        <p><?php echo htmlspecialchars($place->description); ?></p>
+      </a>
+      <?php endif; ?> <?php endforeach; ?>
     </div>
-</body>
+    <hr style="margin: 40px 0" />
+    <h2 style="text-align: center; margin-bottom: 10px">Brouillons :</h2>
 
+    <div class="characters-container">
+      <?php foreach ($places as $place): ?> <?php if ($place->status ===
+      'draft'): ?>
+      <a
+        href="/place/<?php echo htmlspecialchars($place->id); ?>"
+        class="place-card"
+        style="opacity: 0.6">
+        <h3><?php echo htmlspecialchars($place->name); ?></h3>
+        <p><?php echo htmlspecialchars($place->description); ?></p>
+      </a>
+      <?php endif; ?> <?php endforeach; ?>
+    </div>
+  </body>
 </html>

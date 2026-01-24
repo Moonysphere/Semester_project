@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
@@ -86,12 +86,15 @@
 
       <div class="field">
         <label>date de creation :</label>
-<p>
-  <?php echo htmlspecialchars($univers->createdate?->format('Y-m-d') ?? ''); ?>
-</p>
+        <p>
+          <?php echo htmlspecialchars($univers->createdate?->format('Y-m-d') ??
+          ''); ?>
+        </p>
       </div>
-
-
+      <div class="field">
+        <label>Status :</label>
+        <p><?php echo htmlspecialchars($univers->status); ?></p>
+      </div>
       <div class="buttons">
         <a href="/univers" class="btn btn-back">Retour</a>
         <a
@@ -103,8 +106,7 @@
         <button
           type="button"
           class="btn btn-delete"
-          onclick="deleteCharacter(<?php echo $univers->id; ?>)"
-        >
+          onclick="deleteCharacter(<?php echo $univers->id; ?>)">
           Supprimer
         </button>
       </div>

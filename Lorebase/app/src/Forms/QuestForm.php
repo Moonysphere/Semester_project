@@ -17,8 +17,9 @@ class QuestForm extends AbstractForm
         $quest->title = $this->data['title'];
         $quest->slug =$repository->checkSlug("slug","quest",$repository->slugify($this->data['title'])) ;
         $quest->description = $this->data['description'];
-        $quest->statut = $this->data['statut'];
+        $quest->statut_quest = $this->data['statut_quest']; // En cours, Terminé, Pas commencé
         $quest->levelrequirements = (int) ($this->data['levelrequirements']);
+        $quest->status = $this->data['status']; // 'draft' ou 'published' pas confondre avec le statut de la quête
 
         return $quest;
     }
@@ -47,11 +48,17 @@ class QuestForm extends AbstractForm
         if (empty($this->data['description'])) {
             $this->errors[] = 'Description is required';
         }
-        if (empty($this->data['statut'])) {
-            $this->errors[] = 'Statut is required';
+        if (empty($this->data['statut_quest'])) {
+            $this->errors[] = 'Quest statut is required';
         }
         if (!isset($this->data['levelrequirements'])) {
             $this->errors[] = 'Level Requirement is required';
+        }
+        if (!isset($this->data['status'])) { // Forcer le draft si on choisit rien
+            $this->data['status'] = 'draft';
+        }
+        if (!in_array($this->data['status'], ['draft', 'published'], true)) {
+            $this->errors[] = 'Invalid status';
         }
 
         return empty($this->errors);

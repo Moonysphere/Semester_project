@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
@@ -98,6 +98,10 @@
         <label>Description :</label>
         <p><?php echo htmlspecialchars($character->description); ?></p>
       </div>
+      <div class="field">
+        <label>Statut :</label>
+        <p><?php echo htmlspecialchars($character->status); ?></p>
+      </div>
 
       <div class="buttons">
         <a href="/character" class="btn btn-back">Retour</a>
@@ -110,8 +114,7 @@
         <button
           type="button"
           class="btn btn-delete"
-          onclick="deleteCharacter(<?php echo $character->id; ?>)"
-        >
+          onclick="deleteCharacter(<?php echo $character->id; ?>)">
           Supprimer
         </button>
       </div>

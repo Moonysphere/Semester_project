@@ -26,6 +26,8 @@ class Univers extends AbstractEntity
     #[Column(type: 'date', nullable: true)]
     public ?\DateTimeImmutable $createdate = null;
 
+    #[Column(type:'varchar', size: 255)]
+    public string $status;
 
     /* =======================
        GETTERS

@@ -20,6 +20,7 @@ class CharacterForm extends AbstractForm
         $character->origin = $this->data['origin'] ?? null;
         $character->pv = (int)($this->data['pv'] ?? 0);
         $character->description = $this->data['description'] ?? null;
+        $character->status = $this->data['status'] ?? null;
 
         return $character;
     }
@@ -48,6 +49,9 @@ class CharacterForm extends AbstractForm
         }
         if (empty($this->data['role'])) {
             $this->errors[] = 'Role is required';
+        }
+        if (empty($this->data['status'])) {
+            $this->errors[] = 'Status is required';
         }
 
         return empty($this->errors);

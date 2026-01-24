@@ -1,133 +1,152 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Créer une Place - Lorebase</title>
 
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            padding: 20px;
-        }
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        padding: 20px;
+      }
 
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: white;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        background: white;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
 
-        h1 {
-            color: #333;
-            margin-bottom: 30px;
-        }
+      h1 {
+        color: #333;
+        margin-bottom: 30px;
+      }
 
-        .form-group {
-            margin-bottom: 20px;
-        }
+      .form-group {
+        margin-bottom: 20px;
+      }
 
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: #495057;
-        }
+      label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: #495057;
+      }
 
-        input[type="text"],
-        textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ced4da;
-            border-radius: 4px;
-            font-size: 14px;
-        }
+      input[type="text"],
+      textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        font-size: 14px;
+      }
 
-        textarea {
-            resize: vertical;
-            min-height: 120px;
-        }
+      textarea {
+        resize: vertical;
+        min-height: 120px;
+      }
+      button {
+        background-color: #4caf50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+      button:hover {
+        background-color: #45a049;
+      }
 
-        .actions {
-            display: flex;
-            gap: 10px;
-            margin-top: 30px;
-        }
+      .actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 30px;
+      }
 
-        .btn {
-            padding: 10px 20px;
-            border-radius: 4px;
-            border: none;
-            cursor: pointer;
-            font-size: 14px;
-            text-decoration: none;
-            display: inline-block;
-            text-align: center;
-        }
-
-        .btn-primary {
-            background-color: #007bff;
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background-color: #0056b3;
-        }
-
-        .btn-secondary {
-            background-color: #6c757d;
-            color: white;
-        }
-
-        .btn-secondary:hover {
-            background-color: #5a6268;
-        }
+      .create {
+        background-color: #4caf50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+      .create:hover {
+        background-color: #45a049;
+      }
+      .brouillon {
+        background-color: #f0ad4e;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+      .brouillon:hover {
+        background-color: #ec971f;
+      }
+      .archived {
+        background-color: #dc3545;
+        color: white;
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <div class="container">
-        <h1>Créer une nouvelle place</h1>
+      <h1>Créer une nouvelle place</h1>
 
-        <form action="/place" method="POST">
-            <div class="form-group">
-                <label for="name">Nom de la place</label>
-                <input type="text" id="name" name="name" required placeholder="Ex : Château d’Argelune">
-            </div>
-
-            <div class="form-group">
-                <label for="description">Description</label>
-                <textarea id="description" name="description"
-                    placeholder="Décrivez cette place (histoire, ambiance, particularités...)"></textarea>
-            </div>
-
-            <div class="form-group">
-                <label for="type">Type</label>
-                <textarea id="type" name="type" placeholder="Quel type de place?"></textarea>
-            </div>
-
-
-            <div class="actions">
-                <button type="submit" class="btn btn-primary">
-                    Créer la place
-                </button>
-
-                <a href="/place" class="btn btn-secondary">
-                    Annuler
-                </a>
-            </div>
-        </form>
+      <form action="/place" method="POST">
+        <div class="form-group">
+          <label for="name">Nom de la place</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            required
+            placeholder="Ex : Château d’Argelune" />
+        </div>
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea
+            id="description"
+            name="description"
+            placeholder="Décrivez cette place (histoire, ambiance, particularités...)"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="type">Type</label>
+          <textarea
+            id="type"
+            name="type"
+            placeholder="Quel type de place?"></textarea>
+        </div>
+        <div class="actions">
+          <button class="create" type="submit" name="status" value="published">
+            Créer la place
+          </button>
+          <button class="brouillon" type="submit" name="status" value="draft">
+            Brouillon
+          </button>
+          </button>
+      <button class="archived" type="submit" name="status" value="archived">
+        Archiver
+      </button>
+        </div>
+      </form>
     </div>
-</body>
-
+  </body>
 </html>

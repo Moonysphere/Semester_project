@@ -28,6 +28,9 @@ class Place extends AbstractEntity
     #[Column(type: 'varchar', size: 255)]
     public string $description;
 
+    #[Column(type:'varchar', size: 255)]
+    public string $status;
+
     public function getId(): int
     {
         return $this->id;

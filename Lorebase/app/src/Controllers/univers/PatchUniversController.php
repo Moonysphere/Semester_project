@@ -31,7 +31,24 @@ class PatchUniversController extends AbstractController
         $univers->name = (string)($data['name'] ?? $univers->name);
         $univers->slug = $universRepository->slugify($data['name']) ?? $univers->slug;
         $univers->description = $data['description'] ?? $univers->description;
+        
+        // Si seulement status envoyé, utiliser setStatut()
+        if (array_key_exists('status', $data) && count($data) === 1) {
+            if (in_array($data['status'], ['draft', 'published', 'archived'], true)) {
+                $universRepository->setStatut($univers->getId(), $data['status']);
 
+                return new Response(
+                    json_encode(['success' => true, 'id' => $univers->getId(), 'status' => $data['status']]),
+                    200,
+                    ['Content-Type' => 'application/json']
+                );
+            }
+        }
+
+        // Sinon mise à jour complète
+        if (isset($data['status']) && in_array($data['status'], ['draft', 'published', 'archived'], true)) {
+            $univers->status = $data['status'];
+        }
 
         $universRepository->update($univers);
 

@@ -18,6 +18,7 @@ class PlaceForm extends AbstractForm
         $place->slug =$repository->checkSlug("slug","place",$repository->slugify($this->data['name'])) ;
         $place->type = $this->data['type'] ?? null;
         $place->description = $this->data['description'] ?? null;
+        $place->status = $this->data['status'] ?? null;
 
         return $place;
     }
@@ -50,6 +51,9 @@ class PlaceForm extends AbstractForm
 
         if (empty($this->data['description'])) {
             $this->errors[] = 'Description is required';
+        }
+        if (empty($this->data['status'])) {
+            $this->errors[] = 'Status is required';
         }
 
         return empty($this->errors);

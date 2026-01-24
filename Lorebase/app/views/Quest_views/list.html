@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Personnages</title>
+    <title>Quêtes</title>
     <style>
       body {
         font-family: Arial, sans-serif;
@@ -17,7 +17,7 @@
         margin-bottom: 30px;
       }
 
-      .characters-container {
+      .quests-container {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
         gap: 20px;
@@ -26,7 +26,7 @@
         margin: 0 auto;
       }
 
-      .character-card {
+      .quest-card {
         border: 1px solid #ddd;
         border-radius: 8px;
         padding: 20px;
@@ -40,12 +40,12 @@
         background-color: white;
       }
 
-      .character-card:hover {
+      .quest-card:hover {
         transform: translateY(-5px);
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       }
 
-      .character-card h3 {
+      .quest-card h3 {
         margin: 10px 0;
       }
 
@@ -63,21 +63,52 @@
     </style>
   </head>
   <body>
-    <h1>Personnages</h1>
+    <h1>Quêtes</h1>
 
-    <div class="characters-container">
-      <!-- Carte d'ajout -->
-      <a href="/quest/create" class="character-card add-card">+</a>
+    <div class="quests-container">
+      <a href="/quest/create" class="quest-card add-card">+</a>
 
-      <!-- Cartes des personnages -->
-      <?php foreach ($quests as $quest): ?>
+      <?php foreach ($quests as $quest): ?> <?php if ($quest->status ===
+      'published'): ?>
       <a
         href="/quest/<?php echo htmlspecialchars($quest->slug); ?>"
         class="character-card">
         <h3><?php echo htmlspecialchars($quest->title); ?></h3>
         <p><?php echo htmlspecialchars($quest->description); ?></p>
       </a>
-      <?php endforeach; ?>
+      <?php endif; ?> <?php endforeach; ?>
+    </div>
+
+    <hr style="margin: 40px 0" />
+    <h2 style="text-align: center; margin-bottom: 10px">Brouillons :</h2>
+
+    <div class="quests-container">
+      <?php foreach ($quests as $quest): ?> <?php if ($quest->status ===
+      'draft'): ?>
+      <a
+        href="/quest/<?php echo htmlspecialchars($quest->id); ?>"
+        class="quest-card"
+        style="opacity: 0.6">
+        <h3><?php echo htmlspecialchars($quest->title); ?></h3>
+        <p><?php echo htmlspecialchars($quest->description); ?></p>
+      </a>
+      <?php endif; ?> <?php endforeach; ?>
+    </div>
+
+    <hr style="margin: 40px 0" />
+    <h2 style="text-align: center; margin-bottom: 10px">Archivées :</h2>
+
+    <div class="quests-container">
+      <?php foreach ($quests as $quest): ?> <?php if ($quest->status ===
+      'archived'): ?>
+      <a
+        href="/quest/<?php echo htmlspecialchars($quest->id); ?>"
+        class="quest-card"
+        style="opacity: 0.4">
+        <h3><?php echo htmlspecialchars($quest->title); ?></h3>
+        <p><?php echo htmlspecialchars($quest->description); ?></p>
+      </a>
+      <?php endif; ?> <?php endforeach; ?>
     </div>
   </body>
 </html>

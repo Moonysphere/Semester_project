@@ -18,6 +18,7 @@ class RulerForm extends AbstractForm
         $ruler->slug =$repository->checkSlug("slug","ruler",$repository->slugify($this->data['name'])) ;
         $ruler->description = $this->data['description'] ?? null;
         $ruler->categorie = $this->data['categorie'] ?? null;
+        $ruler->status = $this->data['status'] ?? null;
 
         return $ruler;
     }
@@ -49,6 +50,12 @@ class RulerForm extends AbstractForm
         }
         if (empty($this->data['categorie'])) {
             $this->errors[] = 'categorie is required';
+        }
+        if (!isset($this->data['status'])) { // Forcer le draft si on choisit rien
+            $this->data['status'] = 'draft';
+        }
+        if (!in_array($this->data['status'], ['draft', 'published'], true)) {
+            $this->errors[] = 'Invalid status';
         }
 
         return empty($this->errors);
