@@ -5,10 +5,11 @@ namespace App\Lib\Controllers;
 use App\Lib\Http\Request;
 use App\Lib\Http\Response;
 
-abstract class AbstractController {
+abstract class AbstractController
+{
     public abstract function process(Request $request): Response;
 
-    protected function render(string $file ,string $template, array $data = []): Response
+    protected function render(string $file, string $template, array $data = []): Response
     {
         $response = new Response();
         extract($data);
@@ -18,5 +19,9 @@ abstract class AbstractController {
         $response->addHeader('Content-Type', 'text/html');
 
         return $response;
+    }
+    protected function isLoggedIn(): bool
+    {
+        return isset($_SESSION['user']);
     }
 }

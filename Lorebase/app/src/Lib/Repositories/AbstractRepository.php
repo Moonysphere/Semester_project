@@ -66,6 +66,7 @@ abstract class AbstractRepository
     public function queryBuilder(): self
     {
         $this->queryString = "";
+        $this->params = [];
         return $this;
     }
 
@@ -145,32 +146,32 @@ abstract class AbstractRepository
         $this->queryString .= "$field $condition :$field";
         return $this;
     }
-private function normalizeParams(array $params): array
-{
-    foreach ($params as $k => $v) {
-        if ($v instanceof \DateTimeInterface) {
-            // type DATE
-            $params[$k] = $v->format('Y-m-d');
+    private function normalizeParams(array $params): array
+    {
+        foreach ($params as $k => $v) {
+            if ($v instanceof \DateTimeInterface) {
+                // type DATE
+                $params[$k] = $v->format('Y-m-d');
+            }
         }
+        return $params;
     }
-    return $params;
-}
 
-public function setParams(array $params): self
-{
-    $this->params = $this->normalizeParams($params);
-    return $this;
-}
-
-
-public function addParam(string $key, $value): self
-{
-    if ($value instanceof \DateTimeInterface) {
-        $value = $value->format('Y-m-d H:i:s');
+    public function setParams(array $params): self
+    {
+        $this->params = $this->normalizeParams($params);
+        return $this;
     }
-    $this->params[$key] = $value;
-    return $this;
-}
+
+
+    public function addParam(string $key, $value): self
+    {
+        if ($value instanceof \DateTimeInterface) {
+            $value = $value->format('Y-m-d H:i:s');
+        }
+        $this->params[$key] = $value;
+        return $this;
+    }
 
 
     public function executeQuery(): self
@@ -181,33 +182,12 @@ public function addParam(string $key, $value): self
         return $this;
     }
 
-   public function getOneResult()
-{
-    $row = $this->query->fetch(\PDO::FETCH_ASSOC);
-    if ($row === false) return null;
+    public function getOneResult()
+    {
+        $row = $this->query->fetch(\PDO::FETCH_ASSOC);
+        if ($row === false) return null;
 
-    $class = 'App\\Entities\\' . ucfirst($this->getTable());
-    $entity = new $class();
-
-    foreach ($row as $key => $value) {
-        if ($key === 'createdate' && $value !== null && $value !== '') {
-            $entity->$key = new \DateTimeImmutable($value);
-        } else {
-            $entity->$key = $value;
-        }
-    }
-
-    return $entity;
-}
-
-
-  public function getAllResults(): array
-{
-    $rows = $this->query->fetchAll(\PDO::FETCH_ASSOC);
-
-    $class = 'App\\Entities\\' . ucfirst($this->getTable());
-
-    return array_map(function (array $row) use ($class) {
+        $class = 'App\\Entities\\' . ucfirst($this->getTable());
         $entity = new $class();
 
         foreach ($row as $key => $value) {
@@ -219,8 +199,29 @@ public function addParam(string $key, $value): self
         }
 
         return $entity;
-    }, $rows);
-}
+    }
+
+
+    public function getAllResults(): array
+    {
+        $rows = $this->query->fetchAll(\PDO::FETCH_ASSOC);
+
+        $class = 'App\\Entities\\' . ucfirst($this->getTable());
+
+        return array_map(function (array $row) use ($class) {
+            $entity = new $class();
+
+            foreach ($row as $key => $value) {
+                if ($key === 'createdate' && $value !== null && $value !== '') {
+                    $entity->$key = new \DateTimeImmutable($value);
+                } else {
+                    $entity->$key = $value;
+                }
+            }
+
+            return $entity;
+        }, $rows);
+    }
 
     public function find(string | int $id)
     {
@@ -276,16 +277,16 @@ public function addParam(string $key, $value): self
         }
     }
 
-   public function set(AbstractEntity $entity): self
-{
-    $this->queryString .= " SET";
-    foreach ($entity->toArray() as $key => $value) {
-        if ($key === 'id') continue; 
-        $this->queryString .= " $key = :$key,";
+    public function set(AbstractEntity $entity): self
+    {
+        $this->queryString .= " SET";
+        foreach ($entity->toArray() as $key => $value) {
+            if ($key === 'id') continue;
+            $this->queryString .= " $key = :$key,";
+        }
+        $this->queryString = rtrim($this->queryString, ',');
+        return $this;
     }
-    $this->queryString = rtrim($this->queryString, ',');
-    return $this;
-}
 
 
     public function save(AbstractEntity $entity): string
@@ -301,15 +302,15 @@ public function addParam(string $key, $value): self
     }
 
     public function update(AbstractEntity $entity): void
-{
-    $this->queryBuilder()
-        ->updateTable()
-        ->as(substr($this->getTable(), 0, 1))
-        ->set($entity)
-        ->where('id', self::CONDITIONS['eq'])
-        ->setParams($entity->toArray())
-        ->executeQuery(); 
-}
+    {
+        $this->queryBuilder()
+            ->updateTable()
+            ->as(substr($this->getTable(), 0, 1))
+            ->set($entity)
+            ->where('id', self::CONDITIONS['eq'])
+            ->setParams($entity->toArray())
+            ->executeQuery();
+    }
 
 
     public function remove(AbstractEntity $entity)

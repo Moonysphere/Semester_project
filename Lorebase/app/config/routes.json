@@ -1,5 +1,10 @@
 [
   {
+    "path": "/",
+    "method": "GET",
+    "controller": "Homepage\\GetHomepageController"
+  },
+  {
     "path": "/character/create",
     "method": "GET",
     "controller": "Character\\GetCreateCharacterController"
@@ -144,6 +149,31 @@
     "controller": "Ruler\\PatchRulerController"
   },
   {
+    "path": "/register",
+    "method": "POST",
+    "controller": "Auth\\RegisterController"
+  },
+  {
+    "path": "/register",
+    "method": "GET",
+    "controller": "Auth\\RegisterViewController"
+  },
+  {
+    "path": "/login",
+    "method": "POST",
+    "controller": "Auth\\LoginController"
+  },
+  {
+    "path": "/login",
+    "method": "GET",
+    "controller": "Auth\\LoginViewController"
+  },
+  {
+    "path": "/logout",
+    "method": "POST",
+    "controller": "Auth\\LogoutController"
+  },
+  {
     "path": "/role/create",
     "method": "GET",
     "controller": "Role\\GetCreateRoleController"
@@ -177,6 +207,8 @@
     "path": "/role/:id",
     "method": "DELETE",
     "controller": "Role\\DeleteRoleController"
+  },
+  {
     "path": "/place/create",
     "method": "GET",
     "controller": "Place\\GetCreatePlaceController"

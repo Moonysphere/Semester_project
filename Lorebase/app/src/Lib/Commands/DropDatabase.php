@@ -1,39 +1,39 @@
 <?php
 
-
 namespace App\Lib\Commands;
 
 use App\Lib\Database\DatabaseConnexion;
 use App\Lib\Database\Dsn;
 
-
-class CreateDatabase extends AbstractCommand
+class DropDatabase extends AbstractCommand
 {
-
     public function execute(): void
     {
         $dsn = new Dsn();
         $dbName = $dsn->getDbName();
+
+        $dsn->addHostToDsn()
+            ->addPortToDsn();
+
         $pdoDsn = sprintf(
             'pgsql:host=%s;port=%d;dbname=postgres',
             $dsn->getHost(),
             $dsn->getPort()
         );
+
         $pdo = new \PDO($pdoDsn, $dsn->getUser(), $dsn->getPassword());
         $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 
-        $stmt = $pdo->prepare("SELECT 1 FROM pg_database WHERE datname = :dbname");
-        $stmt->execute(['dbname' => $dbName]);
-        $exists = $stmt->fetchColumn();
+        $pdo->exec("
+            SELECT pg_terminate_backend(pg_stat_activity.pid)
+            FROM pg_stat_activity
+            WHERE pg_stat_activity.datname = '{$dbName}'
+            AND pid <> pg_backend_pid();
+        ");
 
-        if ($exists) {
-            echo "La base de données '{$dbName}' existe déjà.\n";
-            return;
-        }
+        $pdo->exec("DROP DATABASE IF EXISTS {$dbName};");
 
-        $pdo->exec("CREATE DATABASE {$dbName};");
-
-        echo "Base de données '{$dbName}' créée avec succès.\n";
+        echo "Base de données '{$dbName}' supprimée avec succès.\n";
     }
 
     public function undo(): void {}
