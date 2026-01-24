@@ -35,7 +35,7 @@ class PatchPlaceController extends AbstractController
         $placeRepository->update($place);
 
         return new Response(
-            json_encode(['success' => true, 'id' => $place->getId()]),
+            json_encode(['success' => true, 'id' => $place->getId(), 'slug' => $place->slug]),
             200,
             ['Content-Type' => 'application/json']
         );

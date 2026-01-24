@@ -2,8 +2,6 @@
 
 namespace App\Forms;
 
-use App\Lib\Entities\AbstractEntity;
-
 abstract class AbstractForm
 {
     protected array $data = [];
@@ -36,6 +34,18 @@ abstract class AbstractForm
         parse_str($urlEncoded, $data);
         return $data;
     }
+
+    protected function slugify(string $text): string
+{
+    $text = trim($text);
+    $text = mb_strtolower($text, 'UTF-8');
+
+    $text = iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $text) ?: $text;
+    $text = preg_replace('/[^a-z0-9]+/i', '-', $text);
+    $text = trim($text, '-');
+
+    return $text !== '' ? $text : 'item';
+}
 
 
     public function parseStringToArray(string $data): ?array
@@ -113,4 +123,7 @@ abstract class AbstractForm
     {
         return $this->data;
     }
+
+    
+
 }

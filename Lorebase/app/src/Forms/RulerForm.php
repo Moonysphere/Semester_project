@@ -12,9 +12,10 @@ class RulerForm extends AbstractForm
         if (!$this->validateAllFields()) {
             return null;
         }
-
+        $repository = new RulerRepository();
         $ruler = new Ruler();
         $ruler->name = $this->data['name'] ?? null;
+        $ruler->slug =$repository->checkSlug("slug","ruler",$repository->slugify($this->data['name'])) ;
         $ruler->description = $this->data['description'] ?? null;
         $ruler->categorie = $this->data['categorie'] ?? null;
 

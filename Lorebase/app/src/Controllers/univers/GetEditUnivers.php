@@ -12,11 +12,13 @@ class GetEditUnivers extends AbstractController
     public function process(Request $request): Response
     {
         $universRepository = new UniversRepository();
-        $univers = $universRepository->find($request->getSlug('id'));
+        $slug = $request->getSlug('slug');
 
-        if (empty($univers)) {
-            return new Response('univers non trouvé', 404, ['Content-Type' => 'text/html']);
-        }
+    if ($slug === '') {
+        return new Response('Slug manquant', 400, ['Content-Type' => 'application/json']);
+    }
+
+    $univers = $universRepository->findBySlug($slug, 'univers');
 
         return $this->render('univers','edit', ['univers' => $univers]);
     }

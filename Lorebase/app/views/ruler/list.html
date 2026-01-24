@@ -70,7 +70,7 @@
       <!-- Cartes des personnages -->
       <?php foreach ($ruler as $ruler): ?>
       <a
-        href="/ruler/<?php echo htmlspecialchars($ruler->id); ?>"
+        href="/ruler/<?php echo htmlspecialchars($ruler->slug); ?>"
         class="character-card"
       >
         <h3><?php echo htmlspecialchars($ruler->name); ?></h3>

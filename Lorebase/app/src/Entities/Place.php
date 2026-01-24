@@ -20,6 +20,9 @@ class Place extends AbstractEntity
     public string $name;
 
     #[Column(type: 'varchar', size: 255)]
+    public string $slug;
+
+    #[Column(type: 'varchar', size: 255)]
     public string $type;
 
     #[Column(type: 'varchar', size: 255)]
@@ -34,6 +37,13 @@ class Place extends AbstractEntity
     {
         return $this->name;
     }
+
+
+    public function getSlug(): string
+    {
+        return $this->slug;
+    }
+
 
     public function getType(): string
     {

@@ -29,13 +29,14 @@ class PatchUniversController extends AbstractController
         }
 
         $univers->name = (string)($data['name'] ?? $univers->name);
+        $univers->slug = $universRepository->slugify($data['name']) ?? $univers->slug;
         $univers->description = $data['description'] ?? $univers->description;
 
 
         $universRepository->update($univers);
 
         return new Response(
-            json_encode(['success' => true, 'id' => $univers->getId()]),
+            json_encode(['success' => true, 'id' => $univers->getId(),'slug' => $univers->slug]),
             200,
             ['Content-Type' => 'application/json']
         );

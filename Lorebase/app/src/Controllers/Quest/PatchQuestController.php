@@ -33,7 +33,7 @@ class GetPatchQuestController extends AbstractController
     $quest->statut = $data['statut'] ?? $quest->statut;
     $quest->statutPlaceId = $data['statutPlaceId'] ?? $quest->statutPlaceId;
     $quest->universeId = $data['universeId'] ?? $quest->universeId;
-    $quest->levelRequirement = $data['levelRequirement'] ?? $quest->levelRequirement;
+    $quest->levelrequirements = $data['levelrequirement'] ?? $quest->levelrequirements;
 
     $questRepository->update($quest);
 

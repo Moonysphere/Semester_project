@@ -14,11 +14,13 @@ class GetCharacterController extends AbstractController
     {
         $characterRepository = new CharacterRepository();
 
-        $character = $characterRepository->find($request->getSlug('id'));
+         $slug = $request->getSlug('slug');
 
-        if (empty($character)) {
-            return new Response('Personnage non trouvé', 404, ['Content-Type' => 'text/html']);
-        }
+    if ($slug === '') {
+        return new Response('Slug manquant', 400, ['Content-Type' => 'application/json']);
+    }
+
+        $character = $characterRepository->findBySlug($slug, 'character');
 
         return $this->render('character','detail', ['character' => $character]);
     }

@@ -82,6 +82,18 @@ abstract class AbstractRepository
         return $this;
     }
 
+    public function findBySlug(string $slug , string $table): ?AbstractEntity
+{
+    return $this->queryBuilder()
+        ->select('*')
+        ->from($table)
+        ->where('slug', '=')
+        ->addParam('slug', $slug)
+        ->executeQuery()
+        ->getOneResult();
+}
+
+
     public function insert(AbstractEntity $entity): self
     {
         $this->queryString .= "INSERT INTO {$this->getTable()} ({$this->getFields($entity)})";
@@ -145,6 +157,10 @@ abstract class AbstractRepository
         $this->queryString .= "$field $condition :$field";
         return $this;
     }
+
+    
+
+
 private function normalizeParams(array $params): array
 {
     foreach ($params as $k => $v) {
@@ -180,6 +196,16 @@ public function addParam(string $key, $value): self
         $this->query->execute($this->params);
         return $this;
     }
+   public function first(): array|false
+{
+
+    $row = $this->query->fetch(\PDO::FETCH_ASSOC);
+
+    $this->queryBuilder();
+
+    return $row ?: false;
+}
+
 
    public function getOneResult()
 {
@@ -199,7 +225,6 @@ public function addParam(string $key, $value): self
 
     return $entity;
 }
-
 
   public function getAllResults(): array
 {
@@ -275,6 +300,50 @@ public function addParam(string $key, $value): self
             $this->addParam($key, $value);
         }
     }
+
+   public function slugify(string $slug)
+{
+
+    $slug=strip_tags($slug);
+    $slug = preg_replace('~[^\pL\d]+~u', '-', $slug);
+    setlocale(LC_ALL, 'en_US.utf8');
+    $slug = iconv('utf-8', 'us-ascii//TRANSLIT', $slug);
+    $slug = preg_replace('~[^-\w]+~', '', $slug);
+    $slug = trim($slug, '-');
+    $slug = preg_replace('~-+~', '-', $slug);
+    $slug = strtolower($slug);
+    if (empty($slug)) { return 'n-a'; }
+    return $slug;
+}
+
+    public function checkSlug(string $field, string $table,string $slug): string
+{
+    $baseSlug = $slug;
+    $count = 1;
+
+    $result = $this->queryBuilder()
+        ->select($field)
+        ->from($table)
+        ->where('slug', '=');         
+        $this->params[':slug'] = $slug;    
+$result = $result->executeQuery()->first();
+
+    while ($result) {
+        $slug = $baseSlug . '-' . $count;
+        $count++;
+
+        $result = $this->queryBuilder()
+           ->select($field)
+           ->from($table)
+           ->where('slug', '=');         
+           $this->params[':slug'] = $slug;    
+$result = $result->executeQuery()->first();
+    }
+
+    return $slug;
+}
+
+    
 
    public function set(AbstractEntity $entity): self
 {

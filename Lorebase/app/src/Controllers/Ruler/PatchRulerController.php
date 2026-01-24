@@ -29,6 +29,7 @@ class PatchRulerController extends AbstractController
         }
 
         $ruler->name = $data['name'] ?? $ruler ->name;
+        $ruler->slug = $rulerRepository->slugify($data['name']) ?? $ruler->slug;
         $ruler->categorie = $data['categorie'] ?? $ruler ->categorie;
         $ruler->description = $data['description'] ?? $ruler ->description;
 
@@ -36,7 +37,7 @@ class PatchRulerController extends AbstractController
 
             // Retourne un succès JSON (pas de redirection)
         return new Response(
-            json_encode(['success' => true, 'id' => $ruler->getId()]),
+            json_encode(['success' => true, 'id' => $ruler->getId(), 'slug' => $ruler->slug]),
             200,
             ['Content-Type' => 'application/json']
         );

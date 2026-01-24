@@ -29,6 +29,7 @@ class PatchCharacterController extends AbstractController
         }
 
         $character->name = $data['name'] ?? $character->name;
+        $character->slug = $characterRepository->slugify($data['name']) ?? $character->slug;
         $character->role = $data['role'] ?? $character->role;
         $character->origin = $data['origin'] ?? $character->origin;
         $character->pv = $data['pv'] ?? $character->pv;
@@ -36,9 +37,8 @@ class PatchCharacterController extends AbstractController
 
         $characterRepository->update($character);
 
-        // Retourne un succès JSON (pas de redirection)
         return new Response(
-            json_encode(['success' => true, 'id' => $character->getId()]),
+            json_encode(['success' => true, 'id' => $character->getId(),'slug' => $character->slug]),
             200,
             ['Content-Type' => 'application/json']
         );

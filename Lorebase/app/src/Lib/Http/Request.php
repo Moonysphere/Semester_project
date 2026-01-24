@@ -18,6 +18,7 @@ class Request {
         $this->headers = getallheaders();
         $this->urlParams = $_GET;
         $this->payload = file_get_contents('php://input');
+        $this->slugs = [];
     }
 
     public function getUri(): string {
