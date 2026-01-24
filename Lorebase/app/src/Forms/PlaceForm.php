@@ -12,9 +12,10 @@ class PlaceForm extends AbstractForm
         if (!$this->validateAllFields()) {
             return null;
         }
-
+        $repository = new PlaceRepository();
         $place = new Place();
         $place->name = $this->data['name'] ?? null;
+        $place->slug =$repository->checkSlug("slug","place",$repository->slugify($this->data['name'])) ;
         $place->type = $this->data['type'] ?? null;
         $place->description = $this->data['description'] ?? null;
         $place->status = $this->data['status'] ?? null;

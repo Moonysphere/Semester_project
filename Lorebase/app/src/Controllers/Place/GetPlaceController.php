@@ -13,11 +13,13 @@ class GetPlaceController extends AbstractController
     {
         $placeRepository = new PlaceRepository();
 
-        $place = $placeRepository->find($request->getSlug('id'));
+        $slug = $request->getSlug('slug');
 
-        if (empty($place)) {
-            return new Response('Place non trouvé', 404, ['Content-Type' => 'text/html']);
+        if ($slug === '') {
+            return new Response('Slug manquant', 400, ['Content-Type' => 'application/json']);
         }
+
+        $place = $placeRepository->findBySlug($slug, 'place');
 
         return $this->render('place', 'detail', ['place' => $place]);
     }

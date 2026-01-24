@@ -71,8 +71,8 @@
       <?php foreach ($quests as $quest): ?> <?php if ($quest->status ===
       'published'): ?>
       <a
-        href="/quest/<?php echo htmlspecialchars($quest->id); ?>"
-        class="quest-card">
+        href="/quest/<?php echo htmlspecialchars($quest->slug); ?>"
+        class="character-card">
         <h3><?php echo htmlspecialchars($quest->title); ?></h3>
         <p><?php echo htmlspecialchars($quest->description); ?></p>
       </a>

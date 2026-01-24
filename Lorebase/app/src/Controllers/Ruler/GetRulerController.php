@@ -13,11 +13,13 @@ class GetRulerController extends AbstractController
     {
         $RulerRepository = new RulerRepository();
 
-        $ruler = $RulerRepository->find($request->getSlug('id'));
+        $slug = $request->getSlug('slug');
 
-        if (empty($ruler)) {
-            return new Response('Ruler non trouvé', 404, ['Content-Type' => 'text/html']);
+        if ($slug === '') {
+            return new Response('Slug manquant', 400, ['Content-Type' => 'application/json']);
         }
+
+        $ruler = $RulerRepository->findBySlug($slug, 'ruler');
 
         return $this->render('ruler' , 'detail', ['ruler' => $ruler]);
     }

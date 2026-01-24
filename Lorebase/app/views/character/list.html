@@ -102,7 +102,7 @@
       <?php foreach ($characters as $character): ?> <?php if ($character->status
       === 'archived'): ?>
       <a
-        href="/character/<?php echo htmlspecialchars($character->id); ?>"
+        href="/character/<?php echo htmlspecialchars($character->slug); ?>"
         class="character-card"
         style="opacity: 0.4">
         <h3><?php echo htmlspecialchars($character->name); ?></h3>

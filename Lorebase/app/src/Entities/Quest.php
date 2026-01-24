@@ -19,6 +19,9 @@ class Quest extends AbstractEntity
     #[Column(type: 'varchar', size: 255)]
     public string $title;
 
+    #[Column(type: 'varchar', size: 255)]
+    public string $slug;
+
     #[Column(type: 'text')]
     public string $description;
 
@@ -36,4 +39,65 @@ class Quest extends AbstractEntity
     {
         return $this->id;
     }
+
+    // TITLE
+public function getTitle(): string
+{
+    return $this->title;
+}
+
+public function setTitle(string $title): self
+{
+    $this->title = $title;
+    return $this;
+}
+
+// SLUG
+public function getSlug(): string
+{
+    return $this->slug;
+}
+
+public function setSlug(string $slug): self
+{
+    $this->slug = $slug;
+    return $this;
+}
+
+// DESCRIPTION
+public function getDescription(): string
+{
+    return $this->description;
+}
+
+public function setDescription(string $description): self
+{
+    $this->description = $description;
+    return $this;
+}
+
+// STATUT
+public function getStatut(): string
+{
+    return $this->statut;
+}
+
+public function setStatut(string $statut): self
+{
+    $this->statut = $statut;
+    return $this;
+}
+
+// LEVEL REQUIREMENTS
+public function getLevelrequirements(): int
+{
+    return $this->levelrequirements;
+}
+
+public function setLevelrequirements(int $levelrequirements): self
+{
+    $this->levelrequirements = $levelrequirements;
+    return $this;
+}
+
 }

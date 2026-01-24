@@ -66,6 +66,7 @@ abstract class AbstractRepository
     public function queryBuilder(): self
     {
         $this->queryString = "";
+        $this->params = [];
         return $this;
     }
 
@@ -81,6 +82,18 @@ abstract class AbstractRepository
         $this->queryString .= ' ' . implode(', ', $fields);
         return $this;
     }
+
+    public function findBySlug(string $slug , string $table): ?AbstractEntity
+{
+    return $this->queryBuilder()
+        ->select('*')
+        ->from($table)
+        ->where('slug', '=')
+        ->addParam('slug', $slug)
+        ->executeQuery()
+        ->getOneResult();
+}
+
 
     public function insert(AbstractEntity $entity): self
     {
@@ -145,6 +158,10 @@ abstract class AbstractRepository
         $this->queryString .= "$field $condition :$field";
         return $this;
     }
+
+    
+
+
 private function normalizeParams(array $params): array
 {
     foreach ($params as $k => $v) {
@@ -152,25 +169,24 @@ private function normalizeParams(array $params): array
             // type DATE
             $params[$k] = $v->format('Y-m-d');
         }
+        return $params;
     }
-    return $params;
-}
 
-public function setParams(array $params): self
-{
-    $this->params = $this->normalizeParams($params);
-    return $this;
-}
-
-
-public function addParam(string $key, $value): self
-{
-    if ($value instanceof \DateTimeInterface) {
-        $value = $value->format('Y-m-d H:i:s');
+    public function setParams(array $params): self
+    {
+        $this->params = $this->normalizeParams($params);
+        return $this;
     }
-    $this->params[$key] = $value;
-    return $this;
-}
+
+
+    public function addParam(string $key, $value): self
+    {
+        if ($value instanceof \DateTimeInterface) {
+            $value = $value->format('Y-m-d H:i:s');
+        }
+        $this->params[$key] = $value;
+        return $this;
+    }
 
 
     public function executeQuery(): self
@@ -180,6 +196,16 @@ public function addParam(string $key, $value): self
         $this->query->execute($this->params);
         return $this;
     }
+   public function first(): array|false
+{
+
+    $row = $this->query->fetch(\PDO::FETCH_ASSOC);
+
+    $this->queryBuilder();
+
+    return $row ?: false;
+}
+
 
    public function getOneResult()
 {
@@ -200,14 +226,13 @@ public function addParam(string $key, $value): self
     return $entity;
 }
 
-
   public function getAllResults(): array
 {
     $rows = $this->query->fetchAll(\PDO::FETCH_ASSOC);
 
     $class = 'App\\Entities\\' . ucfirst($this->getTable());
 
-    return array_map(function (array $row) use ($class) {
+        $class = 'App\\Entities\\' . ucfirst($this->getTable());
         $entity = new $class();
 
         foreach ($row as $key => $value) {
@@ -219,8 +244,29 @@ public function addParam(string $key, $value): self
         }
 
         return $entity;
-    }, $rows);
-}
+    }
+
+
+    public function getAllResults(): array
+    {
+        $rows = $this->query->fetchAll(\PDO::FETCH_ASSOC);
+
+        $class = 'App\\Entities\\' . ucfirst($this->getTable());
+
+        return array_map(function (array $row) use ($class) {
+            $entity = new $class();
+
+            foreach ($row as $key => $value) {
+                if ($key === 'createdate' && $value !== null && $value !== '') {
+                    $entity->$key = new \DateTimeImmutable($value);
+                } else {
+                    $entity->$key = $value;
+                }
+            }
+
+            return $entity;
+        }, $rows);
+    }
 
     public function find(string | int $id)
     {
@@ -276,6 +322,50 @@ public function addParam(string $key, $value): self
         }
     }
 
+   public function slugify(string $slug)
+{
+
+    $slug=strip_tags($slug);
+    $slug = preg_replace('~[^\pL\d]+~u', '-', $slug);
+    setlocale(LC_ALL, 'en_US.utf8');
+    $slug = iconv('utf-8', 'us-ascii//TRANSLIT', $slug);
+    $slug = preg_replace('~[^-\w]+~', '', $slug);
+    $slug = trim($slug, '-');
+    $slug = preg_replace('~-+~', '-', $slug);
+    $slug = strtolower($slug);
+    if (empty($slug)) { return 'n-a'; }
+    return $slug;
+}
+
+    public function checkSlug(string $field, string $table,string $slug): string
+{
+    $baseSlug = $slug;
+    $count = 1;
+
+    $result = $this->queryBuilder()
+        ->select($field)
+        ->from($table)
+        ->where('slug', '=');         
+        $this->params[':slug'] = $slug;    
+$result = $result->executeQuery()->first();
+
+    while ($result) {
+        $slug = $baseSlug . '-' . $count;
+        $count++;
+
+        $result = $this->queryBuilder()
+           ->select($field)
+           ->from($table)
+           ->where('slug', '=');         
+           $this->params[':slug'] = $slug;    
+$result = $result->executeQuery()->first();
+    }
+
+    return $slug;
+}
+
+    
+
    public function set(AbstractEntity $entity): self
 {
     $this->queryString .= " SET";
@@ -283,9 +373,6 @@ public function addParam(string $key, $value): self
         if ($key === 'id') continue; 
         $this->queryString .= " $key = :$key,";
     }
-    $this->queryString = rtrim($this->queryString, ',');
-    return $this;
-}
 
 
     public function save(AbstractEntity $entity): string
@@ -301,15 +388,15 @@ public function addParam(string $key, $value): self
     }
 
     public function update(AbstractEntity $entity): void
-{
-    $this->queryBuilder()
-        ->updateTable()
-        ->as(substr($this->getTable(), 0, 1))
-        ->set($entity)
-        ->where('id', self::CONDITIONS['eq'])
-        ->setParams($entity->toArray())
-        ->executeQuery(); 
-}
+    {
+        $this->queryBuilder()
+            ->updateTable()
+            ->as(substr($this->getTable(), 0, 1))
+            ->set($entity)
+            ->where('id', self::CONDITIONS['eq'])
+            ->setParams($entity->toArray())
+            ->executeQuery();
+    }
 
 
     public function remove(AbstractEntity $entity)

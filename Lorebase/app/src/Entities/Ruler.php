@@ -17,6 +17,9 @@ class Ruler extends AbstractEntity
     #[Column(type: 'varchar', size: 255)]
     public string $name;
 
+    #[Column(type: 'varchar', size: 255)]
+    public string $slug;
+
     #[Column(type: 'varchar', nullable: true)]
     public ?string $categorie = null ;
 
@@ -37,6 +40,12 @@ class Ruler extends AbstractEntity
     public function getName(): string
     {
         return $this->name;
+    }
+
+
+    public function getSlug(): string
+    {
+        return $this->slug;
     }
 
       public function getCategorie(): ?string

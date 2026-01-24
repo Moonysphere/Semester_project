@@ -86,7 +86,7 @@
       <?php foreach ($rulers as $ruler): ?> <?php if ($ruler->status ===
       'draft'): ?>
       <a
-        href="/ruler/<?php echo htmlspecialchars($ruler->id); ?>"
+        href="/ruler/<?php echo htmlspecialchars($ruler->slug); ?>"
         class="character-card"
         style="opacity: 0.6">
         <h3><?php echo htmlspecialchars($ruler->name); ?></h3>

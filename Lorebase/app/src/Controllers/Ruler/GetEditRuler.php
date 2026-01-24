@@ -12,11 +12,15 @@ class GetEditRuler extends AbstractController
     public function process(Request $request): Response
     {
         $rulerRepository = new RulerRepository();
-        $ruler = $rulerRepository->find($request->getSlug('id'));
+       
+        $slug = $request->getSlug('slug');
 
-        if (empty($ruler)) {
-            return new Response('Personnage non trouvé', 404, ['Content-Type' => 'text/html']);
+        if ($slug === '') {
+            return new Response('Slug manquant', 400, ['Content-Type' => 'application/json']);
         }
+
+        $ruler = $rulerRepository->findBySlug($slug, 'ruler');
+
 
         return $this->render('ruler','edit', ['ruler' => $ruler]);
     }

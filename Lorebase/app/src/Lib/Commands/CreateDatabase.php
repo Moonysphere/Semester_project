@@ -12,13 +12,28 @@ class CreateDatabase extends AbstractCommand
 
     public function execute(): void
     {
-        $db = new DatabaseConnexion();
         $dsn = new Dsn();
-        $dsn->addHostToDsn()
-            ->addPortToDsn()
-            ->addDbnameToDsn();
-        $db->setConnexion($dsn);
-        $db->getConnexion()->exec("CREATE DATABASE {$dsn->getDbName()};");
+        $dbName = $dsn->getDbName();
+        $pdoDsn = sprintf(
+            'pgsql:host=%s;port=%d;dbname=postgres',
+            $dsn->getHost(),
+            $dsn->getPort()
+        );
+        $pdo = new \PDO($pdoDsn, $dsn->getUser(), $dsn->getPassword());
+        $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+
+        $stmt = $pdo->prepare("SELECT 1 FROM pg_database WHERE datname = :dbname");
+        $stmt->execute(['dbname' => $dbName]);
+        $exists = $stmt->fetchColumn();
+
+        if ($exists) {
+            echo "La base de données '{$dbName}' existe déjà.\n";
+            return;
+        }
+
+        $pdo->exec("CREATE DATABASE {$dbName};");
+
+        echo "Base de données '{$dbName}' créée avec succès.\n";
     }
 
     public function undo(): void {}

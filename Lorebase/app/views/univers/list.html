@@ -71,8 +71,9 @@
       <?php foreach ($univers as $univers): ?><?php if ($univers->status ===
       'published'): ?>
       <a
-        href="/univers/<?php echo htmlspecialchars($univers->id); ?>"
-        class="character-card">
+        href="/univers/<?php echo htmlspecialchars($univers->slug); ?>"
+        class="character-card"
+      >
         <h3><?php echo htmlspecialchars($univers->name); ?></h3>
         <p><?php echo htmlspecialchars($univers->description); ?></p>
       </a>

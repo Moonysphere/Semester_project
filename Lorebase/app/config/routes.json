@@ -1,11 +1,16 @@
 [
   {
+    "path": "/",
+    "method": "GET",
+    "controller": "Homepage\\GetHomepageController"
+  },
+  {
     "path": "/character/create",
     "method": "GET",
     "controller": "Character\\GetCreateCharacterController"
   },
   {
-    "path": "/character/:id/edit",
+    "path": "/character/:slug/edit",
     "method": "GET",
     "controller": "Character\\GetEditCharacterController"
   },
@@ -15,7 +20,7 @@
     "controller": "Character\\GetCharactersController"
   },
   {
-    "path": "/character/:id",
+    "path": "/character/:slug",
     "method": "GET",
     "controller": "Character\\GetCharacterController"
   },
@@ -33,6 +38,7 @@
     "path": "/character/:id",
     "method": "DELETE",
     "controller": "Character\\DeleteCharacterController"
+
   },
 
   {
@@ -41,7 +47,7 @@
     "controller": "Quest\\GetCreateQuestController"
   },
   {
-    "path": "/quest/:id/edit",
+    "path": "/quest/:slug/edit",
     "method": "GET",
     "controller": "Quest\\GetEditQuestController"
   },
@@ -51,7 +57,7 @@
     "controller": "Quest\\GetQuestsController"
   },
   {
-    "path": "/quest/:id",
+    "path": "/quest/:slug",
     "method": "GET",
     "controller": "Quest\\GetQuestController"
   },
@@ -70,6 +76,7 @@
     "method": "DELETE",
     "controller": "Quest\\DeleteQuestController"
 
+
   },
   {
     "path": "/univers/create",
@@ -77,7 +84,7 @@
     "controller": "Univers\\GetCreateUniversController"
   },
   {
-    "path": "/univers/:id/edit",
+    "path": "/univers/:slug/edit",
     "method": "GET",
     "controller": "Univers\\GetEditUnivers"
   },
@@ -87,7 +94,7 @@
     "controller": "Univers\\GetUniversAllController"
   },
   {
-    "path": "/univers/:id",
+    "path": "/univers/:slug",
     "method": "GET",
     "controller": "Univers\\GetUniversController"
   },
@@ -127,12 +134,12 @@
     "controller": "Ruler\\DeleteRulerController"
   },
   {
-    "path": "/ruler/:id",
+    "path": "/ruler/:slug",
     "method": "GET",
     "controller": "Ruler\\GetRulerController"
   },
   {
-    "path": "/ruler/:id/edit",
+    "path": "/ruler/:slug/edit",
     "method": "GET",
     "controller": "Ruler\\GetEditRuler"
   },
@@ -142,12 +149,72 @@
     "controller": "Ruler\\PatchRulerController"
   },
   {
+    "path": "/register",
+    "method": "POST",
+    "controller": "Auth\\RegisterController"
+  },
+  {
+    "path": "/register",
+    "method": "GET",
+    "controller": "Auth\\RegisterViewController"
+  },
+  {
+    "path": "/login",
+    "method": "POST",
+    "controller": "Auth\\LoginController"
+  },
+  {
+    "path": "/login",
+    "method": "GET",
+    "controller": "Auth\\LoginViewController"
+  },
+  {
+    "path": "/logout",
+    "method": "POST",
+    "controller": "Auth\\LogoutController"
+  },
+  {
+    "path": "/role/create",
+    "method": "GET",
+    "controller": "Role\\GetCreateRoleController"
+  },
+  {
+    "path": "/role/:id/edit",
+    "method": "GET",
+    "controller": "Role\\GetEditRoleController"
+  },
+  {
+    "path": "/role",
+    "method": "GET",
+    "controller": "Role\\GetRolesController"
+  },
+  {
+    "path": "/role/:id",
+    "method": "GET",
+    "controller": "Role\\GetRoleController"
+  },
+  {
+    "path": "/role",
+    "method": "POST",
+    "controller": "Role\\PostRoleController"
+  },
+  {
+    "path": "/role/:id",
+    "method": "PATCH",
+    "controller": "Role\\PatchRoleController"
+  },
+  {
+    "path": "/role/:id",
+    "method": "DELETE",
+    "controller": "Role\\DeleteRoleController"
+  },
+  {
     "path": "/place/create",
     "method": "GET",
     "controller": "Place\\GetCreatePlaceController"
   },
   {
-    "path": "/place/:id/edit",
+    "path": "/place/:slug/edit",
     "method": "GET",
     "controller": "Place\\GetEditPlaceController"
   },
@@ -157,7 +224,7 @@
     "controller": "Place\\GetPlacesController"
   },
   {
-    "path": "/place/:id",
+    "path": "/place/:slug",
     "method": "GET",
     "controller": "Place\\GetPlaceController"
   },

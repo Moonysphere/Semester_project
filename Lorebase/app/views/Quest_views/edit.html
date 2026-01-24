@@ -99,7 +99,8 @@
             id="title"
             name="title"
             value="<?php echo htmlspecialchars($quest->title); ?>"
-            required />
+            required
+          />
         </div>
 
         <div class="form-group">
@@ -109,7 +110,8 @@
             id="description"
             name="description"
             value="<?php echo htmlspecialchars($quest->description); ?>"
-            required />
+            required
+          />
         </div>
 
         <div class="form-group">
@@ -120,16 +122,24 @@
             name="statut_quest"
             value="<?php echo htmlspecialchars($quest->statut_quest); ?>"
             required />
+          <input
+            id="statut"
+            name="statut"
+            value="<?php echo htmlspecialchars($quest->statut); ?>"
+            required
+          />
         </div>
 
         <div class="form-group">
-          <label for="levelrequirements">Level Requirement :</label>
+          <label for="levelrequirement">Level Requirement :</label>
           <input
             type="number"
-            id="levelrequirements"
-            name="levelrequirements"
-            value="<?php echo htmlspecialchars($quest->levelrequirements); ?>"
-            required />
+            id="levelrequirement"
+            name="levelrequirement"
+            value="<?php echo htmlspecialchars($quest->levelrequirement); ?>"
+            required
+          />
+
         </div>
 
         <div class="buttons">
@@ -190,7 +200,7 @@
           })
             .then((response) => {
               if (response.ok) {
-                window.location.href = `/quest/<?php echo $quest->id; ?>`;
+                window.location.href = `/quest/<?php echo $quest->slug; ?>`;
               } else {
                 alert("Erreur lors de la modification");
               }

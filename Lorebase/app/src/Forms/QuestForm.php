@@ -12,9 +12,10 @@ class QuestForm extends AbstractForm
         if (!$this->validateAllFields()) {
             return null;
         }
-
+        $repository = new QuestRepository();
         $quest = new Quest();
         $quest->title = $this->data['title'];
+        $quest->slug =$repository->checkSlug("slug","quest",$repository->slugify($this->data['title'])) ;
         $quest->description = $this->data['description'];
         $quest->statut_quest = $this->data['statut_quest']; // En cours, Terminé, Pas commencé
         $quest->levelrequirements = (int) ($this->data['levelrequirements']);

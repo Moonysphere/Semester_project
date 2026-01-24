@@ -12,11 +12,13 @@ class GetEditQuestController extends AbstractController
     public function process(Request $request): Response
     {
         $questRepository = new QuestRepository();
-        $quest = $questRepository->find($request->getSlug('id'));
+        $slug = $request->getSlug('slug');
 
-        if (empty($quest)) {
-            return new Response('Quête non trouvée', 404, ['Content-Type' => 'text/html']);
-        }
+    if ($slug === '') {
+        return new Response('Slug manquant', 400, ['Content-Type' => 'application/json']);
+    }
+
+    $quest = $questRepository->findBySlug($slug, 'quest');
 
         return $this->render('Quest_views', 'edit', ['quest' => $quest]);
     }

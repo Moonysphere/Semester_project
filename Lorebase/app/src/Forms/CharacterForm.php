@@ -12,9 +12,10 @@ class CharacterForm extends AbstractForm
         if (!$this->validateAllFields()) {
             return null;
         }
-
+        $repository = new CharacterRepository();
         $character = new Character();
         $character->name = $this->data['name'] ?? null;
+        $character->slug =$repository->checkSlug("slug","character",$repository->slugify($this->data['name'])) ;
         $character->role = $this->data['role'] ?? null;
         $character->origin = $this->data['origin'] ?? null;
         $character->pv = (int)($this->data['pv'] ?? 0);

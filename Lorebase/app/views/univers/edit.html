@@ -158,23 +158,26 @@
             data.status = statusValue;
           }
 
-          // Envoyer tous les champs + le status
-          fetch(`/univers/<?php echo $univers->id; ?>`, {
-            method: "PATCH",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(data),
-          })
-            .then((response) => {
-              if (response.ok) {
-                window.location.href = `/univers/<?php echo $univers->id; ?>`;
-              } else {
-                alert("Erreur lors de la modification");
-              }
-            })
-            .catch((error) => {
-              console.error("Erreur:", error);
-              alert("Erreur lors de la modification");
-            });
+          
+                  fetch(`/univers/<?php echo $univers->id; ?>`, {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        })
+        .then(async (response) => {
+          if (!response.ok) {
+            throw new Error("Erreur serveur");
+          }
+
+          const result = await response.json();
+
+          window.location.href = `/univers/${result.slug}`;
+        })
+        .catch((error) => {
+          console.error("Erreur:", error);
+          alert("Erreur lors de la modification");
+        });
+
         });
     </script>
   </body>
