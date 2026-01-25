@@ -5,7 +5,7 @@
     display: inline-block;
     padding: f.rem(10) f.rem(16);
     border-radius: f.rem(6);
-    background-color: var(--black);
+    background-color: var(--color-secondary);
     font-size: 1rem;
     font-weight: 600;
     line-height: f.rem(18);
@@ -20,18 +20,18 @@
 
     // modif de couleur
     &--primary {
-      background-color: var(--primary);
+      background-color: var(--color-secondary);
 
       &:hover {
-        background-color: var(--primary-hover);
+        background-color: var(--secondary-hover);
       }
     }
 
     &--secondary {
-      background-color: var(--secondary);
+      background-color: var(--color-primary);
 
       &:hover {
-        background-color: var(--secondary-hover);
+        background-color: var(--primary-hover);
       }
     }
 
