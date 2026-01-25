@@ -1,18 +1,29 @@
-$spacing: 0.25rem;
-
-// Colors //
-
-$colors: (
+// Mode claire
+$colors-light: (
   "primary": #7954ff,
   "secondary": #b3b9ff,
   "font-color": #141414,
-  "primary-dark": #01031a,
-  "secondary-dark": #17016c,
-  "font-color-dark": #fafafa,
-  "black": #000,
-  "white": #fff,
+  "bg-primary": #ffffff,
+  "bg-secondary": #f5f5f5,
+  "sidebar-bg": #17016c,
+  "border": #e0e0e0,
 );
 
+// Mode sombre
+$colors-dark: (
+  "primary": #9d7fff,
+  "secondary": #d4c5ff,
+  "font-color": #fafafa,
+  "bg-primary": #0a0a0a,
+  "bg-secondary": #1a1a1a,
+  "sidebar-bg": #17016c,
+  "border": #333333,
+);
+
+// Couleurs par défaut
+$colors: $colors-light;
+
+// Les nuances
 $shades: (
   950: 12%,
   900: 20%,
@@ -27,8 +38,7 @@ $shades: (
   50: 97%,
 );
 
-// Breakpoints //
-
+// Breakpoints
 $breakpoints: (
   "sm": 576px,
   "md": 768px,
@@ -36,3 +46,5 @@ $breakpoints: (
   "xl": 1200px,
   "xxl": 1400px,
 );
+
+$spacing: 0.25rem;
