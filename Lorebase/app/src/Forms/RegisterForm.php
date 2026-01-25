@@ -57,6 +57,7 @@ class RegisterForm extends AbstractForm
         $user->setPassword(password_hash($this->data['password'], PASSWORD_BCRYPT));
         $user->setFirstname($this->sanitize($this->data['firstname'] ?? ''));
         $user->setLastname($this->sanitize($this->data['lastname'] ?? ''));
+        $user->role = 'author';
 
         return $user;
     }

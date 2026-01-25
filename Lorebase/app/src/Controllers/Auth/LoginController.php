@@ -75,6 +75,7 @@ class LoginController extends AbstractController
         $_SESSION['user'] = [
             'username' => $user->username,
             'email' => $user->email,
+            'role' => $user->role,
         ];
 
         return new Response(
