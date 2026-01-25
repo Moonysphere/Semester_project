@@ -26,6 +26,9 @@ class Ruler extends AbstractEntity
     #[Column(type: 'text', nullable: true)]
     public ?string $description = null;
 
+    #[Column(type:'varchar', size: 255)]
+    public string $status;
+
     
 
     /* =======================

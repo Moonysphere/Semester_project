@@ -12,9 +12,9 @@ class GetRulerAllController extends AbstractController
 {
     public function process(Request $request): Response
     {
-        $RulerRepository = new RulerRepository();
-        $ruler = $RulerRepository->findAll();
+        $rulerRepository = new RulerRepository();
+        $rulers = $rulerRepository->findAll();
 
-        return $this->render('ruler','list', ['ruler' => $ruler]);
+        return $this->render('ruler','list', ['rulers' => $rulers]);
     }
 }
