@@ -35,7 +35,7 @@ class PatchCharacterController extends AbstractController
         $character->pv = $data['pv'] ?? $character->pv;
         $character->description = $data['description'] ?? $character->description;
 
-        // Si seulement status envoyé, utiliser setStatut()
+
         if (array_key_exists('status', $data) && count($data) === 1) {
             if (in_array($data['status'], ['draft', 'published', 'archived'], true)) {
                 $characterRepository->setStatut($character->getId(), $data['status']);
@@ -48,7 +48,7 @@ class PatchCharacterController extends AbstractController
             }
         }
 
-        // Sinon mise à jour complète
+
         if (isset($data['status']) && in_array($data['status'], ['draft', 'published', 'archived'], true)) {
             $character->status = $data['status'];
         }

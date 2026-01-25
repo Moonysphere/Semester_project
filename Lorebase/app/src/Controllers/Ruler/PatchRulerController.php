@@ -58,7 +58,7 @@ class PatchRulerController extends AbstractController
 
         $rulerRepository->update($ruler);
 
-            // Retourne un succès JSON (pas de redirection)
+
         return new Response(
             json_encode(['success' => true, 'id' => $ruler->getId(), 'slug' => $ruler->slug]),
             200,
