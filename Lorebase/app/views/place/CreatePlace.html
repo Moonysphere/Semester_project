@@ -134,6 +134,20 @@
             name="type"
             placeholder="Quel type de place?"></textarea>
         </div>
+        <div class="form-group">
+          <label for="univers_id">Univers</label>
+          <select id="univers_id" name="univers_id" required>
+            <option value="">-- Choisir un univers --</option>
+            <?php foreach ($universes as $univers): ?>
+            <option
+              value="<?= $univers->id ?>"
+              title="<?= htmlspecialchars($univers->description ?? '') ?>"
+            >
+              <?= htmlspecialchars($univers->name) ?>
+            </option>
+            <?php endforeach; ?>
+          </select>
+        </div>
         <div class="actions">
           <button class="create" type="submit" name="status" value="published">
             Créer la place

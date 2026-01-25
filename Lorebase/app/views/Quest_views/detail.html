@@ -96,6 +96,14 @@
         <label>Status :</label>
         <p><?php echo htmlspecialchars($quest->status); ?></p>
       </div>
+      <div class="field">
+        <label>Début de la quête :</label>
+        <p><?= htmlspecialchars($placeName ?? 'Non défini') ?></p>
+      </div>
+      <div class="field">
+        <label>Univers :</label>
+        <p><?= htmlspecialchars($universName ?? 'Non défini') ?></p>
+      </div>
 
       <div class="buttons">
         <a href="/quest" class="btn btn-back">Retour</a>
@@ -108,7 +116,8 @@
         <button
           type="button"
           class="btn btn-delete"
-          onclick="deleteQuest(<?php echo $quest->id; ?>)">
+          onclick="deleteQuest(<?php echo $quest->id; ?>)"
+        >
           Supprimer
         </button>
       </div>
