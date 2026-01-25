@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Quêtes</title>
+    <title>Règles</title>
     <style>
       body {
         font-family: Arial, sans-serif;
@@ -17,7 +17,7 @@
         margin-bottom: 30px;
       }
 
-      .quests-container {
+      .rulers-container {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
         gap: 20px;
@@ -26,7 +26,7 @@
         margin: 0 auto;
       }
 
-      .quest-card {
+      .ruler-card {
         border: 1px solid #ddd;
         border-radius: 8px;
         padding: 20px;
@@ -40,12 +40,12 @@
         background-color: white;
       }
 
-      .quest-card:hover {
+      .ruler-card:hover {
         transform: translateY(-5px);
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       }
 
-      .quest-card h3 {
+      .ruler-card h3 {
         margin: 10px 0;
       }
 
@@ -65,14 +65,15 @@
   <body>
     <h1>Rulers</h1>
 
-    <div class="quests-container">
-      <a href="/quest/create" class="quest-card add-card">+</a>
+    <div class="rulers-container">
+      <a href="/ruler/create" class="ruler-card add-card">+</a>
 
       <?php foreach ($rulers as $ruler): ?> <?php if ($ruler->status ===
       'published'): ?>
       <a
         href="/ruler/<?php echo htmlspecialchars($ruler->slug); ?>"
-        class="character-card">
+        class="character-card"
+      >
         <h3><?php echo htmlspecialchars($ruler->name); ?></h3>
         <p><?php echo htmlspecialchars($ruler->description); ?></p>
       </a>
@@ -82,13 +83,14 @@
     <hr style="margin: 40px 0" />
     <h2 style="text-align: center; margin-bottom: 10px">Brouillons :</h2>
 
-    <div class="quests-container">
+    <div class="rulers-container">
       <?php foreach ($rulers as $ruler): ?> <?php if ($ruler->status ===
       'draft'): ?>
       <a
         href="/ruler/<?php echo htmlspecialchars($ruler->id); ?>"
-        class="quest-card"
-        style="opacity: 0.6">
+        class="ruler-card"
+        style="opacity: 0.6"
+      >
         <h3><?php echo htmlspecialchars($ruler->name); ?></h3>
         <p><?php echo htmlspecialchars($ruler->description); ?></p>
       </a>
@@ -98,13 +100,14 @@
     <hr style="margin: 40px 0" />
     <h2 style="text-align: center; margin-bottom: 10px">Archivées :</h2>
 
-    <div class="quests-container">
+    <div class="rulers-container">
       <?php foreach ($rulers as $ruler): ?> <?php if ($ruler->status ===
       'archived'): ?>
       <a
         href="/ruler/<?php echo htmlspecialchars($ruler->id); ?>"
-        class="quest-card"
-        style="opacity: 0.4">
+        class="ruler-card"
+        style="opacity: 0.4"
+      >
         <h3><?php echo htmlspecialchars($ruler->name); ?></h3>
         <p><?php echo htmlspecialchars($ruler->description); ?></p>
       </a>

@@ -93,16 +93,16 @@
         <p><?php echo htmlspecialchars($quest->levelrequirements); ?></p>
       </div>
       <div class="field">
-        <label>Status :</label>
-        <p><?php echo htmlspecialchars($quest->status); ?></p>
-      </div>
-      <div class="field">
         <label>Début de la quête :</label>
         <p><?= htmlspecialchars($placeName ?? 'Non défini') ?></p>
       </div>
       <div class="field">
         <label>Univers :</label>
         <p><?= htmlspecialchars($universName ?? 'Non défini') ?></p>
+      </div>
+      <div class="field">
+        <label>Status :</label>
+        <p><?php echo htmlspecialchars($quest->status); ?></p>
       </div>
 
       <div class="buttons">
