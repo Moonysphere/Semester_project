@@ -1,0 +1,60 @@
+@use "../partials/functions" as f;
+@use "../partials/fonts" as fo;
+
+@layer components {
+  .card {
+    background: var(--color-primary);
+    border: 1px solid var(--color-border);
+    border-radius: 16px;
+    padding: 30px;
+    text-align: center;
+    transition: all 0.3s;
+
+    &__content {
+      flex: auto;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      gap: f.rem(18);
+      padding-right: f.rem(1);
+      min-width: 0;
+    }
+
+    &__image {
+      margin-block: f.rem(-20) f.rem(10);
+      margin-inline: f.rem(-20);
+      max-width: unset;
+      width: inherit;
+      object-fit: cover;
+    }
+
+    &__title {
+      margin: 0;
+      line-height: 1;
+      color: var(--text-color);
+
+      &_main-font {
+        font-family: fo.$mainFont;
+        font-weight: 700;
+        font-size: f.rem(24);
+
+        letter-spacing: f.rem(2);
+        margin: 0;
+      }
+
+      &_secondary-font {
+        font-family: fo.$secondaryFont;
+        font-weight: 800;
+        font-size: f.rem(32);
+        margin: 0;
+      }
+    }
+
+    &__text {
+      font-size: f.rem(16);
+      font-weight: 400;
+      line-height: f.rem(24);
+      margin-block: 0;
+    }
+  }
+}
