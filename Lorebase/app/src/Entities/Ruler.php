@@ -6,6 +6,7 @@ use App\Lib\Annotations\ORM\Column;
 use App\Lib\Annotations\ORM\Id;
 use App\Lib\Annotations\ORM\ORM;
 use App\Lib\Entities\AbstractEntity;
+use App\Lib\Annotations\ORM\References;
 
 #[ORM]
 class Ruler extends AbstractEntity
@@ -21,12 +22,16 @@ class Ruler extends AbstractEntity
     public string $slug;
 
     #[Column(type: 'varchar', nullable: true)]
-    public ?string $categorie = null ;
+    public ?string $categorie = null;
 
     #[Column(type: 'text', nullable: true)]
     public ?string $description = null;
 
-    
+    #[Column(type: 'int')]
+    #[References(class: Univers::class, property: 'id')]
+    public int $univers_id;
+
+
 
     /* =======================
        GETTERS
@@ -48,7 +53,7 @@ class Ruler extends AbstractEntity
         return $this->slug;
     }
 
-      public function getCategorie(): ?string
+    public function getCategorie(): ?string
     {
         return $this->categorie;
     }
@@ -58,7 +63,7 @@ class Ruler extends AbstractEntity
         return $this->description;
     }
 
-  
+
 
     /* =======================
        SETTERS

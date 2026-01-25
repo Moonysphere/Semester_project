@@ -81,7 +81,7 @@
 
       <div class="field">
         <label>Rôle :</label>
-        <p><?php echo htmlspecialchars($character->role); ?></p>
+        <p><?php echo htmlspecialchars($character->role_id); ?></p>
       </div>
 
       <div class="field">
@@ -103,6 +103,11 @@
         <p><?php echo htmlspecialchars($character->status); ?></p>
       </div>
 
+      <div class="field">
+        <label>Univers :</label>
+        <p><?php echo htmlspecialchars($character->univers_id); ?></p>
+      </div>
+
       <div class="buttons">
         <a href="/character" class="btn btn-back">Retour</a>
         <a
@@ -114,7 +119,8 @@
         <button
           type="button"
           class="btn btn-delete"
-          onclick="deleteCharacter(<?php echo $character->id; ?>)">
+          onclick="deleteCharacter(<?php echo $character->id; ?>)"
+        >
           Supprimer
         </button>
       </div>

@@ -25,12 +25,17 @@
         font-weight: bold;
       }
       input,
-      textarea {
+      textarea,
+      select {
         width: 100%;
         padding: 8px;
         border: 1px solid #ddd;
         border-radius: 4px;
         box-sizing: border-box;
+      }
+      select {
+        cursor: pointer;
+        background-color: #fff;
       }
       textarea {
         resize: vertical;
@@ -74,8 +79,18 @@
         <input type="text" id="name" name="name" required />
       </div>
       <div class="form-group">
-        <label for="role">Rôle :</label>
-        <input type="text" id="role" name="role" required />
+        <label for="role_id">Rôle :</label>
+        <select id="role_id" name="role_id" required>
+          <option value="">-- Choisir un rôle --</option>
+          <?php foreach ($roles as $role): ?>
+          <option
+            value="<?= $role->id ?>"
+            title="<?= htmlspecialchars($role->description ?? '') ?>"
+          >
+            <?= htmlspecialchars($role->name) ?>
+          </option>
+          <?php endforeach; ?>
+        </select>
       </div>
       <div class="form-group">
         <label for="origin">Origine :</label>
@@ -88,6 +103,20 @@
       <div class="form-group">
         <label for="description">Description :</label>
         <textarea id="description" name="description" required></textarea>
+      </div>
+      <div class="form-group">
+        <label for="univers_id">Univers</label>
+        <select id="univers_id" name="univers_id" required>
+          <option value="">-- Choisir un univers --</option>
+          <?php foreach ($universes as $univers): ?>
+          <option
+            value="<?= $univers->id ?>"
+            title="<?= htmlspecialchars($univers->description ?? '') ?>"
+          >
+            <?= htmlspecialchars($univers->name) ?>
+          </option>
+          <?php endforeach; ?>
+        </select>
       </div>
       <button class="create" type="submit" name="status" value="published">
         Créer le personnage
