@@ -29,7 +29,7 @@ class PatchRulerController extends AbstractController
         }
 
         $ruler->name = $data['name'] ?? $ruler ->name;
-        $ruler->slug = $rulerRepository->slugify($data['name']) ?? $ruler->slug;
+        $ruler->slug = $rulerRepository->checkSlug("slug","ruler",$rulerRepository->slugify($data['name'])) ?? $ruler->slug;
         $ruler->categorie = $data['categorie'] ?? $ruler ->categorie;
         $ruler->description = $data['description'] ?? $ruler ->description;
 
