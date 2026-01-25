@@ -29,7 +29,7 @@ class PatchCharacterController extends AbstractController
         }
 
         $character->name = $data['name'] ?? $character->name;
-        $character->slug = $characterRepository->slugify($data['name']) ?? $character->slug;
+        $character->slug = $characterRepository->checkSlug("slug","character",$characterRepository->slugify($data['name'])) ?? $character->slug;
         $character->role = $data['role'] ?? $character->role;
         $character->origin = $data['origin'] ?? $character->origin;
         $character->pv = $data['pv'] ?? $character->pv;

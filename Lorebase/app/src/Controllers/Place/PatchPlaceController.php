@@ -52,7 +52,7 @@ class PatchPlaceController extends AbstractController
             ['Content-Type' => 'application/json']
         );
     }
-
+    $place->slug = $placeRepository->checkSlug("slug","place",$placeRepository->slugify($data['name'])) ?? $place->slug;
     $place->status = $data['status'] ?? $place->status;
 
         $placeRepository->update($place);

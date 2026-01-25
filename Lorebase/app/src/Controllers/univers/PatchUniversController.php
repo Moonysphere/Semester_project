@@ -29,7 +29,7 @@ class PatchUniversController extends AbstractController
         }
 
         $univers->name = (string)($data['name'] ?? $univers->name);
-        $univers->slug = $universRepository->slugify($data['name']) ?? $univers->slug;
+        $univers->slug = $universRepository->checkSlug("slug","univers",$universRepository->slugify($data['name'])) ?? $univers->slug;
         $univers->description = $data['description'] ?? $univers->description;
         
         // Si seulement status envoyé, utiliser setStatut()

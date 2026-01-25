@@ -68,7 +68,7 @@
 
       <?php foreach ($roles as $role): ?>
       <a
-        href="/role/<?php echo htmlspecialchars($role->id); ?>"
+        href="/role/<?php echo htmlspecialchars($role->slug); ?>"
         class="role-card"
       >
         <h3><?php echo htmlspecialchars($role->name); ?></h3>

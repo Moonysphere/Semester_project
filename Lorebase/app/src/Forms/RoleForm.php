@@ -12,9 +12,10 @@ class RoleForm extends AbstractForm
         if (!$this->validateAllFields()) {
             return null;
         }
-
+        $repository = new RoleRepository();
         $role = new Role();
         $role->name = $this->data['name'] ?? null;
+        $role->slug =$repository->checkSlug("slug","place",$repository->slugify($this->data['name'])) ;
         $role->description = $this->data['description'] ?? null;
 
         return $role;
