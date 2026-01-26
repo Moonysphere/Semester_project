@@ -52,4 +52,29 @@ class UserRepository extends AbstractRepository
             return false;
         }
     }
+
+    public function updateUser(users $user): void
+    {
+        $oldEmail = $_SESSION['user']['email'];
+
+        $sql = "UPDATE users SET 
+                username = :username,
+                email = :email,
+                firstname = :firstname,
+                lastname = :lastname,
+                password = :password,
+                role = :role
+                WHERE email = :oldEmail";
+
+        $stmt = $this->db->getConnexion()->prepare($sql);
+        $stmt->execute([
+            ':username' => $user->username,
+            ':email' => $user->email,
+            ':firstname' => $user->firstname,
+            ':lastname' => $user->lastname,
+            ':password' => $user->password,
+            ':role' => $user->role,
+            ':oldEmail' => $oldEmail,
+        ]);
+    }
 }

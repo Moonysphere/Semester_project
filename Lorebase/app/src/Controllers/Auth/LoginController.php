@@ -5,7 +5,7 @@ namespace App\Controllers\Auth;
 use App\Lib\Http\Request;
 use App\Lib\Http\Response;
 use App\Lib\Controllers\AbstractController;
-use App\Forms\LoginForm;
+use App\Forms\UserForm;
 use App\Repositories\UserRepository;
 
 class LoginController extends AbstractController
@@ -24,7 +24,7 @@ class LoginController extends AbstractController
             );
         }
 
-        $form = new LoginForm();
+        $form = new UserForm();
         $payload = $request->getPayload();
 
         if (is_string($payload) && !empty($payload)) {
@@ -43,7 +43,7 @@ class LoginController extends AbstractController
             $form->setData($_POST);
         }
 
-        if (!$form->validate()) {
+        if (!$form->validateLogin()) {
             return new Response(
                 json_encode(['success' => false, 'errors' => $form->getErrors()]),
                 400,
@@ -75,6 +75,7 @@ class LoginController extends AbstractController
         $_SESSION['user'] = [
             'username' => $user->username,
             'email' => $user->email,
+            'role' => $user->role,
         ];
 
         return new Response(

@@ -28,6 +28,9 @@ class users extends AbstractEntity
     #[Column(type: 'varchar', size: 255, nullable: true)]
     public ?string $firstname = null;
 
+    #[Column(type: 'varchar', size: 255)]
+    public string $role = 'author';
+
     public function getId(): string
     {
         return $this->email;
@@ -68,5 +71,20 @@ class users extends AbstractEntity
     public function setLastname(?string $lastname): void
     {
         $this->lastname = $lastname;
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
+    }
+
+    public function isEditor(): bool
+    {
+        return $this->role === 'editor';
+    }
+
+    public function isAuthor(): bool
+    {
+        return $this->role === 'reader';
     }
 }
