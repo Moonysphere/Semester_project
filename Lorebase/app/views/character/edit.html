@@ -157,14 +157,17 @@
             value="archived">
             Archiver
           </button>
-
-          <a
-            href="/character/<?php echo $character->slug  ; ?>"
-            class="btn btn-cancel"
-            >Annuler</a
-          >
         </div>
       </form>
+
+      <!-- Bouton Annuler HORS du formulaire -->
+      <div class="buttons" style="margin-top: 10px">
+        <a
+          href="/character/<?php echo $character->slug  ; ?>"
+          class="btn btn-cancel"
+          >Annuler</a
+        >
+      </div>
     </div>
     <script>
       document
@@ -191,14 +194,14 @@
             body: JSON.stringify(data),
           })
             .then(async (response) => {
-          if (!response.ok) {
-            throw new Error("Erreur serveur");
-          }
+              if (!response.ok) {
+                throw new Error("Erreur serveur");
+              }
 
-          const result = await response.json();
+              const result = await response.json();
 
-          window.location.href = `/character/${result.slug}`;
-        })
+              window.location.href = `/character/${result.slug}`;
+            })
             .catch((error) => {
               console.error("Erreur:", error);
               alert("Erreur lors de la modification");

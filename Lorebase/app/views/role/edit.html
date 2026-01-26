@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
@@ -11,6 +11,7 @@
         padding: 20px;
         background-color: #f5f5f5;
       }
+
       .container {
         max-width: 600px;
         margin: 0 auto;
@@ -19,17 +20,21 @@
         border-radius: 8px;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
       }
+
       h1 {
         margin-top: 0;
       }
+
       .form-group {
         margin: 20px 0;
       }
+
       label {
         display: block;
         font-weight: bold;
         margin-bottom: 5px;
       }
+
       input,
       textarea {
         width: 100%;
@@ -39,15 +44,18 @@
         box-sizing: border-box;
         font-family: Arial, sans-serif;
       }
+
       textarea {
         resize: vertical;
         min-height: 100px;
       }
+
       .buttons {
         display: flex;
         gap: 10px;
         margin-top: 30px;
       }
+
       .btn {
         padding: 10px 20px;
         border: none;
@@ -55,12 +63,28 @@
         cursor: pointer;
         font-size: 14px;
       }
+
       .btn-submit {
         background-color: #28a745;
         color: white;
       }
+
       .btn-submit:hover {
         background-color: #218838;
+      }
+      .btn-draft {
+        background-color: #f0ad4e;
+        color: white;
+      }
+      .btn-draft:hover {
+        background-color: #ec971f;
+      }
+      .btn-archived {
+        background-color: #dc3545;
+        color: white;
+      }
+      .btn-archived:hover {
+        background-color: #c82333;
       }
       .btn-cancel {
         background-color: #6c757d;
@@ -68,6 +92,7 @@
         text-decoration: none;
         display: inline-block;
       }
+
       .btn-cancel:hover {
         background-color: #5a6268;
       }
@@ -75,10 +100,7 @@
   </head>
   <body>
     <div class="container">
-      <h1>
-        Modifier
-        <?php echo htmlspecialchars($role->name); ?>
-      </h1>
+      <h1>Modifier <?php echo htmlspecialchars($role->name); ?></h1>
       <form id="editForm">
         <div class="form-group">
           <label for="name">Nom :</label>
@@ -87,8 +109,7 @@
             id="name"
             name="name"
             value="<?php echo htmlspecialchars($role->name); ?>"
-            required
-          />
+            required />
         </div>
 
         <div class="form-group">
@@ -98,10 +119,33 @@
           >
         </div>
         <div class="buttons">
-          <button type="submit" class="btn btn-submit">Sauvegarder</button>
-          <a href="/role/<?php echo $role->id; ?>" class="btn btn-cancel"
-            >Annuler</a
-          >
+          <button
+            type="submit"
+            class="btn btn-submit"
+            name="status"
+            value="published">
+            Publier
+          </button>
+
+          <button
+            type="submit"
+            class="btn btn-draft"
+            name="status"
+            value="draft">
+            Brouillon
+          </button>
+
+          <button
+            type="submit"
+            class="btn btn-archived"
+            name="status"
+            value="archived">
+            Archiver
+          </button>
+
+          <a href="/role/<?php echo $role->slug; ?>" class="btn btn-cancel">
+            Annuler
+          </a>
         </div>
       </form>
     </div>
@@ -110,22 +154,33 @@
         .getElementById("editForm")
         .addEventListener("submit", function (e) {
           e.preventDefault();
+
+          const submitter = e.submitter;
+          const statusValue = submitter ? submitter.value : null;
+
+          // Récupérer tous les champs du formulaire
           const formData = new FormData(this);
           const data = Object.fromEntries(formData);
+
+          // Si un bouton status est cliqué, ajouter/écraser le status
+          if (statusValue && submitter.name === "status") {
+            data.status = statusValue;
+          }
+
           fetch(`/role/<?php echo $role->id; ?>`, {
             method: "PATCH",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(data),
           })
-             .then(async (response) => {
-          if (!response.ok) {
-            throw new Error("Erreur serveur");
-          }
+            .then(async (response) => {
+              if (!response.ok) {
+                throw new Error("Erreur serveur");
+              }
 
-          const result = await response.json();
+              const result = await response.json();
 
-          window.location.href = `/role/${result.slug}`;
-        })
+              window.location.href = `/role/${result.slug}`;
+            })
             .catch((error) => {
               console.error("Erreur:", error);
               alert("Erreur lors de la modification");

@@ -99,8 +99,7 @@
             id="title"
             name="title"
             value="<?php echo htmlspecialchars($quest->title); ?>"
-            required
-          />
+            required />
         </div>
 
         <div class="form-group">
@@ -110,8 +109,7 @@
             id="description"
             name="description"
             value="<?php echo htmlspecialchars($quest->description); ?>"
-            required
-          />
+            required />
         </div>
 
         <div class="form-group">
@@ -122,12 +120,6 @@
             name="statut_quest"
             value="<?php echo htmlspecialchars($quest->statut_quest); ?>"
             required />
-          <input
-            id="statut"
-            name="statut"
-            value="<?php echo htmlspecialchars($quest->statut); ?>"
-            required
-          />
         </div>
 
         <div class="form-group">
@@ -136,10 +128,7 @@
             type="number"
             id="levelrequirement"
             name="levelrequirement"
-            value="<?php echo htmlspecialchars($quest->levelrequirement); ?>"
-            required
-          />
-
+            value="<?php echo htmlspecialchars($quest->levelrequirements ?? ''); ?>" />
         </div>
 
         <div class="buttons">
@@ -166,12 +155,13 @@
             value="archived">
             Archiver
           </button>
-
-          <a href="/quest/<?php echo $quest->id; ?>" class="btn btn-cancel">
-            Annuler
-          </a>
         </div>
       </form>
+
+      <div class="buttons" style="margin-top: 10px;">
+      <a href="/quest/<?php echo $quest->slug; ?>" class="btn btn-cancel">
+        Annuler
+      </a>
     </div>
 
     <script>
@@ -179,20 +169,18 @@
         .getElementById("editForm")
         .addEventListener("submit", function (e) {
           e.preventDefault();
-
           const submitter = e.submitter;
           const statusValue = submitter ? submitter.value : null;
-
-          // Récupérer tous les champs du formulaire
           const formData = new FormData(this);
-          const data = Object.fromEntries(formData);
-
-          // Si un bouton status est cliqué, ajouter/écraser le status
+          const data = {};
+          for (let [key, value] of formData.entries()) {
+            if (value !== "" && value !== null && value !== undefined) {
+              data[key] = value;
+            }
+          }
           if (statusValue && submitter.name === "status") {
             data.status = statusValue;
           }
-
-          // Envoyer tous les champs + le status
           fetch(`/quest/<?php echo $quest->id; ?>`, {
             method: "PATCH",
             headers: { "Content-Type": "application/json" },

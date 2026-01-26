@@ -15,8 +15,9 @@ class RoleForm extends AbstractForm
         $repository = new RoleRepository();
         $role = new Role();
         $role->name = $this->data['name'] ?? null;
-        $role->slug =$repository->checkSlug("slug","place",$repository->slugify($this->data['name'])) ;
+        $role->slug =$repository->checkSlug("slug","role",$repository->slugify($this->data['name'])) ;
         $role->description = $this->data['description'] ?? null;
+        $role->status = $this->data['status'];
 
         return $role;
     }
@@ -46,6 +47,13 @@ class RoleForm extends AbstractForm
         if (empty($this->data['description'])) {
             $this->errors[] = 'description is required';
         }
+        if (!isset($this->data['status'])) { // Forcer le draft si on choisit rien
+            $this->data['status'] = 'draft';
+        }
+        if (!in_array($this->data['status'], ['draft', 'published', 'archived'], true)) {
+            $this->errors[] = 'Invalid status';
+        }
         return empty($this->errors);
+        
     }
 }
