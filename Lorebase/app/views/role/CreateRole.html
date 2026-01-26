@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
@@ -48,6 +48,40 @@
       button:hover {
         background-color: #45a049;
       }
+      .actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 30px;
+      }
+
+      .create {
+        background-color: #4caf50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+      .create:hover {
+        background-color: #45a049;
+      }
+      .brouillon {
+        background-color: #f0ad4e;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+      .brouillon:hover {
+        background-color: #ec971f;
+      }
+      .archived {
+        background-color: #dc3545;
+        color: white;
+      }
     </style>
   </head>
   <body>
@@ -60,9 +94,19 @@
       <div class="form-group">
         <label for="role">Description :</label>
         <input type="text" id="description" name="description" required />
-      </div>
-
-      <button type="submit">Créer le role</button>
-    </form>
+       <div class="actions">
+          <button class="create" type="submit" name="status" value="published">
+            Créer la place
+          </button>
+          <button class="brouillon" type="submit" name="status" value="draft">
+            Brouillon
+          </button>
+          </button>
+      <button class="archived" type="submit" name="status" value="archived">
+        Archiver
+      </button>
+        </div>
+      </form>
+    </div>
   </body>
 </html>

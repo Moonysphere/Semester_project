@@ -111,3 +111,4 @@ class Quest extends AbstractEntity
         return $this;
     }
 }
+}

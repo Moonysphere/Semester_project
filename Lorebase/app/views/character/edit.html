@@ -182,14 +182,17 @@
           >
             Archiver
           </button>
-
-          <a
-            href="/character/<?php echo $character->slug  ; ?>"
-            class="btn btn-cancel"
-            >Annuler</a
-          >
         </div>
       </form>
+
+      <!-- Bouton Annuler HORS du formulaire -->
+      <div class="buttons" style="margin-top: 10px">
+        <a
+          href="/character/<?php echo $character->slug  ; ?>"
+          class="btn btn-cancel"
+          >Annuler</a
+        >
+      </div>
     </div>
     <script>
       document

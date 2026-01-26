@@ -20,7 +20,7 @@ class GetRoleController extends AbstractController
             return new Response('Slug manquant', 400, ['Content-Type' => 'application/json']);
         }
 
-        $role = $roleRepository->findBySlug($slug, 'place');
+        $role = $roleRepository->findBySlug($slug, 'role');
 
         return $this->render('role', 'detail', ['role' => $role]);
     }
