@@ -59,7 +59,7 @@ class CreateSchema extends AbstractCommand
         }
 
         foreach ($sortedClassesAnnotationsDump as $classAnnotionsDump) {
-            $statement .= 'DROP TABLE IF EXISTS ' . (new \ReflectionClass($classAnnotionsDump->getName()))->getShortName() . ';' . PHP_EOL;
+            $statement .= 'DROP TABLE IF EXISTS ' . (new \ReflectionClass($classAnnotionsDump->getName()))->getShortName() . ' CASCADE;' . PHP_EOL;
         }
 
         $statement .= PHP_EOL;

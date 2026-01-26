@@ -15,12 +15,13 @@ class CharacterForm extends AbstractForm
         $repository = new CharacterRepository();
         $character = new Character();
         $character->name = $this->data['name'] ?? null;
-        $character->slug =$repository->checkSlug("slug","character",$repository->slugify($this->data['name'])) ;
-        $character->role = $this->data['role'] ?? null;
+        $character->slug = $repository->checkSlug("slug", "character", $repository->slugify($this->data['name']));
+        $character->role_id = $this->data['role_id'] ?? null;
         $character->origin = $this->data['origin'] ?? null;
         $character->pv = (int)($this->data['pv'] ?? 0);
         $character->description = $this->data['description'] ?? null;
         $character->status = $this->data['status'] ?? null;
+        $character->univers_id = $this->data['univers_id'] ?? null;
 
         return $character;
     }
@@ -47,7 +48,7 @@ class CharacterForm extends AbstractForm
         if (empty($this->data['name'])) {
             $this->errors[] = 'Name is required';
         }
-        if (empty($this->data['role'])) {
+        if (empty($this->data['role_id'])) {
             $this->errors[] = 'Role is required';
         }
         if (empty($this->data['status'])) {

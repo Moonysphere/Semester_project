@@ -119,6 +119,14 @@
             id="statut_quest"
             name="statut_quest"
             value="<?php echo htmlspecialchars($quest->statut_quest); ?>"
+            required
+          />
+          <input
+            id="statut"
+            name="statut"
+            value="<?php echo htmlspecialchars($quest->statut); ?>"
+            required
+          />
             required />
         </div>
 
@@ -128,6 +136,37 @@
             type="number"
             id="levelrequirement"
             name="levelrequirement"
+            value="<?php echo htmlspecialchars($quest->levelrequirement); ?>"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="place_id">Début de la quête :</label>
+          <select id="place_id" name="place_id" required>
+            <option value="">-- Choisir un lieu de départ --</option>
+            <?php foreach ($places as $place): ?>
+            <option
+              value="<?= $place->id ?>"
+              title="<?= htmlspecialchars($place->description ?? '') ?>"
+            >
+              <?= htmlspecialchars($place->name) ?>
+            </option>
+            <?php endforeach; ?>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="univers_id">Univers</label>
+          <select id="univers_id" name="univers_id" required>
+            <option value="">-- Choisir un univers --</option>
+            <?php foreach ($universes as $univers): ?>
+            <option
+              value="<?= $univers->id ?>"
+              title="<?= htmlspecialchars($univers->description ?? '') ?>"
+            >
+              <?= htmlspecialchars($univers->name) ?>
+            </option>
+            <?php endforeach; ?>
+          </select>
             value="<?php echo htmlspecialchars($quest->levelrequirements ?? ''); ?>" />
         </div>
 
@@ -136,7 +175,8 @@
             type="submit"
             class="btn btn-submit"
             name="status"
-            value="published">
+            value="published"
+          >
             Publier
           </button>
 
@@ -144,7 +184,8 @@
             type="submit"
             class="btn btn-draft"
             name="status"
-            value="draft">
+            value="draft"
+          >
             Brouillon
           </button>
 
@@ -152,7 +193,8 @@
             type="submit"
             class="btn btn-archived"
             name="status"
-            value="archived">
+            value="archived"
+          >
             Archiver
           </button>
         </div>
