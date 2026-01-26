@@ -5,7 +5,7 @@ namespace App\Controllers\Auth;
 use App\Lib\Http\Request;
 use App\Lib\Http\Response;
 use App\Lib\Controllers\AbstractController;
-use App\Forms\RegisterForm;
+use App\Forms\UserForm;
 use App\Repositories\UserRepository;
 
 class RegisterController extends AbstractController
@@ -24,7 +24,7 @@ class RegisterController extends AbstractController
             );
         }
         $payload = $request->getPayload();
-        $form = new RegisterForm();
+        $form = new UserForm();
 
         if (is_string($payload) && !empty($payload)) {
             $parsedData = $form->parseStringToArray($payload);
@@ -46,7 +46,7 @@ class RegisterController extends AbstractController
         }
         $form->setData($data);
 
-        if (!$form->validate()) {
+        if (!$form->validateRegister()) {
             return new Response(
                 json_encode(['success' => false, 'errors' => $form->getErrors()]),
                 400,

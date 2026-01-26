@@ -4,8 +4,24 @@ namespace App\Forms;
 
 use App\Entities\users;
 
-class RegisterForm extends AbstractForm
+class UserForm extends AbstractForm
 {
+
+    public function validateLogin(): bool
+    {
+        $this->errors = [];
+
+        if (empty($this->data['username'])) {
+            $this->errors[] = 'username_required';
+        }
+
+        if (empty($this->data['password'])) {
+            $this->errors[] = 'password_required';
+        }
+
+        return empty($this->errors);
+    }
+
     protected array $errors = [];
 
     private function sanitize(string $value): string
@@ -14,7 +30,7 @@ class RegisterForm extends AbstractForm
     }
 
 
-    public function validate(): bool
+    public function validateRegister(): bool
     {
         $this->errors = [];
 

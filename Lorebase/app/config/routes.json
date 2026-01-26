@@ -38,7 +38,6 @@
     "path": "/character/:id",
     "method": "DELETE",
     "controller": "Character\\DeleteCharacterController"
-
   },
 
   {
@@ -75,8 +74,6 @@
     "path": "/quest/:id",
     "method": "DELETE",
     "controller": "Quest\\DeleteQuestController"
-
-
   },
   {
     "path": "/univers/create",
@@ -242,5 +239,15 @@
     "path": "/place/:id",
     "method": "DELETE",
     "controller": "Place\\DeletePlaceController"
+  },
+  {
+    "path": "/user/profile",
+    "method": "PATCH",
+    "controller": "Auth\\PatchUserController"
+  },
+  {
+    "path": "/user/profile",
+    "method": "GET",
+    "controller": "Auth\\GetProfileController"
   }
 ]
