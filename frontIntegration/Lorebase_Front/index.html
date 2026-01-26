@@ -63,6 +63,9 @@
 
     <!-- FOOTER / PROFIL -->
     <div class="sidebar__footer">
+      <button class="sidebar__theme-toggle" id="themeToggle" aria-label="Changer de thème">
+        <span class="sidebar__theme-toggle-icon">🌙</span>
+      </button>
       <div class="sidebar__user">
         <div class="sidebar__user-avatar">JD</div>
       </div>
@@ -79,6 +82,11 @@
           <button class="button button--lg button--primary">Bouton</button>
           <button class="button button--primary">Bouton</button>
           <button class="button button--sm button--primary">Bouton</button>
+        </p>
+        <p>
+          <button class="button button--lg button--secondary">Bouton</button>
+          <button class="button button--secondary">Bouton</button>
+          <button class="button button--sm button--secondary">Bouton</button>
         </p>
         <p>
           <a href="#" class="button button--lg button--danger">Bouton</a>
@@ -125,6 +133,47 @@
       sidebar.classList.remove('active');
       sidebarOverlay.classList.remove('active');
     });
+  </script>
+  <!-- JAVASCRIPT POUR THEME TOGGLE -->
+  <script>
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = themeToggle?.querySelector('.sidebar__theme-toggle-icon');
+    const htmlElement = document.documentElement;
+
+    // Récupérer le thème sauvegardé ou utiliser le thème système
+    const savedTheme = localStorage.getItem('theme');
+    const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    const currentTheme = savedTheme || systemTheme;
+
+    // Appliquer le thème au chargement
+    if (currentTheme === 'dark') {
+      htmlElement.setAttribute('data-theme', 'dark');
+      if (themeIcon) themeIcon.textContent = '🌙';
+    } else {
+      htmlElement.setAttribute('data-theme', 'light');
+      if (themeIcon) themeIcon.textContent = '☀️';
+    }
+
+    // Toggle theme on click
+    if (themeToggle) {
+      themeToggle.addEventListener('click', function () {
+        const currentTheme = htmlElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+        // Animation de rotation
+        themeToggle.classList.add('rotating');
+        setTimeout(() => themeToggle.classList.remove('rotating'), 600);
+
+        // Changer le thème
+        htmlElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+
+        // Changer l'icône
+        if (themeIcon) {
+          themeIcon.textContent = newTheme === 'dark' ? '🌙' : '☀️';
+        }
+      });
+    }
   </script>
 
 </body>
