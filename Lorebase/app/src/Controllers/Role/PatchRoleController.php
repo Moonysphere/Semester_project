@@ -32,9 +32,13 @@ class PatchRoleController extends AbstractController
         $role->slug = $roleRepository->checkSlug("slug","role",$roleRepository->slugify($data['name'])) ?? $role->slug;
         $role->description = $data['description'] ?? $role->description;
 
+        if (isset($data['status']) && in_array($data['status'], ['draft', 'published', 'archived'], true)) {
+            $role->status = $data['status'];
+        }
+
         $roleRepository->update($role);
 
-        // Retourne un succès JSON (pas de redirection)
+
         return new Response(
             json_encode(['success' => true, 'id' => $role->getId(),'slug' => $role->slug]),
             200,

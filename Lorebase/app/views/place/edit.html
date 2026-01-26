@@ -155,7 +155,7 @@
             Archiver
           </button>
 
-          <a href="/place/<?php echo $place->id; ?>" class="btn btn-cancel">
+          <a href="/place/<?php echo $place->slug; ?>" class="btn btn-cancel">
             Annuler
           </a>
         </div>
@@ -185,15 +185,15 @@
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(data),
           })
-             .then(async (response) => {
-          if (!response.ok) {
-            throw new Error("Erreur serveur");
-          }
+            .then(async (response) => {
+              if (!response.ok) {
+                throw new Error("Erreur serveur");
+              }
 
-          const result = await response.json();
+              const result = await response.json();
 
-          window.location.href = `/place/${result.slug}`;
-        })
+              window.location.href = `/place/${result.slug}`;
+            })
             .catch((error) => {
               console.error("Erreur:", error);
               alert("Erreur lors de la modification");
