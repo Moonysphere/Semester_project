@@ -103,9 +103,9 @@ body {
 
 /* ========== FOOTER ========== */
 .footer {
+    margin-top: auto;
     text-align: center;
     padding: 2rem;
-    margin-top: 4rem;
     color: color-mix(in srgb, var(--color-font) 50%, transparent);
     border-top: 1px solid color-mix(in srgb, var(--color-border) 20%, transparent);
 }
