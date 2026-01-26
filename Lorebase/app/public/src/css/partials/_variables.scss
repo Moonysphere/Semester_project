@@ -20,6 +20,14 @@ $colors-dark: (
   "border": #333333,
 );
 
+$size-font: (
+  "text-xs": 12px,
+  "text-s":14px,
+  "text-m":16px,
+  "text-l":24px,
+  "text-xl":36px
+);
+
 // Couleurs par défaut
 $colors: $colors-light;
 

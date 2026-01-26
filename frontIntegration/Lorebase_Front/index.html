@@ -1,13 +1,80 @@
 <!DOCTYPE html>
 <html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Design guide</title>
-    <link rel="stylesheet" href="/src/css/main.scss" />
-    <script type="module" src="/src/js/main.js"></script>
-  </head>
-  <body>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Design guide</title>
+  <link rel="stylesheet" href="/src/css/main.scss" />
+  <script type="module" src="/src/js/main.js"></script>
+</head>
+
+<body>
+
+  <!-- BOUTON TOGGLE MOBILE -->
+  <button class="sidebar-toggle" id="sidebarToggle">☰</button>
+
+  <!-- OVERLAY MOBILE -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- ========== SIDEBAR ========== -->
+  <aside class="sidebar" id="sidebar">
+
+    <!-- HEADER -->
+    <div class="sidebar__header">
+      <div class="sidebar__logo">
+        <img src="/src/assets/icon_sidebar/logo.svg" alt="logo" class="">
+      </div>
+    </div>
+
+    <!-- NAVIGATION -->
+    <nav class="sidebar__nav">
+
+      <!-- Section Contenu -->
+      <ul class="sidebar__menu">
+        <li class="sidebar__menu-item">
+          <a href="#" class="sidebar__link">
+            <img src="/src/assets/icon_sidebar/icon_perso.svg" alt="logo" class="">
+          </a>
+        </li>
+        <li class="sidebar__menu-item">
+          <a href="#" class="sidebar__link">
+            <img src="/src/assets/icon_sidebar/icon_uni.svg" alt="logo" class="">
+          </a>
+        </li>
+        <li class="sidebar__menu-item">
+          <a href="#" class="sidebar__link">
+            <img src="/src/assets/icon_sidebar/icon_place.svg" alt="logo" class="">
+          </a>
+        </li>
+        <li class="sidebar__menu-item">
+          <a href="#" class="sidebar__link">
+            <img src="/src/assets/icon_sidebar/icon_rules.svg" alt="logo" class="">
+          </a>
+        </li>
+        <li class="sidebar__menu-item">
+          <a href="#" class="sidebar__link">
+            <img src="/src/assets/icon_sidebar/icon_settings.svg" alt="logo" class="">
+          </a>
+        </li>
+      </ul>
+
+    </nav>
+
+    <!-- FOOTER / PROFIL -->
+    <div class="sidebar__footer">
+      <button class="sidebar__theme-toggle" id="themeToggle" aria-label="Changer de thème">
+        <span class="sidebar__theme-toggle-icon">🌙</span>
+      </button>
+      <div class="sidebar__user">
+        <div class="sidebar__user-avatar">JD</div>
+      </div>
+    </div>
+
+  </aside>
+
+  <!-- ========== CONTENU PRINCIPAL ========== -->
+  <main class="main-content">
     <div class="container">
       <section>
         <h2>.button</h2>
@@ -27,23 +94,88 @@
           <a href="#" class="button button--sm button--danger">Bouton</a>
         </p>
       </section>
+
       <section>
         <h2>.card</h2>
         <div style="display: flex; gap: 1rem; align-items: flex-start">
           <article class="card">
             <div class="card__content">
+              <div class="card__image">
+                <img src="/src/assets/icon_sidebar/icon_perso.svg" alt="logo" class="">
+              </div>
               <h2 class="card__title_main-font">CHARACTER</h2>
-              <h2 class="card__title_secondary-font">NAME</h2>
               <p class="card__text">
                 Some quick example text to build on the card title and make up
                 the bulk of the card's content.
               </p>
               <a href="#" class="button button--primary p--6">Button</a>
             </div>
-            <img src=" " alt="" class="card__image" />
           </article>
         </div>
       </section>
     </div>
-  </body>
+  </main>
+
+  <!-- JAVASCRIPT POUR TOGGLE MOBILE -->
+  <script>
+    const sidebar = document.getElementById('sidebar');
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    const sidebarOverlay = document.getElementById('sidebarOverlay');
+
+    // Ouvrir/fermer la sidebar sur mobile
+    sidebarToggle.addEventListener('click', () => {
+      sidebar.classList.toggle('active');
+      sidebarOverlay.classList.toggle('active');
+    });
+
+    // Fermer en cliquant sur l'overlay
+    sidebarOverlay.addEventListener('click', () => {
+      sidebar.classList.remove('active');
+      sidebarOverlay.classList.remove('active');
+    });
+  </script>
+  <!-- JAVASCRIPT POUR THEME TOGGLE -->
+  <script>
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = themeToggle?.querySelector('.sidebar__theme-toggle-icon');
+    const htmlElement = document.documentElement;
+
+    // Récupérer le thème sauvegardé ou utiliser le thème système
+    const savedTheme = localStorage.getItem('theme');
+    const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    const currentTheme = savedTheme || systemTheme;
+
+    // Appliquer le thème au chargement
+    if (currentTheme === 'dark') {
+      htmlElement.setAttribute('data-theme', 'dark');
+      if (themeIcon) themeIcon.textContent = '🌙';
+    } else {
+      htmlElement.setAttribute('data-theme', 'light');
+      if (themeIcon) themeIcon.textContent = '☀️';
+    }
+
+    // Toggle theme on click
+    if (themeToggle) {
+      themeToggle.addEventListener('click', function () {
+        const currentTheme = htmlElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+        // Animation de rotation
+        themeToggle.classList.add('rotating');
+        setTimeout(() => themeToggle.classList.remove('rotating'), 600);
+
+        // Changer le thème
+        htmlElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+
+        // Changer l'icône
+        if (themeIcon) {
+          themeIcon.textContent = newTheme === 'dark' ? '🌙' : '☀️';
+        }
+      });
+    }
+  </script>
+
+</body>
+
 </html>
