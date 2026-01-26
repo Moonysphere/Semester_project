@@ -14,11 +14,13 @@ class GetRoleController extends AbstractController
     {
         $roleRepository = new RoleRepository();
 
-        $role = $roleRepository->find($request->getSlug('id'));
+         $slug = $request->getSlug('slug');
 
-        if (empty($role)) {
-            return new Response('Rôle non trouvé', 404, ['Content-Type' => 'text/html']);
+        if ($slug === '') {
+            return new Response('Slug manquant', 400, ['Content-Type' => 'application/json']);
         }
+
+        $role = $roleRepository->findBySlug($slug, 'role');
 
         return $this->render('role', 'detail', ['role' => $role]);
     }

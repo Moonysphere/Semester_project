@@ -27,6 +27,10 @@ class Ruler extends AbstractEntity
     #[Column(type: 'text', nullable: true)]
     public ?string $description = null;
 
+    #[Column(type: 'varchar', size: 255)]
+    public string $status;
+
+
     #[Column(type: 'int')]
     #[References(class: Univers::class, property: 'id')]
     public int $univers_id;

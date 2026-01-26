@@ -176,7 +176,7 @@
     "controller": "Role\\GetCreateRoleController"
   },
   {
-    "path": "/role/:id/edit",
+    "path": "/role/:slug/edit",
     "method": "GET",
     "controller": "Role\\GetEditRoleController"
   },
@@ -186,7 +186,7 @@
     "controller": "Role\\GetRolesController"
   },
   {
-    "path": "/role/:id",
+    "path": "/role/:slug",
     "method": "GET",
     "controller": "Role\\GetRoleController"
   },

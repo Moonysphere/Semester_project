@@ -81,26 +81,31 @@
 
       <div class="field">
         <label>Rôle :</label>
-        <p><?php echo htmlspecialchars($character->role_id); ?></p>
+        <p><?= htmlspecialchars($roleName ?? 'Non défini') ?></p>
       </div>
 
       <div class="field">
         <label>Origine :</label>
-        <p><?php echo htmlspecialchars($character->origin); ?></p>
+        <p><?= htmlspecialchars($character->origin) ?></p>
       </div>
 
       <div class="field">
         <label>Points de vie :</label>
-        <p><?php echo htmlspecialchars($character->pv); ?></p>
+        <p><?= htmlspecialchars($character->pv) ?></p>
       </div>
 
       <div class="field">
         <label>Description :</label>
-        <p><?php echo htmlspecialchars($character->description); ?></p>
+        <p><?= htmlspecialchars($character->description) ?></p>
       </div>
       <div class="field">
         <label>Statut :</label>
-        <p><?php echo htmlspecialchars($character->status); ?></p>
+        <p><?= htmlspecialchars($character->status) ?></p>
+      </div>
+
+      <div class="field">
+        <label>Univers :</label>
+        <p><?= htmlspecialchars($universName ?? 'Non défini') ?></p>
       </div>
 
       <div class="field">

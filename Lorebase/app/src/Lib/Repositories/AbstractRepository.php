@@ -91,6 +91,7 @@ abstract class AbstractRepository
             ->where('slug', '=')
             ->addParam('slug', $slug)
             ->executeQuery()
+            ->debug()
             ->getOneResult();
     }
 
@@ -367,6 +368,7 @@ abstract class AbstractRepository
             ->insert($entity)
             ->values($entity)
             ->setParams($entity->toArray())
+            ->debug()
         ;
 
         $this->executeQuery();
@@ -381,6 +383,7 @@ abstract class AbstractRepository
             ->set($entity)
             ->where('id', self::CONDITIONS['eq'])
             ->setParams($entity->toArray())
+            ->debug()
             ->executeQuery();
     }
 
@@ -392,6 +395,7 @@ abstract class AbstractRepository
             ->from($this->getTable())
             ->where('id', self::CONDITIONS['eq'])
             ->addParam('id', $entity->getId())
+            ->debug()
             ->executeQuery();
     }
 
@@ -412,6 +416,7 @@ abstract class AbstractRepository
                 'id' => $id,
                 'status' => $status
             ])
+            ->debug()
 
             ->executeQuery();
     }
@@ -421,4 +426,35 @@ abstract class AbstractRepository
         $this->queryString .= " INNER JOIN $table AS $alias ON $condition";
         return $this;
     }
+
+    public function debug(): self
+{
+    $logDir = '/var/log/apache2/sql_logs';
+
+
+    if (!is_dir($logDir) || !is_writable($logDir)) {
+        return $this;
+    }
+
+    $timestamp = (new \DateTimeImmutable())->format('Y-m-d_H-i-s_u');
+    $logFile = $logDir . '/sql_' . $timestamp . '.log';
+
+    $sql = $this->queryString;
+
+    foreach ($this->params as $key => $value) {
+        if ($value === null) {
+            $value = 'NULL';
+        } elseif ($value instanceof \DateTimeInterface) {
+            $value = "'" . $value->format('Y-m-d H:i:s') . "'";
+        } elseif (is_string($value)) {
+            $value = "'" . addslashes($value) . "'";
+        }
+
+        $sql = str_replace(':' . $key, $value, $sql);
+    }
+
+    file_put_contents($logFile, $sql . PHP_EOL, FILE_APPEND);
+
+    return $this;
+}
 }

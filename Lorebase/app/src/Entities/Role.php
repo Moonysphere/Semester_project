@@ -21,9 +21,15 @@ class Role extends AbstractEntity
     #[Column(type: 'varchar', size: 255)]
     public string $name;
 
+    #[Column(type: 'varchar', size: 255)]
+    public string $slug;
 
     #[Column(type: 'varchar', size: 255)]
     public string $description;
+
+    #[Column(type:'varchar', size: 255)]
+    public string $status;
+    
 
 
     public function getId(): int

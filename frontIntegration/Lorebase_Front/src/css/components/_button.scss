@@ -1,10 +1,11 @@
 @use "../partials/functions" as f;
+
 @layer components {
   .button {
     display: inline-block;
     padding: f.rem(10) f.rem(16);
     border-radius: f.rem(6);
-    background-color: var(--black);
+    background-color: var(--color-secondary);
     font-size: 1rem;
     font-weight: 600;
     line-height: f.rem(18);
@@ -12,25 +13,31 @@
     color: var(--white);
     cursor: pointer;
     transition: background-color 0.3s;
+
     &:hover {
       background-color: var(--black-hover);
     }
 
-    // modifiers de couleur
+    // modif de couleur
+    &--secondary {
+      background-color: var(--color-secondary);
+
+      &:hover {
+        background-color: var(--secondary-hover);
+      }
+    }
+
     &--primary {
-      background-color: var(--primary);
+      background-color: var(--color-primary);
+
       &:hover {
         background-color: var(--primary-hover);
       }
     }
-    &--secondary {
-      background-color: var(--grey);
-      &:hover {
-        background-color: var(--grey-hover);
-      }
-    }
+
     &--danger {
       background-color: var(--red);
+
       &:hover {
         background-color: var(--red-hover);
       }

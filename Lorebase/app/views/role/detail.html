@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
@@ -83,11 +83,15 @@
         <label>Description :</label>
         <p><?php echo htmlspecialchars($role->description); ?></p>
       </div>
+      <div class="field">
+        <label>Status :</label>
+        <p><?php echo htmlspecialchars($role->status); ?></p>
+      </div>
 
       <div class="buttons">
         <a href="/role" class="btn btn-back">Retour</a>
         <a
-          href="/role/<?php echo $role->id; ?>/edit"
+          href="/role/<?php echo $role->slug; ?>/edit"
           class="btn"
           style="background-color: #ffc107; color: black"
           >Modifier</a
@@ -95,8 +99,7 @@
         <button
           type="button"
           class="btn btn-delete"
-          onclick="deleteRole(<?php echo $role->id; ?>)"
-        >
+          onclick="deleteRole(<?php echo $role->id; ?>)">
           Supprimer
         </button>
       </div>

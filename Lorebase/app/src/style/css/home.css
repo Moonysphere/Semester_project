@@ -1,0 +1,175 @@
+/* ========================================
+   AJUSTEMENTS DE LAYOUT UNIQUEMENT
+   Pour mettre les cards en ligne et espacer proprement
+   ======================================== */
+
+/* ========== BODY & MAIN CONTENT ========== */
+body {
+    background: linear-gradient(135deg, var(--color-bg-primary) 0%, var(--color-bg-secondary) 100%);
+    min-height: 100vh;
+}
+
+.main-content {
+    padding: 2rem;
+}
+
+/* ========== HEADER ========== */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem;
+    margin-bottom: 3rem;
+    background: color-mix(in srgb, var(--color-bg-secondary) 50%, transparent);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+}
+
+.logo {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-font);
+    text-decoration: none;
+}
+
+.logo span {
+    color: var(--color-primary);
+}
+
+.auth-buttons {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.user-info {
+    padding: 0.5rem 1rem;
+    background: color-mix(in srgb, var(--color-bg-secondary) 50%, transparent);
+    border-radius: 8px;
+}
+
+/* ========== HERO ========== */
+.hero {
+    text-align: center;
+}
+
+.hero h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+    color: var(--color-font);
+}
+
+.hero h1 span {
+    color: var(--color-primary);
+}
+
+.hero p {
+    font-size: 1.25rem;
+    color: color-mix(in srgb, var(--color-font) 70%, transparent);
+    max-width: 600px;
+    margin: 0 auto 2rem;
+}
+
+/* ========== NAVIGATION SECTION ========== */
+.nav-section {
+    padding: 2rem;
+    max-width: 1400px;
+    margin: 0 auto 3rem;
+}
+
+.nav-section h2 {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 3rem;
+    color: var(--color-font);
+}
+
+/* ========== CARDS EN LIGNE ========== */
+.nav-grid {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    align-items: stretch;
+    flex-wrap: wrap;
+}
+
+.nav-grid .card {
+    flex: 1 1 300px;
+    max-width: 400px;
+    min-width: 280px;
+}
+
+/* ========== FOOTER ========== */
+.footer {
+    text-align: center;
+    padding: 2rem;
+    margin-top: 4rem;
+    color: color-mix(in srgb, var(--color-font) 50%, transparent);
+    border-top: 1px solid color-mix(in srgb, var(--color-border) 20%, transparent);
+}
+
+/* ========== SIDEBAR FOOTER ADJUSTMENTS ========== */
+.sidebar__footer {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+    width: 100%;
+}
+
+.sidebar__footer .auth-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+.sidebar__footer .button {
+    width: 100%;
+    font-size: 0.75rem;
+    padding: 0.5rem 0.25rem;
+}
+
+.sidebar__footer .user-info {
+    width: 100%;
+    justify-content: center;
+    font-size: 0.75rem;
+    padding: 0.5rem;
+    text-align: center;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 1024px) {
+    .nav-grid .card {
+        flex: 1 1 calc(50% - 1rem);
+    }
+}
+
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 2rem;
+    }
+
+    .hero p {
+        font-size: 1rem;
+    }
+
+    .nav-grid {
+        flex-direction: column;
+    }
+
+    .nav-grid .card {
+        max-width: 100%;
+    }
+
+    .header {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .main-content {
+        padding: 1rem;
+    }
+}

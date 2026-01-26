@@ -29,7 +29,7 @@ class PatchRulerController extends AbstractController
         }
 
         $ruler->name = $data['name'] ?? $ruler ->name;
-        $ruler->slug = $rulerRepository->slugify($data['name']) ?? $ruler->slug;
+        $ruler->slug = $rulerRepository->checkSlug("slug","ruler",$rulerRepository->slugify($data['name'])) ?? $ruler->slug;
         $ruler->categorie = $data['categorie'] ?? $ruler ->categorie;
         $ruler->description = $data['description'] ?? $ruler ->description;
 
@@ -58,7 +58,7 @@ class PatchRulerController extends AbstractController
 
         $rulerRepository->update($ruler);
 
-            // Retourne un succès JSON (pas de redirection)
+
         return new Response(
             json_encode(['success' => true, 'id' => $ruler->getId(), 'slug' => $ruler->slug]),
             200,

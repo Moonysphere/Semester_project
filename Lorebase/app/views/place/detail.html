@@ -90,6 +90,10 @@
         <p><?php echo htmlspecialchars($place->description); ?></p>
       </div>
       <div class="field">
+        <label>Univers :</label>
+        <p><?= htmlspecialchars($universName ?? 'Non défini') ?></p>
+      </div>
+      <div class="field">
         <label>Status :</label>
         <p><?php echo htmlspecialchars($place->status); ?></p>
       </div>
@@ -97,7 +101,7 @@
       <div class="buttons">
         <a href="/place" class="btn btn-back">Retour</a>
         <a
-          href="/place/<?php echo $place->id; ?>/edit"
+          href="/place/<?php echo $place->slug; ?>/edit"
           class="btn"
           style="background-color: #ffc107; color: black"
           >Modifier</a
@@ -105,7 +109,7 @@
         <button
           type="button"
           class="btn btn-delete"
-          onclick="deletePlace(<?php echo $place->id; ?>)">
+          onclick="deletePlace('<?php echo $place->slug; ?>')">
           Supprimer
         </button>
       </div>

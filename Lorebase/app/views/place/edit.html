@@ -110,7 +110,8 @@
             id="name"
             name="name"
             value="<?php echo htmlspecialchars($place->name); ?>"
-            required />
+            required
+          />
         </div>
         <div class="form-group">
           <label for="type">Type:</label>
@@ -119,7 +120,8 @@
             id="type"
             name="type"
             value="<?php echo htmlspecialchars($place->type); ?>"
-            required />
+            required
+          />
         </div>
         <div class="form-group">
           <label for="description">Description</label>
@@ -128,14 +130,30 @@
             id="description"
             name="description"
             value="<?php echo htmlspecialchars($place->description); ?>"
-            required />
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="univers_id">Univers</label>
+          <select id="univers_id" name="univers_id" required>
+            <option value="">-- Choisir un univers --</option>
+            <?php foreach ($universes as $univers): ?>
+            <option
+              value="<?= $univers->id ?>"
+              title="<?= htmlspecialchars($univers->description ?? '') ?>"
+            >
+              <?= htmlspecialchars($univers->name) ?>
+            </option>
+            <?php endforeach; ?>
+          </select>
         </div>
         <div class="buttons">
           <button
             type="submit"
             class="btn btn-submit"
             name="status"
-            value="published">
+            value="published"
+          >
             Publier
           </button>
 
@@ -143,7 +161,8 @@
             type="submit"
             class="btn btn-draft"
             name="status"
-            value="draft">
+            value="draft"
+          >
             Brouillon
           </button>
 
@@ -151,11 +170,12 @@
             type="submit"
             class="btn btn-archived"
             name="status"
-            value="archived">
+            value="archived"
+          >
             Archiver
           </button>
 
-          <a href="/place/<?php echo $place->id; ?>" class="btn btn-cancel">
+          <a href="/place/<?php echo $place->slug; ?>" class="btn btn-cancel">
             Annuler
           </a>
         </div>
@@ -185,12 +205,14 @@
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(data),
           })
-            .then((response) => {
-              if (response.ok) {
-                window.location.href = `/place/<?php echo $place->id; ?>`;
-              } else {
-                alert("Erreur lors de la modification");
+            .then(async (response) => {
+              if (!response.ok) {
+                throw new Error("Erreur serveur");
               }
+
+              const result = await response.json();
+
+              window.location.href = `/place/${result.slug}`;
             })
             .catch((error) => {
               console.error("Erreur:", error);

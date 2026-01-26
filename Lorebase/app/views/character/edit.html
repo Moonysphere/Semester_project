@@ -98,16 +98,22 @@
             id="name"
             name="name"
             value="<?php echo htmlspecialchars($character->name); ?>"
-            required />
+            required
+          />
         </div>
         <div class="form-group">
-          <label for="role">Rôle :</label>
-          <input
-            type="text"
-            id="role"
-            name="role"
-            value="<?php echo htmlspecialchars($character->role); ?>"
-            required />
+          <label for="role_id">Rôle :</label>
+          <select id="role_id" name="role_id" required>
+            <option value="">-- Choisir un rôle --</option>
+            <?php foreach ($roles as $role): ?>
+            <option
+              value="<?= $role->id ?>"
+              title="<?= htmlspecialchars($role->description ?? '') ?>"
+            >
+              <?= htmlspecialchars($role->name) ?>
+            </option>
+            <?php endforeach; ?>
+          </select>
         </div>
         <div class="form-group">
           <label for="origin">Origine :</label>
@@ -116,7 +122,8 @@
             id="origin"
             name="origin"
             value="<?php echo htmlspecialchars($character->origin); ?>"
-            required />
+            required
+          />
         </div>
         <div class="form-group">
           <label for="pv">Points de vie :</label>
@@ -125,7 +132,8 @@
             id="pv"
             name="pv"
             value="<?php echo htmlspecialchars($character->pv); ?>"
-            required />
+            required
+          />
         </div>
         <div class="form-group">
           <label for="description">Description :</label>
@@ -133,12 +141,27 @@
 <?php echo htmlspecialchars($character->description); ?></textarea
           >
         </div>
+        <div class="form-group">
+          <label for="univers_id">Univers</label>
+          <select id="univers_id" name="univers_id" required>
+            <option value="">-- Choisir un univers --</option>
+            <?php foreach ($universes as $univers): ?>
+            <option
+              value="<?= $univers->id ?>"
+              title="<?= htmlspecialchars($univers->description ?? '') ?>"
+            >
+              <?= htmlspecialchars($univers->name) ?>
+            </option>
+            <?php endforeach; ?>
+          </select>
+        </div>
         <div class="buttons">
           <button
             type="submit"
             class="btn btn-submit"
             name="status"
-            value="published">
+            value="published"
+          >
             Publier
           </button>
 
@@ -146,7 +169,8 @@
             type="submit"
             class="btn btn-draft"
             name="status"
-            value="draft">
+            value="draft"
+          >
             Brouillon
           </button>
 
@@ -154,17 +178,21 @@
             type="submit"
             class="btn btn-archived"
             name="status"
-            value="archived">
+            value="archived"
+          >
             Archiver
           </button>
-
-          <a
-            href="/character/<?php echo $character->id; ?>"
-            class="btn btn-cancel"
-            >Annuler</a
-          >
         </div>
       </form>
+
+      <!-- Bouton Annuler HORS du formulaire -->
+      <div class="buttons" style="margin-top: 10px">
+        <a
+          href="/character/<?php echo $character->slug  ; ?>"
+          class="btn btn-cancel"
+          >Annuler</a
+        >
+      </div>
     </div>
     <script>
       document
@@ -191,14 +219,14 @@
             body: JSON.stringify(data),
           })
             .then(async (response) => {
-          if (!response.ok) {
-            throw new Error("Erreur serveur");
-          }
+              if (!response.ok) {
+                throw new Error("Erreur serveur");
+              }
 
-          const result = await response.json();
+              const result = await response.json();
 
-          window.location.href = `/character/${result.slug}`;
-        })
+              window.location.href = `/character/${result.slug}`;
+            })
             .catch((error) => {
               console.error("Erreur:", error);
               alert("Erreur lors de la modification");
