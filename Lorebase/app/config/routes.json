@@ -299,6 +299,8 @@
     "path": "/api/rulers/:slug",
     "method": "GET",
     "controller": "Api\\Ruler\\GetApiRulersController"
+  },
+  {
     "path": "/user/profile",
     "method": "PATCH",
     "controller": "Auth\\PatchUserController"
