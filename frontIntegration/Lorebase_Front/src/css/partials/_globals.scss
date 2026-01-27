@@ -30,9 +30,8 @@
       }
     }
 
-    // couleurs agnostiques
     --bg-color: var(--primary);
-    --text-color: var(--font-color); // nom de variable bizarre... faisons avec
+    --text-color: var(--font-color); 
 
     @media (prefers-color-scheme: dark) {
       --bg-color: var(--primary-dark);
