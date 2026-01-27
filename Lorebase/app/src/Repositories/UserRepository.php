@@ -77,4 +77,17 @@ class UserRepository extends AbstractRepository
             ':oldEmail' => $oldEmail,
         ]);
     }
+    public function updateUserRole(users $user): void
+    {
+        $this->queryBuilder()
+            ->updateTable()
+            ->as(substr($this->getTable(), 0, 1))
+            ->setField('role', 'role')
+            ->where('email', self::CONDITIONS['eq'])
+            ->setParams([
+                'role' => $user->role,
+                'email' => $user->email
+            ])
+            ->executeQuery();
+    }
 }

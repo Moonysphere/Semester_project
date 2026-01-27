@@ -249,5 +249,15 @@
     "path": "/user/profile",
     "method": "GET",
     "controller": "Auth\\GetProfileController"
+  },
+  {
+    "path": "/admin/backoffice",
+    "method": "GET",
+    "controller": "Admin\\GetBackOffice"
+  },
+  {
+    "path": "/admin/user/role",
+    "method": "PATCH",
+    "controller": "Admin\\PatchUserRole"
   }
 ]
