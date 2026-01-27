@@ -1,0 +1,73 @@
+<!-- BOUTON TOGGLE MOBILE -->
+  <button class="sidebar-toggle" id="sidebarToggle">☰</button>
+
+  <!-- OVERLAY MOBILE -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- ========== SIDEBAR ========== -->
+  <aside class="sidebar" id="sidebar">
+
+    <!-- HEADER -->
+    <div class="sidebar__header">
+      <div class="sidebar__logo">
+        <a href="/" class="logo">
+          <img src="/src/style/assets/icon_sidebar/logo.svg" alt="logo">
+        </a>
+      </div>
+    </div>
+
+    <!-- NAVIGATION -->
+    <nav class="sidebar__nav">
+      <ul class="sidebar__menu">
+        <li class="sidebar__menu-item">
+          <a href="/character" class="sidebar__link">
+            <img src="/src/style/assets/icon_sidebar/icon_perso.svg" alt="Personnages">
+          </a>
+        </li>
+        <li class="sidebar__menu-item">
+          <a href="/univers" class="sidebar__link">
+            <img src="/src/style/assets/icon_sidebar/icon_uni.svg" alt="Univers">
+          </a>
+        </li>
+        <li class="sidebar__menu-item">
+          <a href="/place" class="sidebar__link">
+            <img src="/src/style/assets/icon_sidebar/icon_place.svg" alt="Lieux">
+          </a>
+        </li>
+        <li class="sidebar__menu-item">
+          <a href="/ruler" class="sidebar__link">
+            <img src="/src/style/assets/icon_sidebar/icon_rules.svg" alt="Règles">
+          </a>
+        </li>
+        <li class="sidebar__menu-item">
+          <a href="#" class="sidebar__link">
+            <img src="/src/style/assets/icon_sidebar/icon_settings.svg" alt="Paramètres">
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <!-- FOOTER / PROFIL + THEME TOGGLE -->
+    <div class="sidebar__footer">
+      <!-- Bouton changement de thème -->
+      <button class="sidebar__theme-toggle" id="themeToggle" aria-label="Changer de thème">
+        <span class="sidebar__theme-toggle-icon">🌙</span>
+      </button>
+
+      <!-- Avatar utilisateur -->
+      <div class="auth-buttons">
+        <?php if (isset($user)): ?>
+        <div class="user-info">
+          <span>👤
+            <?= htmlspecialchars($user['username']) ?>
+          </span>
+        </div>
+        <a  href="/logout"  class="button button--sm button--danger" id="logoutBtn">Déconnexion</a  >
+        <?php else: ?>
+        <a href="/login" class="button button--sm button--primary">Connexion</a>
+        <a href="/register" class="button button--sm button--primary">S'inscrire</a>
+        <?php endif; ?>
+      </div>
+    </div>
+
+  </aside>
+  <script type="module" src="../src/style/js/home.js"></script>

@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../src/style/css/framework.css">
     <title>Univers</title>
     <style>
       body {
@@ -76,20 +77,30 @@
 
   <body>
     <h1>Univers</h1>
-
+<?php require "../components/sidebar.html"; ?>
+<div class="main-content">
     <!-- ================= PUBLIÉS ================= -->
     <div class="characters-container">
       <a href="/univers/create" class="character-card add-card">+</a>
 
       <?php foreach ($univers as $univer): ?>
         <?php if ($univer->status === 'published'): ?>
-          <a
+      
+          <article class="card">
+            <div class="card__content">
+              <div class="card__image">
+                <img src="src/style/assets/icon_sidebar/icon_uni.svg" alt="logo" class="">
+              </div>
+              <h2 class="card__title_main-font"><?php echo htmlspecialchars($univer->name, ENT_QUOTES, 'UTF-8'); ?></h2>
+              <p class="card__text"><?php echo htmlspecialchars($univer->description, ENT_QUOTES, 'UTF-8'); ?></p>
+               <a
             href="/univers/<?php echo htmlspecialchars($univer->slug, ENT_QUOTES, 'UTF-8'); ?>"
-            class="character-card"
-          >
-            <h3><?php echo htmlspecialchars($univer->name, ENT_QUOTES, 'UTF-8'); ?></h3>
-            <p><?php echo htmlspecialchars($univer->description, ENT_QUOTES, 'UTF-8'); ?></p>
-          </a>
+            class="button button--primary p--6"
+          >détail</a>
+            </div>
+          </article>
+      
+   
         <?php endif; ?>
       <?php endforeach; ?>
     </div>
@@ -101,13 +112,19 @@
     <div class="characters-container">
       <?php foreach ($univers as $univer): ?>
         <?php if ($univer->status === 'draft'): ?>
-          <a
+           <article class="card">
+            <div class="card__content">
+              <div class="card__image">
+                <img src="src/style/assets/icon_sidebar/icon_uni.svg" alt="logo" class="">
+              </div>
+              <h2 class="card__title_main-font"><?php echo htmlspecialchars($univer->name, ENT_QUOTES, 'UTF-8'); ?></h2>
+              <p class="card__text"><?php echo htmlspecialchars($univer->description, ENT_QUOTES, 'UTF-8'); ?></p>
+               <a
             href="/univers/<?php echo htmlspecialchars($univer->slug, ENT_QUOTES, 'UTF-8'); ?>"
-            class="character-card draft"
-          >
-            <h3><?php echo htmlspecialchars($univer->name, ENT_QUOTES, 'UTF-8'); ?></h3>
-            <p><?php echo htmlspecialchars($univer->description, ENT_QUOTES, 'UTF-8'); ?></p>
-          </a>
+            class="button button--primary p--6"
+          >détail</a>
+            </div>
+          </article>
         <?php endif; ?>
       <?php endforeach; ?>
     </div>
@@ -119,15 +136,22 @@
     <div class="characters-container">
       <?php foreach ($univers as $univer): ?>
         <?php if ($univer->status === 'archived'): ?>
-          <a
+           <article class="card">
+            <div class="card__content">
+              <div class="card__image">
+                <img src="src/style/assets/icon_sidebar/icon_uni.svg" alt="logo" class="">
+              </div>
+              <h2 class="card__title_main-font"><?php echo htmlspecialchars($univer->name, ENT_QUOTES, 'UTF-8'); ?></h2>
+              <p class="card__text"><?php echo htmlspecialchars($univer->description, ENT_QUOTES, 'UTF-8'); ?></p>
+               <a
             href="/univers/<?php echo htmlspecialchars($univer->slug, ENT_QUOTES, 'UTF-8'); ?>"
-            class="character-card archived"
-          >
-            <h3><?php echo htmlspecialchars($univer->name, ENT_QUOTES, 'UTF-8'); ?></h3>
-            <p><?php echo htmlspecialchars($univer->description, ENT_QUOTES, 'UTF-8'); ?></p>
-          </a>
+            class="button button--primary p--6"
+          >détail</a>
+            </div>
+          </article>
         <?php endif; ?>
       <?php endforeach; ?>
+    </div>
     </div>
   </body>
 </html>
