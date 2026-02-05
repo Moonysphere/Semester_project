@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Controllers\Quest;
 
@@ -40,6 +40,7 @@ class PostQuestController extends AbstractController
         }
 
         $data['status'] = $data['status'] ?? 'draft';
+        $data['user_id'] = $_SESSION['user']['email'] ?? null;
 
         if (!in_array($data['status'], ['draft', 'published', 'archived'], true)) {
             return new Response(
@@ -72,5 +73,3 @@ class PostQuestController extends AbstractController
         return new Response('', 302, ['Location' => '/quest']);
     }
 }
-
-?>

@@ -43,8 +43,9 @@ class Quest extends AbstractEntity
     #[References(class: Univers::class, property: 'id')]
     public int $univers_id;
 
-
-
+    #[Column(type: 'varchar', size: 255, nullable: true)]
+    #[References(class: users::class, property: 'email')]
+    public ?string $user_id = null;
 
     public function getId(): int
     {
@@ -111,4 +112,3 @@ class Quest extends AbstractEntity
         return $this;
     }
 }
-

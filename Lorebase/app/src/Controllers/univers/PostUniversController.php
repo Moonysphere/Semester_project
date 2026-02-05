@@ -42,6 +42,7 @@ class PostUniversController extends AbstractController
         }
 
         $data['status'] = $data['status'] ?? 'draft';
+        $data['user_id'] = $_SESSION['user']['email'] ?? null;
 
         if (!in_array($data['status'], ['draft', 'published', 'archived'], true)) {
             return new Response(

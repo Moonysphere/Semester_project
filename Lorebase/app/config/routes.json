@@ -256,6 +256,11 @@
     "controller": "Admin\\GetBackOffice"
   },
   {
+    "path": "/admin/user/:email",
+    "method": "GET",
+    "controller": "Admin\\GetBackOfficeUser"
+  },
+  {
     "path": "/admin/user/role",
     "method": "PATCH",
     "controller": "Admin\\PatchUserRole"

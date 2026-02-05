@@ -22,6 +22,7 @@ class CharacterForm extends AbstractForm
         $character->description = $this->data['description'] ?? null;
         $character->status = $this->data['status'] ?? null;
         $character->univers_id = $this->data['univers_id'] ?? null;
+        $character->user_id = $this->data['user_id'] ?? null;
 
         return $character;
     }

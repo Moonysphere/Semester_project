@@ -23,6 +23,10 @@ class DeleteUniversController extends AbstractController
             );
         }
 
+        if ($univers->user_id !== $_SESSION['user']['email'] && $_SESSION['user']['role'] !== 'admin') {
+            return new Response(json_encode(['error' => 'Unauthorized']), 403, ['Content-Type' => 'application/json']);
+        }
+
         $universRepository->remove($univers);
 
         return new Response(

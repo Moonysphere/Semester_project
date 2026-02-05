@@ -20,6 +20,10 @@ class DeleteCharacterController extends AbstractController
             return new Response(json_encode(['error' => 'not found']), 404, ['Content-Type' => 'application/json']);
         }
 
+        if ($character->user_id !== $_SESSION['user']['email'] && $_SESSION['user']['role'] !== 'admin') {
+            return new Response(json_encode(['error' => 'Unauthorized']), 403, ['Content-Type' => 'application/json']);
+        }
+
         $characterRepository->remove($character);
 
         return new Response('Personnage supprimé', 204, ['Content-Type' => 'application/json', 'Location' => '/character']);
