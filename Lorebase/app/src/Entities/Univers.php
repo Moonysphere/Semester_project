@@ -5,6 +5,7 @@ namespace App\Entities;
 use App\Lib\Annotations\ORM\Column;
 use App\Lib\Annotations\ORM\Id;
 use App\Lib\Annotations\ORM\ORM;
+use App\Lib\Annotations\ORM\References;
 use App\Lib\Entities\AbstractEntity;
 
 #[ORM]
@@ -26,8 +27,12 @@ class Univers extends AbstractEntity
     #[Column(type: 'date', nullable: true)]
     public ?\DateTimeImmutable $createdate = null;
 
-    #[Column(type:'varchar', size: 255)]
+    #[Column(type: 'varchar', size: 255)]
     public string $status;
+
+    #[Column(type: 'varchar', size: 255, nullable: true)]
+    #[References(class: users::class, property: 'email')]
+    public ?string $user_id = null;
 
     /* =======================
        GETTERS
@@ -58,7 +63,7 @@ class Univers extends AbstractEntity
         return $this->createdate;
     }
 
-    
+
 
     /* =======================
        SETTERS

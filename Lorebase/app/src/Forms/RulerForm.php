@@ -20,6 +20,7 @@ class RulerForm extends AbstractForm
         $ruler->categorie = $this->data['categorie'] ?? null;
         $ruler->univers_id = $this->data['univers_id'] ?? null;
         $ruler->status = $this->data['status'] ?? null;
+        $ruler->user_id = $this->data['user_id'] ?? null;
 
         return $ruler;
     }

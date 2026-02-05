@@ -22,6 +22,10 @@ class PatchQuestController extends AbstractController
             );
         }
 
+        if ($quest->user_id !== $_SESSION['user']['email'] && $_SESSION['user']['role'] !== 'admin') {
+            return new Response(json_encode(['error' => 'Unauthorized']), 403, ['Content-Type' => 'application/json']);
+        }
+
         $data = json_decode(file_get_contents('php://input'), true);
 
         if (!is_array($data)) {

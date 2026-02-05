@@ -18,6 +18,10 @@ class PatchPlaceController extends AbstractController
             return new Response(json_encode(['error' => 'not found']), 404, ['Content-Type' => 'application/json']);
         }
 
+        if ($place->user_id !== $_SESSION['user']['email'] && $_SESSION['user']['role'] !== 'admin') {
+            return new Response(json_encode(['error' => 'Unauthorized']), 403, ['Content-Type' => 'application/json']);
+        }
+
         $data = json_decode(file_get_contents('php://input'), true);
 
         if (!is_array($data)) {
@@ -33,27 +37,27 @@ class PatchPlaceController extends AbstractController
         $place->description = $data['description'] ?? $place->description;
 
         if (isset($data['toggle_status']) && $data['toggle_status']) {
-        $newStatus = ($place->status === 'published') ? 'draft' : 'published';
-        $placeRepository->setStatut($place->getId(), $newStatus);
+            $newStatus = ($place->status === 'published') ? 'draft' : 'published';
+            $placeRepository->setStatut($place->getId(), $newStatus);
 
-        return new Response(
-            json_encode(['success' => true, 'id' => $place->getId(), 'status' => $newStatus]),
-            200,
-            ['Content-Type' => 'application/json']
-        );
-    }
+            return new Response(
+                json_encode(['success' => true, 'id' => $place->getId(), 'status' => $newStatus]),
+                200,
+                ['Content-Type' => 'application/json']
+            );
+        }
 
-    if (array_key_exists('status', $data) && count($data) === 1) {
-        $placeRepository->setStatut($place->getId(), $data['status']);
+        if (array_key_exists('status', $data) && count($data) === 1) {
+            $placeRepository->setStatut($place->getId(), $data['status']);
 
-        return new Response(
-            json_encode(['success' => true, 'id' => $place->getId(), 'status' => $data['status']]),
-            200,
-            ['Content-Type' => 'application/json']
-        );
-    }
-    $place->slug = $placeRepository->checkSlug("slug","place",$placeRepository->slugify($data['name'])) ?? $place->slug;
-    $place->status = $data['status'] ?? $place->status;
+            return new Response(
+                json_encode(['success' => true, 'id' => $place->getId(), 'status' => $data['status']]),
+                200,
+                ['Content-Type' => 'application/json']
+            );
+        }
+        $place->slug = $placeRepository->checkSlug("slug", "place", $placeRepository->slugify($data['name'])) ?? $place->slug;
+        $place->status = $data['status'] ?? $place->status;
 
         $placeRepository->update($place);
 

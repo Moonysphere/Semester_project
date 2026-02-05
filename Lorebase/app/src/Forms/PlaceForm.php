@@ -20,6 +20,7 @@ class PlaceForm extends AbstractForm
         $place->description = $this->data['description'] ?? null;
         $place->univers_id = $this->data['univers_id'] ?? null;
         $place->status = $this->data['status'];
+        $place->user_id = $this->data['user_id'] ?? null;
 
         return $place;
     }

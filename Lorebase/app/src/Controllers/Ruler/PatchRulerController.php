@@ -18,6 +18,10 @@ class PatchRulerController extends AbstractController
             return new Response(json_encode(['error' => 'not found']), 404, ['Content-Type' => 'application/json']);
         }
 
+        if ($ruler->user_id !== $_SESSION['user']['email'] && $_SESSION['user']['role'] !== 'admin') {
+            return new Response(json_encode(['error' => 'Unauthorized']), 403, ['Content-Type' => 'application/json']);
+        }
+
         $data = json_decode(file_get_contents('php://input'), true);
 
         if (!is_array($data)) {
@@ -28,33 +32,33 @@ class PatchRulerController extends AbstractController
             );
         }
 
-        $ruler->name = $data['name'] ?? $ruler ->name;
-        $ruler->slug = $rulerRepository->checkSlug("slug","ruler",$rulerRepository->slugify($data['name'])) ?? $ruler->slug;
-        $ruler->categorie = $data['categorie'] ?? $ruler ->categorie;
-        $ruler->description = $data['description'] ?? $ruler ->description;
+        $ruler->name = $data['name'] ?? $ruler->name;
+        $ruler->slug = $rulerRepository->checkSlug("slug", "ruler", $rulerRepository->slugify($data['name'])) ?? $ruler->slug;
+        $ruler->categorie = $data['categorie'] ?? $ruler->categorie;
+        $ruler->description = $data['description'] ?? $ruler->description;
 
         if (isset($data['toggle_status']) && $data['toggle_status']) {
-        $newStatus = ($ruler->status === 'published') ? 'draft' : 'published';
-        $rulerRepository->setStatut($ruler->getId(), $newStatus);
+            $newStatus = ($ruler->status === 'published') ? 'draft' : 'published';
+            $rulerRepository->setStatut($ruler->getId(), $newStatus);
 
-        return new Response(
-            json_encode(['success' => true, 'id' => $ruler->getId(), 'status' => $newStatus]),
-            200,
-            ['Content-Type' => 'application/json']
-        );
-    }
+            return new Response(
+                json_encode(['success' => true, 'id' => $ruler->getId(), 'status' => $newStatus]),
+                200,
+                ['Content-Type' => 'application/json']
+            );
+        }
 
-    if (array_key_exists('status', $data) && count($data) === 1) {
-        $rulerRepository->setStatut($ruler->getId(), $data['status']);
+        if (array_key_exists('status', $data) && count($data) === 1) {
+            $rulerRepository->setStatut($ruler->getId(), $data['status']);
 
-        return new Response(
-            json_encode(['success' => true, 'id' => $ruler->getId(), 'status' => $data['status']]),
-            200,
-            ['Content-Type' => 'application/json']
-        );
-    }
+            return new Response(
+                json_encode(['success' => true, 'id' => $ruler->getId(), 'status' => $data['status']]),
+                200,
+                ['Content-Type' => 'application/json']
+            );
+        }
 
-    $ruler->status = $data['status'] ?? $ruler->status;
+        $ruler->status = $data['status'] ?? $ruler->status;
 
         $rulerRepository->update($ruler);
 

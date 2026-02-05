@@ -40,6 +40,7 @@ class PostPlaceController extends AbstractController
         }
         // Draft = brouillon donc je sais pas en quel langue le mettre comme dans la BDD on parle anglais
         $data['status'] = $data['status'] ?? 'draft';
+        $data['user_id'] = $_SESSION['user']['email'] ?? null;
 
         if (!in_array($data['status'], ['draft', 'published'], true)) {
             return new Response(

@@ -18,6 +18,10 @@ class PatchCharacterController extends AbstractController
             return new Response(json_encode(['error' => 'not found']), 404, ['Content-Type' => 'application/json']);
         }
 
+        if ($character->user_id !== $_SESSION['user']['email'] && $_SESSION['user']['role'] !== 'admin') {
+            return new Response(json_encode(['error' => 'Unauthorized']), 403, ['Content-Type' => 'application/json']);
+        }
+
         $data = json_decode(file_get_contents('php://input'), true);
 
         if (!is_array($data)) {
@@ -29,7 +33,7 @@ class PatchCharacterController extends AbstractController
         }
 
         $character->name = $data['name'] ?? $character->name;
-        $character->slug = $characterRepository->checkSlug("slug","character",$characterRepository->slugify($data['name'])) ?? $character->slug;
+        $character->slug = $characterRepository->checkSlug("slug", "character", $characterRepository->slugify($data['name'])) ?? $character->slug;
         $character->role = $data['role'] ?? $character->role;
         $character->origin = $data['origin'] ?? $character->origin;
         $character->pv = $data['pv'] ?? $character->pv;
@@ -56,7 +60,7 @@ class PatchCharacterController extends AbstractController
         $characterRepository->update($character);
 
         return new Response(
-            json_encode(['success' => true, 'id' => $character->getId(),'slug' => $character->slug]),
+            json_encode(['success' => true, 'id' => $character->getId(), 'slug' => $character->slug]),
             200,
             ['Content-Type' => 'application/json']
         );

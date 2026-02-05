@@ -16,7 +16,7 @@ class UniversForm extends AbstractForm
         'createdate' => 'date',
         'status' => 'string',
     ];
-  
+
 
     public function mapToEntity(): ?Univers
     {
@@ -26,11 +26,11 @@ class UniversForm extends AbstractForm
         $repository = new UniversRepository();
         $univers = new Univers();
         $univers->name = (string)($this->data['name'] ?? '');
-       $univers->description = $this->data['description'] ?? null;
-       $value = $this->data['createdate'] ?? null;
+        $univers->description = $this->data['description'] ?? null;
+        $value = $this->data['createdate'] ?? null;
         $univers->status = $this->data['status']; // 'draft' ou 'published' pas confondre avec le statut de la quête
-        $univers->slug =$repository->checkSlug("slug","univers",$repository->slugify($this->data['name'])) ;
-       
+        $univers->slug = $repository->checkSlug("slug", "univers", $repository->slugify($this->data['name']));
+
 
         if ($value) {
             $value = str_replace('T', ' ', $value);
@@ -39,18 +39,19 @@ class UniversForm extends AbstractForm
                 $value .= ':00';
             }
 
-            
+
             $value = substr($value, 0, 10);
 
             $univers->createdate = new \DateTimeImmutable($value);
         } else {
             $univers->createdate = null;
         }
+        $univers->user_id = $this->data['user_id'] ?? null;
 
         return $univers;
     }
 
-   
+
 
     public function save(): ?Univers
     {
