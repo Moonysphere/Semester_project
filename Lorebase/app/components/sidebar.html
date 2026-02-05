@@ -1,17 +1,4 @@
-<!doctype html>
-<html lang="fr">
-
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="../src/style/css/framework.css" rel="stylesheet">
-  <link href="../src/style/css/home.css" rel="stylesheet">
-  <title>Lorebase - Accueil</title>
-</head>
-
-<body>
-
-  <!-- BOUTON TOGGLE MOBILE -->
+<!-- BOUTON TOGGLE MOBILE -->
   <button class="sidebar-toggle" id="sidebarToggle">☰</button>
 
   <!-- OVERLAY MOBILE -->
@@ -56,10 +43,9 @@
           <a href="#" class="sidebar__link">
             <img src="/src/style/assets/icon_sidebar/icon_settings.svg" alt="Paramètres">
           </a>
-        </li>
+        </li> 
       </ul>
     </nav>
-
     <!-- FOOTER / PROFIL + THEME TOGGLE -->
     <div class="sidebar__footer">
       <!-- Bouton changement de thème -->
@@ -67,55 +53,21 @@
         <span class="sidebar__theme-toggle-icon">🌙</span>
       </button>
 
+      <!-- Avatar utilisateur -->
       <div class="auth-buttons">
         <?php if (isset($user)): ?>
         <div class="user-info">
-          <a href="/user/profile" class="user-link">
-            👤 <?= htmlspecialchars($user['username']) ?>
-          </a>
+          <span>👤
+            <?= htmlspecialchars($user['username']) ?>
+          </span>
         </div>
-        <form method="POST" action="/logout" style="display: inline;">
-          <button type="submit" class="button button--sm button--danger">Déconnexion</button>
-        </form>
+        <a  href="/logout"  class="button button--sm button--danger" id="logoutBtn">Déconnexion</a  >
         <?php else: ?>
         <a href="/login" class="button button--sm button--primary">Connexion</a>
         <a href="/register" class="button button--sm button--primary">S'inscrire</a>
         <?php endif; ?>
       </div>
-
+    </div>
 
   </aside>
-
-  
-  <?php require "../components/sidebar.html"; ?>
-  
-  <!-- ========== CONTENU PRINCIPAL ========== -->
-  <div class="main-content">
-    
-    <!-- Hero -->
-    <section class="hero">
-      <h1>Bienvenue sur <span>Lorebase</span></h1>
-      <p>
-        Créez et gérez vos univers fictifs, personnages, et règles de jeu en un
-        seul endroit.
-      </p>
-      
-      <?php if (!isset($user)): ?>
-      <a href="/register" class="button button--lg button--primary">
-        Commencer gratuitement
-      </a>
-      <?php endif; ?>
-    </section>
-    
-    
-    
-    <footer class="footer">
-      <p>&copy; 2026 Lorebase - Projet Semestre</p>
-    </footer>
-    
-  </div>
-  
-</body>
-
-
-</html>
+  <script type="module" src="../src/style/js/home.js"></script>

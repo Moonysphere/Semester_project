@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../src/style/css/framework.css">
     <title>Personnages</title>
     <style>
       body {
@@ -64,6 +65,8 @@
   </head>
   <body>
     <h1>Personnages</h1>
+    <?php require "../components/sidebar.html"; ?>
+<div class="main-content">
 
     <div class="characters-container">
       <a href="/character/create" class="character-card add-card">+</a>
@@ -71,12 +74,20 @@
       <!-- Cartes des personnages -->
       <?php foreach ($characters as $character): ?><?php if ($character->status
       === 'published'): ?>
-      <a
+      <article class="card">
+            <div class="card__content">
+              <div class="card__image">
+                <img src="src/style/assets/icon_sidebar/icon_perso.svg" alt="logo" class="">
+              </div>
+              <h2 class="card__title_main-font"><?php echo htmlspecialchars($character->name); ?></h2>
+              <p class="card__text"><?php echo htmlspecialchars($character->description); ?></p>
+               <a
         href="/character/<?php echo htmlspecialchars($character->slug); ?>"
-        class="character-card">
-        <h3><?php echo htmlspecialchars($character->name); ?></h3>
-        <p><?php echo htmlspecialchars($character->description); ?></p>
-      </a>
+             class="button button--primary p--6"
+          >détail</a>
+            </div>
+          </article>
+    
       <?php endif; ?> <?php endforeach; ?>
     </div>
     <hr style="margin: 40px 0" />
@@ -85,13 +96,19 @@
     <div class="characters-container">
       <?php foreach ($characters as $character): ?> <?php if ($character->status
       === 'draft'): ?>
-      <a
+      <article class="card">
+            <div class="card__content">
+              <div class="card__image">
+                <img src="src/style/assets/icon_sidebar/icon_perso.svg" alt="logo" class="">
+              </div>
+              <h2 class="card__title_main-font"><?php echo htmlspecialchars($character->name); ?></h2>
+              <p class="card__text"><?php echo htmlspecialchars($character->description); ?></p>
+               <a
         href="/character/<?php echo htmlspecialchars($character->slug); ?>"
-        class="character-card"
-        style="opacity: 0.6">
-        <h3><?php echo htmlspecialchars($character->name); ?></h3>
-        <p><?php echo htmlspecialchars($character->description); ?></p>
-      </a>
+             class="button button--primary p--6"
+          >détail</a>
+            </div>
+          </article>
       <?php endif; ?> <?php endforeach; ?>
     </div>
 
@@ -101,14 +118,21 @@
     <div class="characters-container">
       <?php foreach ($characters as $character): ?> <?php if ($character->status
       === 'archived'): ?>
-      <a
+      <article class="card">
+            <div class="card__content">
+              <div class="card__image">
+                <img src="src/style/assets/icon_sidebar/icon_perso.svg" alt="logo" class="">
+              </div>
+              <h2 class="card__title_main-font"><?php echo htmlspecialchars($character->name); ?></h2>
+              <p class="card__text"><?php echo htmlspecialchars($character->description); ?></p>
+               <a
         href="/character/<?php echo htmlspecialchars($character->slug); ?>"
-        class="character-card"
-        style="opacity: 0.4">
-        <h3><?php echo htmlspecialchars($character->name); ?></h3>
-        <p><?php echo htmlspecialchars($character->description); ?></p>
-      </a>
+             class="button button--primary p--6"
+          >détail</a>
+            </div>
+          </article>
       <?php endif; ?> <?php endforeach; ?>
+    </div>
     </div>
   </body>
 </html>

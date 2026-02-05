@@ -241,6 +241,66 @@
     "controller": "Place\\DeletePlaceController"
   },
   {
+    "path": "/api/quests",
+    "method": "GET",
+    "controller": "Api\\Quest\\GetApiQuestsController"
+  },
+  {
+    "path": "/api/quests/:slug",
+    "method": "GET",
+    "controller": "Api\\Quest\\GetApiQuestController"
+  },
+  {
+    "path": "/api/universes",
+    "method": "GET",
+    "controller": "Api\\Univers\\GetApiUniversController"
+  },
+  {
+    "path": "/api/universes/:slug",
+    "method": "GET",
+    "controller": "Api\\Univers\\GetApiUniversController"
+  },
+  {
+    "path": "/api/places",
+    "method": "GET",
+    "controller": "Api\\Place\\GetApiPlacesController"
+  },
+  {
+    "path": "/api/places/:slug",
+    "method": "GET",
+    "controller": "Api\\Place\\GetApiPlacesController"
+  },
+  {
+    "path": "/api/roles",
+    "method": "GET",
+    "controller": "Api\\Role\\GetApiRolesController"
+  },
+  {
+    "path": "/api/roles/:slug",
+    "method": "GET",
+    "controller": "Api\\Role\\GetApiRolesController"
+  },
+  {
+    "path": "/api/characters",
+    "method": "GET",
+    "controller": "Api\\Character\\GetApiCharactersController"
+  },
+  {
+    "path": "/api/characters/:slug",
+    "method": "GET",
+    "controller": "Api\\Character\\GetApiCharactersController"
+  },
+  {
+    "path": "/api/rulers",
+    "method": "GET",
+    "controller": "Api\\Ruler\\GetApiRulersController"
+  },
+  {
+    "path": "/api/rulers/:slug",
+    "method": "GET",
+    "controller": "Api\\Ruler\\GetApiRulersController"
+  },
+  {
     "path": "/user/profile",
     "method": "PATCH",
     "controller": "Auth\\PatchUserController"

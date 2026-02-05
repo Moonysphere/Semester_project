@@ -11,6 +11,7 @@ body {
 
 .main-content {
     padding: 2rem;
+    height: 100vh;
 }
 
 /* ========== HEADER ========== */
@@ -103,9 +104,9 @@ body {
 
 /* ========== FOOTER ========== */
 .footer {
+    margin-top: auto;
     text-align: center;
     padding: 2rem;
-    margin-top: 4rem;
     color: color-mix(in srgb, var(--color-font) 50%, transparent);
     border-top: 1px solid color-mix(in srgb, var(--color-border) 20%, transparent);
 }
@@ -123,6 +124,8 @@ body {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+    text-align: center;
+    color:white;
     width: 100%;
 }
 
