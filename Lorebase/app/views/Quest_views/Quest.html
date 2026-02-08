@@ -81,7 +81,10 @@
   <body>
     <h1>Créer une quête</h1>
 
-    <form method="POST" action="/quest">
+    <form
+      method="POST"
+      action="/<?php echo htmlspecialchars($_SESSION['user']['username'] ?? ''); ?>/quest"
+    >
       <div class="form-group">
         <label for="title">Titre :</label>
         <input type="text" id="title" name="title" required />

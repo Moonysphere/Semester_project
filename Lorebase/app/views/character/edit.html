@@ -185,10 +185,9 @@
         </div>
       </form>
 
-      <!-- Bouton Annuler HORS du formulaire -->
       <div class="buttons" style="margin-top: 10px">
         <a
-          href="/character/<?php echo $character->slug  ; ?>"
+          href="/<?php echo htmlspecialchars($_SESSION['user']['username'] ?? ''); ?>/character/<?php echo $character->slug  ; ?>"
           class="btn btn-cancel"
           >Annuler</a
         >
@@ -213,7 +212,9 @@
           }
 
           // Envoyer tous les champs + le status
-          fetch(`/character/<?php echo $character->id; ?>`, {
+          const username =
+            '<?php echo htmlspecialchars($_SESSION["user"]["username"] ?? ""); ?>';
+          fetch(`/${username}/character/<?php echo $character->id; ?>`, {
             method: "PATCH",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(data),
@@ -225,7 +226,10 @@
 
               const result = await response.json();
 
-              window.location.href = `/character/${result.slug}`;
+              // ✅ Rediriger vers /:username/character/:slug
+              const username =
+                '<?php echo htmlspecialchars($_SESSION["user"]["username"] ?? ""); ?>';
+              window.location.href = `/${username}/character/${result.slug}`;
             })
             .catch((error) => {
               console.error("Erreur:", error);

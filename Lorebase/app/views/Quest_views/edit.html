@@ -201,7 +201,7 @@
       </form>
 
       <div class="buttons" style="margin-top: 10px;">
-      <a href="/quest/<?php echo $quest->slug; ?>" class="btn btn-cancel">
+      <a href="/<?php echo htmlspecialchars($_SESSION['user']['username'] ?? ''); ?>/quest/<?php echo $quest->slug; ?>" class="btn btn-cancel">
         Annuler
       </a>
     </div>
@@ -223,14 +223,15 @@
           if (statusValue && submitter.name === "status") {
             data.status = statusValue;
           }
-          fetch(`/quest/<?php echo $quest->id; ?>`, {
+          const username = '<?php echo htmlspecialchars($_SESSION['user']['username'] ?? ''); ?>';
+          fetch(`/${username}/quest/<?php echo $quest->id; ?>`, {
             method: "PATCH",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(data),
           })
             .then((response) => {
               if (response.ok) {
-                window.location.href = `/quest/<?php echo $quest->slug; ?>`;
+                window.location.href = `/${username}/quest/<?php echo $quest->slug; ?>`;
               } else {
                 alert("Erreur lors de la modification");
               }

@@ -428,33 +428,45 @@ abstract class AbstractRepository
     }
 
     public function debug(): self
-{
-    $logDir = '/var/log/apache2/sql_logs';
+    {
+        $logDir = '/var/log/apache2/sql_logs';
 
 
-    if (!is_dir($logDir) || !is_writable($logDir)) {
+        if (!is_dir($logDir) || !is_writable($logDir)) {
+            return $this;
+        }
+
+        $timestamp = (new \DateTimeImmutable())->format('Y-m-d_H-i-s_u');
+        $logFile = $logDir . '/sql_' . $timestamp . '.log';
+
+        $sql = $this->queryString;
+
+        foreach ($this->params as $key => $value) {
+            if ($value === null) {
+                $value = 'NULL';
+            } elseif ($value instanceof \DateTimeInterface) {
+                $value = "'" . $value->format('Y-m-d H:i:s') . "'";
+            } elseif (is_string($value)) {
+                $value = "'" . addslashes($value) . "'";
+            }
+
+            $sql = str_replace(':' . $key, $value, $sql);
+        }
+
+        file_put_contents($logFile, $sql . PHP_EOL, FILE_APPEND);
+
         return $this;
     }
 
-    $timestamp = (new \DateTimeImmutable())->format('Y-m-d_H-i-s_u');
-    $logFile = $logDir . '/sql_' . $timestamp . '.log';
+    public function findByDefault()
+    {
+        $this->queryBuilder()
+            ->select()
+            ->from(substr($this->getTable(), 0, 1));
 
-    $sql = $this->queryString;
+        $this->queryString .= " WHERE " . substr($this->getTable(), 0, 1) . ".user_id IS NULL";
 
-    foreach ($this->params as $key => $value) {
-        if ($value === null) {
-            $value = 'NULL';
-        } elseif ($value instanceof \DateTimeInterface) {
-            $value = "'" . $value->format('Y-m-d H:i:s') . "'";
-        } elseif (is_string($value)) {
-            $value = "'" . addslashes($value) . "'";
-        }
-
-        $sql = str_replace(':' . $key, $value, $sql);
+        return $this->executeQuery()
+            ->getAllResults();
     }
-
-    file_put_contents($logFile, $sql . PHP_EOL, FILE_APPEND);
-
-    return $this;
-}
 }

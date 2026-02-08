@@ -12,9 +12,12 @@ class GetCharactersController extends AbstractController
 {
     public function process(Request $request): Response
     {
+        if (session_status() !== PHP_SESSION_ACTIVE) {
+            session_start();
+        }
         $characterRepository = new CharacterRepository();
-        $characters = $characterRepository->findAll();
+        $characters = $characterRepository->findByDefault();
 
-        return $this->render('character','list', ['characters' => $characters]);
+        return $this->render('character', 'defaultList', ['characters' => $characters]);
     }
 }

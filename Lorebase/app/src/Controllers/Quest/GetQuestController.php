@@ -13,6 +13,9 @@ class GetQuestController extends AbstractController
 {
     public function process(Request $request): Response
     {
+        if (session_status() !== PHP_SESSION_ACTIVE) {
+            session_start();
+        }
         $questRepository = new QuestRepository();
         $placeRepository = new PlaceRepository();
         $universRepository = new UniversRepository();
@@ -41,6 +44,8 @@ class GetQuestController extends AbstractController
             $universName = $universRepository->getUniversName($quest->univers_id);
         }
 
-        return $this->render('Quest_views', 'detail', ['quest' => $quest, 'placeName' => $placeName, 'universName' => $universName]);
+        $isOwnEntity = $this->isEntityOwner($quest);
+
+        return $this->render('Quest_views', 'detail', ['quest' => $quest, 'placeName' => $placeName, 'universName' => $universName, 'isOwnEntity' => $isOwnEntity]);
     }
 }

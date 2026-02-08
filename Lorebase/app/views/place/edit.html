@@ -175,7 +175,10 @@
             Archiver
           </button>
 
-          <a href="/place/<?php echo $place->slug; ?>" class="btn btn-cancel">
+          <a
+            href="/<?php echo htmlspecialchars($_SESSION['user']['username'] ?? ''); ?>/place/<?php echo $place->slug; ?>"
+            class="btn btn-cancel"
+          >
             Annuler
           </a>
         </div>
@@ -199,8 +202,10 @@
             data.status = statusValue;
           }
 
+          const username = '<?php echo htmlspecialchars($_SESSION['user']['username'] ?? ''); ?>';
+
           // Envoyer tous les champs + le status
-          fetch(`/place/<?php echo $place->id; ?>`, {
+          fetch(`/${username}/place/<?php echo $place->id; ?>`, {
             method: "PATCH",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(data),
@@ -212,7 +217,7 @@
 
               const result = await response.json();
 
-              window.location.href = `/place/${result.slug}`;
+              window.location.href = `/${username}/place/${result.slug}`;
             })
             .catch((error) => {
               console.error("Erreur:", error);

@@ -3,9 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../../src/style/css/framework.css">
-
-    <title>Place</title>
+    <link rel="stylesheet" href="../../src/style/css/framework.css" />
+    <title>Lieux</title>
     <style>
       body {
         font-family: Arial, sans-serif;
@@ -19,7 +18,7 @@
         margin-bottom: 30px;
       }
 
-      .place-container {
+      .places-container {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
         gap: 20px;
@@ -64,76 +63,143 @@
       }
     </style>
   </head>
-
   <body>
-    <h1>Place</h1>
+    <h1>Lieux</h1>
     <?php require "../components/sidebar.html"; ?>
-<div class="main-content">
+    <div class="main-content">
+      <!-- SECTION: TES LIEUX -->
+      <h2 style="text-align: center; margin-bottom: 10px; margin-top: 40px">
+        Tes lieux :
+      </h2>
+      <div class="places-container">
+        <a
+          href="/<?php echo htmlspecialchars($_SESSION['user']['username'] ?? ''); ?>/place/create"
+          class="place-card add-card"
+          >+</a
+        >
 
-    <div class="place-container">
-      <a href="/place/create" class="place-card add-card">+</a>
-      <?php foreach ($places as $place): ?> <?php if ($place->status ===
-      'published'): ?>
-      <article class="card">
-            <div class="card__content">
-              <div class="card__image">
-                <img src="src/style/assets/icon_sidebar/icon_place.svg" alt="logo" class="">
-              </div>
-              <h2 class="card__title_main-font"><?php echo htmlspecialchars($place->name); ?></h2>
-              <p class="card__text"><?php echo htmlspecialchars($place->description); ?></p>
-               <a
-        href="/place/<?php echo htmlspecialchars($place->slug); ?>"
-             class="button button--primary p--6"
-          >détail</a>
+        <!-- Cartes des lieux publiés -->
+        <?php foreach ($places as $place): ?><?php if ($place->status ===
+        'published'): ?>
+        <article class="card">
+          <div class="card__content">
+            <div class="card__image">
+              <img
+                src="../../src/style/assets/icon_sidebar/icon_place.svg"
+                alt="logo"
+                class=""
+              />
             </div>
-          </article>
-      
-      <?php endif; ?> <?php endforeach; ?>
-    </div>
-    <hr style="margin: 40px 0" />
-    <h2 style="text-align: center; margin-bottom: 10px">Brouillons :</h2>
+            <h2 class="card__title_main-font">
+              <?php echo htmlspecialchars($place->name); ?>
+            </h2>
+            <p class="card__text">
+              <?php echo htmlspecialchars($place->description); ?>
+            </p>
+            <a
+              href="/<?php echo htmlspecialchars($_SESSION['user']['username'] ?? ''); ?>/place/<?php echo htmlspecialchars($place->slug); ?>"
+              class="button button--primary p--6"
+              >détail</a
+            >
+          </div>
+        </article>
 
-    <div class="place-container">
-      <?php foreach ($places as $place): ?> <?php if ($place->status ===
-      'draft'): ?>
-      <article class="card">
-            <div class="card__content">
-              <div class="card__image">
-                <img src="src/style/assets/icon_sidebar/icon_place.svg" alt="logo" class="">
-              </div>
-              <h2 class="card__title_main-font"><?php echo htmlspecialchars($place->name); ?></h2>
-              <p class="card__text"><?php echo htmlspecialchars($place->description); ?></p>
-               <a
-        href="/place/<?php echo htmlspecialchars($place->slug); ?>"
-             class="button button--primary p--6"
-          >détail</a>
+        <?php endif; ?> <?php endforeach; ?>
+      </div>
+      <!-- SECTION: PERSONNAGES PAR DÉFAUT -->
+      <h2 style="text-align: center; margin-bottom: 10px; margin-top: 30px">
+        Lieux par défaut :
+      </h2>
+      <div class="places-container">
+        <?php foreach ($defaultPlaces as $place): ?><?php if ($place->status ===
+        'published'): ?>
+        <article class="card">
+          <div class="card__content">
+            <div class="card__image">
+              <img
+                src="../../src/style/assets/icon_sidebar/icon_place.svg"
+                alt="logo"
+                class=""
+              />
             </div>
-          </article>
+            <h2 class="card__title_main-font">
+              <?php echo htmlspecialchars($place->name); ?>
+            </h2>
+            <p class="card__text">
+              <?php echo htmlspecialchars($place->description); ?>
+            </p>
+            <a
+              href="/place/<?php echo htmlspecialchars($place->slug); ?>"
+              class="button button--primary p--6"
+              >détail</a
+            >
+          </div>
+        </article>
 
-      <?php endif; ?> <?php endforeach; ?>
-    </div>
-<hr style="margin: 40px 0" />
-    <h2 style="text-align: center; margin-bottom: 10px">Archivés</h2>
-    <div class="place-container">
-      <?php foreach ($places as $place): ?>
-        <?php if ($place->status === 'archived'): ?>
-          <article class="card">
-            <div class="card__content">
-              <div class="card__image">
-                <img src="src/style/assets/icon_sidebar/icon_place.svg" alt="logo" class="">
-              </div>
-              <h2 class="card__title_main-font"><?php echo htmlspecialchars($place->name); ?></h2>
-              <p class="card__text"><?php echo htmlspecialchars($place->description); ?></p>
-               <a
-        href="/place/<?php echo htmlspecialchars($place->slug); ?>"
-             class="button button--primary p--6"
-          >détail</a>
+        <?php endif; ?> <?php endforeach; ?>
+      </div>
+      <hr style="margin: 40px 0" />
+      <h2 style="text-align: center; margin-bottom: 10px">Brouillons :</h2>
+
+      <div class="places-container">
+        <?php foreach ($places as $place): ?> <?php if ($place->status ===
+        'draft'): ?>
+        <article class="card">
+          <div class="card__content">
+            <div class="card__image">
+              <img
+                src="../../src/style/assets/icon_sidebar/icon_place.svg"
+                alt="logo"
+                class=""
+              />
             </div>
-          </article>
+            <h2 class="card__title_main-font">
+              <?php echo htmlspecialchars($place->name); ?>
+            </h2>
+            <p class="card__text">
+              <?php echo htmlspecialchars($place->description); ?>
+            </p>
+            <a
+              href="/<?php echo htmlspecialchars($_SESSION['user']['username'] ?? ''); ?>/place/<?php echo htmlspecialchars($place->slug); ?>"
+              class="button button--primary p--6"
+              >détail</a
+            >
+            >
+          </div>
+        </article>
+        <?php endif; ?> <?php endforeach; ?>
+      </div>
 
-        <?php endif; ?>
-      <?php endforeach; ?>
-    </div>
+      <hr style="margin: 40px 0" />
+      <h2 style="text-align: center; margin-bottom: 10px">Archivées :</h2>
+
+      <div class="places-container">
+        <?php foreach ($places as $place): ?> <?php if ($place->status ===
+        'archived'): ?>
+        <article class="card">
+          <div class="card__content">
+            <div class="card__image">
+              <img
+                src="../../src/style/assets/icon_sidebar/icon_place.svg"
+                alt="logo"
+                class=""
+              />
+            </div>
+            <h2 class="card__title_main-font">
+              <?php echo htmlspecialchars($place->name); ?>
+            </h2>
+            <p class="card__text">
+              <?php echo htmlspecialchars($place->description); ?>
+            </p>
+            <a
+              href="/<?php echo htmlspecialchars($_SESSION['user']['username'] ?? ''); ?>/place/<?php echo htmlspecialchars($place->slug); ?>"
+              class="button button--primary p--6"
+              >détail</a
+            >
+          </div>
+        </article>
+        <?php endif; ?> <?php endforeach; ?>
+      </div>
     </div>
   </body>
 </html>

@@ -96,9 +96,18 @@
         <p><?php echo htmlspecialchars($univers->status); ?></p>
       </div>
       <div class="buttons">
-        <a href="/univers" class="btn btn-back">Retour</a>
+        <?php if (isset($_SESSION['user']) &&
+        isset($_SESSION['user']['username'])): ?>
         <a
-          href="/univers/<?php echo $univers->slug; ?>/edit"
+          href="/<?php echo htmlspecialchars($_SESSION['user']['username']); ?>/univers"
+          class="btn btn-back"
+          >Retour</a
+        >
+        <?php else: ?>
+        <a href="/univers" class="btn btn-back">Retour</a>
+        <?php endif; ?> <?php if (isset($isOwnEntity) && $isOwnEntity): ?>
+        <a
+          href="/<?php echo htmlspecialchars($_SESSION['user']['username'] ?? ''); ?>/univers/<?php echo $univers->slug; ?>/edit"
           class="btn"
           style="background-color: #ffc107; color: black"
           >Modifier</a
@@ -106,23 +115,26 @@
         <button
           type="button"
           class="btn btn-delete"
-          onclick="deleteCharacter(<?php echo $univers->id; ?>)">
+          onclick="deleteUnivers(<?php echo $univers->id; ?>)"
+        >
           Supprimer
         </button>
+        <?php endif; ?>
       </div>
     </div>
 
     <script>
-      function deleteCharacter(id) {
-        if (confirm("Êtes-vous sûr de vouloir supprimer ce personnage ?")) {
-          fetch(`/univers/${id}`, {
+      function deleteUnivers(id) {
+        if (confirm("Êtes-vous sûr de vouloir supprimer cet univers ?")) {
+          const username = '<?php echo htmlspecialchars($_SESSION['user']['username'] ?? ''); ?>';
+          fetch(`/${username}/univers/${id}`, {
             method: "DELETE",
             headers: {
               "Content-Type": "application/json",
             },
           }).then((response) => {
             if (response.ok) {
-              window.location.href = "/univers";
+              window.location.href = `/${username}/univers`;
             } else {
               alert("Erreur lors de la suppression");
             }
