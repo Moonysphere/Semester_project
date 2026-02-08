@@ -11,6 +11,10 @@ class PatchCharacterController extends AbstractController
 {
     public function process(Request $request): Response
     {
+        if (session_status() !== PHP_SESSION_ACTIVE) {
+            session_start();
+        }
+
         $characterRepository = new CharacterRepository();
         $character = $characterRepository->find($request->getSlug('id'));
 
@@ -34,10 +38,11 @@ class PatchCharacterController extends AbstractController
 
         $character->name = $data['name'] ?? $character->name;
         $character->slug = $characterRepository->checkSlug("slug", "character", $characterRepository->slugify($data['name'])) ?? $character->slug;
-        $character->role = $data['role'] ?? $character->role;
+        $character->role_id = $data['role_id'] ?? $character->role_id;
         $character->origin = $data['origin'] ?? $character->origin;
         $character->pv = $data['pv'] ?? $character->pv;
         $character->description = $data['description'] ?? $character->description;
+        $character->univers_id = $data['univers_id'] ?? $character->univers_id;
 
 
         if (array_key_exists('status', $data) && count($data) === 1) {

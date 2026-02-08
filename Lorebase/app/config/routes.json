@@ -4,16 +4,7 @@
     "method": "GET",
     "controller": "Homepage\\GetHomepageController"
   },
-  {
-    "path": "/character/create",
-    "method": "GET",
-    "controller": "Character\\GetCreateCharacterController"
-  },
-  {
-    "path": "/character/:slug/edit",
-    "method": "GET",
-    "controller": "Character\\GetEditCharacterController"
-  },
+
   {
     "path": "/character",
     "method": "GET",
@@ -25,28 +16,48 @@
     "controller": "Character\\GetCharacterController"
   },
   {
-    "path": "/character",
+    "path": "/:username/character/create",
+    "method": "GET",
+    "controller": "Character\\GetCreateCharacterController"
+  },
+  {
+    "path": "/:username/character/:slug/edit",
+    "method": "GET",
+    "controller": "Character\\GetEditCharacterController"
+  },
+  {
+    "path": "/:username/character",
+    "method": "GET",
+    "controller": "Character\\GetUserCharactersController"
+  },
+  {
+    "path": "/:username/character/:slug",
+    "method": "GET",
+    "controller": "Character\\GetCharacterController"
+  },
+  {
+    "path": "/:username/character",
     "method": "POST",
     "controller": "Character\\PostCharacterController"
   },
   {
-    "path": "/character/:id",
+    "path": "/:username/character/:id",
     "method": "PATCH",
     "controller": "Character\\PatchCharacterController"
   },
   {
-    "path": "/character/:id",
+    "path": "/:username/character/:id",
     "method": "DELETE",
     "controller": "Character\\DeleteCharacterController"
   },
 
   {
-    "path": "/quest/create",
+    "path": "/:username/quest/create",
     "method": "GET",
     "controller": "Quest\\GetCreateQuestController"
   },
   {
-    "path": "/quest/:slug/edit",
+    "path": "/:username/quest/:slug/edit",
     "method": "GET",
     "controller": "Quest\\GetEditQuestController"
   },
@@ -61,27 +72,37 @@
     "controller": "Quest\\GetQuestController"
   },
   {
-    "path": "/quest",
+    "path": "/:username/quest",
+    "method": "GET",
+    "controller": "Quest\\GetUserQuestsController"
+  },
+  {
+    "path": "/:username/quest/:slug",
+    "method": "GET",
+    "controller": "Quest\\GetQuestController"
+  },
+  {
+    "path": "/:username/quest",
     "method": "POST",
     "controller": "Quest\\PostQuestController"
   },
   {
-    "path": "/quest/:id",
+    "path": "/:username/quest/:id",
     "method": "PATCH",
     "controller": "Quest\\PatchQuestController"
   },
   {
-    "path": "/quest/:id",
+    "path": "/:username/quest/:id",
     "method": "DELETE",
     "controller": "Quest\\DeleteQuestController"
   },
   {
-    "path": "/univers/create",
+    "path": "/:username/univers/create",
     "method": "GET",
     "controller": "Univers\\GetCreateUniversController"
   },
   {
-    "path": "/univers/:slug/edit",
+    "path": "/:username/univers/:slug/edit",
     "method": "GET",
     "controller": "Univers\\GetEditUnivers"
   },
@@ -96,17 +117,27 @@
     "controller": "Univers\\GetUniversController"
   },
   {
-    "path": "/univers",
+    "path": "/:username/univers",
+    "method": "GET",
+    "controller": "Univers\\GetUserUniversController"
+  },
+  {
+    "path": "/:username/univers/:slug",
+    "method": "GET",
+    "controller": "Univers\\GetUniversController"
+  },
+  {
+    "path": "/:username/univers",
     "method": "POST",
     "controller": "Univers\\PostUniversController"
   },
   {
-    "path": "/univers/:id",
+    "path": "/:username/univers/:id",
     "method": "PATCH",
     "controller": "Univers\\PatchUniversController"
   },
   {
-    "path": "/univers/:id",
+    "path": "/:username/univers/:id",
     "method": "DELETE",
     "controller": "Univers\\DeleteUniversController"
   },
@@ -211,7 +242,17 @@
     "controller": "Place\\GetCreatePlaceController"
   },
   {
+    "path": "/:username/place/create",
+    "method": "GET",
+    "controller": "Place\\GetCreatePlaceController"
+  },
+  {
     "path": "/place/:slug/edit",
+    "method": "GET",
+    "controller": "Place\\GetEditPlaceController"
+  },
+  {
+    "path": "/:username/place/:slug/edit",
     "method": "GET",
     "controller": "Place\\GetEditPlaceController"
   },
@@ -221,7 +262,17 @@
     "controller": "Place\\GetPlacesController"
   },
   {
+    "path": "/:username/place",
+    "method": "GET",
+    "controller": "Place\\GetUserPlacesController"
+  },
+  {
     "path": "/place/:slug",
+    "method": "GET",
+    "controller": "Place\\GetPlaceController"
+  },
+  {
+    "path": "/:username/place/:slug",
     "method": "GET",
     "controller": "Place\\GetPlaceController"
   },
@@ -231,12 +282,27 @@
     "controller": "Place\\PostPlaceController"
   },
   {
+    "path": "/:username/place",
+    "method": "POST",
+    "controller": "Place\\PostPlaceController"
+  },
+  {
     "path": "/place/:id",
     "method": "PATCH",
     "controller": "Place\\PatchPlaceController"
   },
   {
+    "path": "/:username/place/:id",
+    "method": "PATCH",
+    "controller": "Place\\PatchPlaceController"
+  },
+  {
     "path": "/place/:id",
+    "method": "DELETE",
+    "controller": "Place\\DeletePlaceController"
+  },
+  {
+    "path": "/:username/place/:id",
     "method": "DELETE",
     "controller": "Place\\DeletePlaceController"
   },

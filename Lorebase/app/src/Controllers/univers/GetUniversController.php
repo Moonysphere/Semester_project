@@ -11,16 +11,21 @@ class GetUniversController extends AbstractController
 {
     public function process(Request $request): Response
     {
+        if (session_status() !== PHP_SESSION_ACTIVE) {
+            session_start();
+        }
         $universRepository = new UniversRepository();
 
-       $slug = $request->getSlug('slug');
+        $slug = $request->getSlug('slug');
 
-    if ($slug === '') {
-        return new Response('Slug manquant', 400, ['Content-Type' => 'application/json']);
-    }
+        if ($slug === '') {
+            return new Response('Slug manquant', 400, ['Content-Type' => 'application/json']);
+        }
 
         $univers = $universRepository->findBySlug($slug, 'univers');
 
-        return $this->render('univers' , 'detail', ['univers' => $univers]);
+        $isOwnEntity = $this->isEntityOwner($univers);
+
+        return $this->render('univers', 'detail', ['univers' => $univers, 'isOwnEntity' => $isOwnEntity]);
     }
 }

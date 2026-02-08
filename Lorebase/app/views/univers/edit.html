@@ -98,7 +98,8 @@
             id="name"
             name="name"
             value="<?php echo htmlspecialchars($univers->name); ?>"
-            required />
+            required
+          />
         </div>
         <div class="form-group">
           <label for="description">description :</label>
@@ -107,14 +108,16 @@
             id="description"
             name="description"
             value="<?php echo htmlspecialchars($univers->description); ?>"
-            required />
+            required
+          />
         </div>
         <div class="buttons">
           <button
             type="submit"
             class="btn btn-submit"
             name="status"
-            value="published">
+            value="published"
+          >
             Publier
           </button>
 
@@ -122,7 +125,8 @@
             type="submit"
             class="btn btn-draft"
             name="status"
-            value="draft">
+            value="draft"
+          >
             Brouillon
           </button>
 
@@ -130,7 +134,8 @@
             type="submit"
             class="btn btn-archived"
             name="status"
-            value="archived">
+            value="archived"
+          >
             Archiver
           </button>
         </div>
@@ -138,7 +143,10 @@
 
       <!-- Bouton Annuler HORS du formulaire -->
       <div class="buttons" style="margin-top: 10px">
-        <a href="/univers/<?php echo $univers->slug; ?>" class="btn btn-cancel">
+        <a
+          href="/<?php echo htmlspecialchars($_SESSION['user']['username'] ?? ''); ?>/univers/<?php echo $univers->slug; ?>"
+          class="btn btn-cancel"
+        >
           Annuler
         </a>
       </div>
@@ -162,7 +170,9 @@
             data.status = statusValue;
           }
 
-          fetch(`/univers/<?php echo $univers->id; ?>`, {
+          const username = '<?php echo htmlspecialchars($_SESSION['user']['username'] ?? ''); ?>';
+
+          fetch(`/${username}/univers/<?php echo $univers->id; ?>`, {
             method: "PATCH",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(data),
@@ -174,7 +184,7 @@
 
               const result = await response.json();
 
-              window.location.href = `/univers/${result.slug}`;
+              window.location.href = `/${username}/univers/${result.slug}`;
             })
             .catch((error) => {
               console.error("Erreur:", error);

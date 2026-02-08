@@ -11,6 +11,10 @@ class PostQuestController extends AbstractController
 {
     public function process(Request $request): Response
     {
+        if (session_status() !== PHP_SESSION_ACTIVE) {
+            session_start();
+        }
+
         $data = $request->getPayload();
 
         if ($data === null || $data === '') {
@@ -70,6 +74,9 @@ class PostQuestController extends AbstractController
             );
         }
 
-        return new Response('', 302, ['Location' => '/quest']);
+        $username = $_SESSION['user']['username'] ?? null;
+        $redirectUrl = $username ? "/$username/quest" : '/quest';
+
+        return new Response('', 302, ['Location' => $redirectUrl]);
     }
 }

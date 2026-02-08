@@ -11,6 +11,10 @@ class PostCharacterController extends AbstractController
 {
     public function process(Request $request): Response
     {
+        if (session_status() !== PHP_SESSION_ACTIVE) {
+            session_start();
+        }
+
         $data = $request->getPayload();
 
         if ($data === null || $data === '') {
@@ -71,6 +75,9 @@ class PostCharacterController extends AbstractController
             );
         }
 
-        return new Response('', 302, ['Location' => '/character']);
+        $username = $_SESSION['user']['username'] ?? null;
+        $redirectUrl = $username ? "/$username/character" : '/character';
+
+        return new Response('', 302, ['Location' => $redirectUrl]);
     }
 }

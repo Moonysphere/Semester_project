@@ -11,6 +11,10 @@ class PostPlaceController extends AbstractController
 {
     public function process(Request $request): Response
     {
+        if (session_status() !== PHP_SESSION_ACTIVE) {
+            session_start();
+        }
+
         $data = $request->getPayload();
 
         if ($data === null || $data === '') {
@@ -70,6 +74,9 @@ class PostPlaceController extends AbstractController
             );
         }
 
-        return new Response('', 302, ['Location' => '/place']);
+        $username = $_SESSION['user']['username'] ?? null;
+        $redirectUrl = $username ? "/$username/place" : '/place';
+
+        return new Response('', 302, ['Location' => $redirectUrl]);
     }
 }

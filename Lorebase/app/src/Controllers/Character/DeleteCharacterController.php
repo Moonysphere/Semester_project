@@ -12,6 +12,10 @@ class DeleteCharacterController extends AbstractController
 {
     public function process(Request $request): Response
     {
+        if (session_status() !== PHP_SESSION_ACTIVE) {
+            session_start();
+        }
+
         $characterRepository = new CharacterRepository();
 
         $character = $characterRepository->find($request->getSlug('id'));
@@ -25,7 +29,9 @@ class DeleteCharacterController extends AbstractController
         }
 
         $characterRepository->remove($character);
+        $username = $_SESSION['user']['username'] ?? null;
+        $redirectUrl = $username ? "/$username/character" : '/character';
 
-        return new Response('Personnage supprimé', 204, ['Content-Type' => 'application/json', 'Location' => '/character']);
+        return new Response('Personnage supprimé', 302, ['Content-Type' => 'application/json', 'Location' => $redirectUrl]);
     }
 }

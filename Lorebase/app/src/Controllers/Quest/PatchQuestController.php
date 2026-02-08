@@ -11,6 +11,10 @@ class PatchQuestController extends AbstractController
 {
     public function process(Request $request): Response
     {
+        if (session_status() !== PHP_SESSION_ACTIVE) {
+            session_start();
+        }
+
         $questRepository = new QuestRepository();
         $quest = $questRepository->find($request->getSlug('id'));
 

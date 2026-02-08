@@ -12,9 +12,12 @@ class GetPlacesController extends AbstractController
 {
     public function process(Request $request): Response
     {
+        if (session_status() !== PHP_SESSION_ACTIVE) {
+            session_start();
+        }
         $placeRepository = new PlaceRepository();
-        $places = $placeRepository->findAll();
+        $places = $placeRepository->findByDefault();
 
-        return $this->render('place', 'list', ['places' => $places]);
+        return $this->render('place', 'defaultList', ['places' => $places]);
     }
 }
