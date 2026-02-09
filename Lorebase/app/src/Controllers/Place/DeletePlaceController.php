@@ -11,6 +11,10 @@ class DeletePlaceController extends AbstractController
 {
     public function process(Request $request): Response
     {
+        if (session_status() !== PHP_SESSION_ACTIVE) {
+            session_start();
+        }
+
         $placeRepository = new PlaceRepository();
 
         $place = $placeRepository->find($request->getSlug('id'));

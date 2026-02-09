@@ -99,9 +99,18 @@
       </div>
 
       <div class="buttons">
-        <a href="/place" class="btn btn-back">Retour</a>
+        <?php if (isset($_SESSION['user']) &&
+        isset($_SESSION['user']['username'])): ?>
         <a
-          href="/place/<?php echo $place->slug; ?>/edit"
+          href="/<?php echo htmlspecialchars($_SESSION['user']['username']); ?>/place"
+          class="btn btn-back"
+          >Retour</a
+        >
+        <?php else: ?>
+        <a href="/place" class="btn btn-back">Retour</a>
+        <?php endif; ?> <?php if (isset($isOwnEntity) && $isOwnEntity): ?>
+        <a
+          href="/<?php echo htmlspecialchars($_SESSION['user']['username'] ?? ''); ?>/place/<?php echo $place->slug; ?>/edit"
           class="btn"
           style="background-color: #ffc107; color: black"
           >Modifier</a
@@ -109,23 +118,27 @@
         <button
           type="button"
           class="btn btn-delete"
-          onclick="deletePlace('<?php echo $place->slug; ?>')">
+          onclick="deletePlace(<?php echo $place->id; ?>)"
+        >
           Supprimer
         </button>
+        <?php endif; ?>
       </div>
     </div>
 
     <script>
       function deletePlace(id) {
         if (confirm("Êtes-vous sûr de vouloir supprimer cette place ?")) {
-          fetch(`/place/${id}`, {
+          const username =
+            '<?php echo htmlspecialchars($_SESSION["user"]["username"] ?? ""); ?>';
+          fetch(`/${username}/place/${id}`, {
             method: "DELETE",
             headers: {
               "Content-Type": "application/json",
             },
           }).then((response) => {
             if (response.ok) {
-              window.location.href = "/place";
+              window.location.href = `/${username}/place`;
             } else {
               alert("Erreur lors de la suppression");
             }

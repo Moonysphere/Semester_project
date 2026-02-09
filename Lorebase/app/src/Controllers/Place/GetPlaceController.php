@@ -12,6 +12,9 @@ class GetPlaceController extends AbstractController
 {
     public function process(Request $request): Response
     {
+        if (session_status() !== PHP_SESSION_ACTIVE) {
+            session_start();
+        }
         $placeRepository = new PlaceRepository();
         $universRepository = new UniversRepository();
 
@@ -28,6 +31,8 @@ class GetPlaceController extends AbstractController
             $universName = $universRepository->getUniversName($place->univers_id);
         }
 
-        return $this->render('place', 'detail', ['place' => $place, 'universName' => $universName]);
+        $isOwnEntity = $this->isEntityOwner($place);
+
+        return $this->render('place', 'detail', ['place' => $place, 'universName' => $universName, 'isOwnEntity' => $isOwnEntity]);
     }
 }

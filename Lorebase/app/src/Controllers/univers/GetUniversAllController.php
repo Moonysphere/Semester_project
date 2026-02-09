@@ -12,9 +12,12 @@ class GetUniversAllController extends AbstractController
 {
     public function process(Request $request): Response
     {
-        $UniversRepository = new UniversRepository();
-        $univers = $UniversRepository->findAll();
+        if (session_status() !== PHP_SESSION_ACTIVE) {
+            session_start();
+        }
+        $universRepository = new UniversRepository();
+        $univers = $universRepository->findByDefault();
 
-        return $this->render('univers','list', ['univers' => $univers]);
+        return $this->render('univers', 'defaultList', ['univers' => $univers]);
     }
 }

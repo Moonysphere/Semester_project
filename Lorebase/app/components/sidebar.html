@@ -44,6 +44,91 @@
           <img
             src="/src/style/assets/icon_sidebar/icon_settings.svg"
             alt="Paramètres" />
+        <?php if (isset($user) && isset($user['username'])): ?>
+        <a
+          href="/<?php echo htmlspecialchars($user['username']); ?>/character"
+          class="sidebar__link"
+        >
+          <img
+            src="/src/style/assets/icon_sidebar/icon_perso.svg"
+            alt="Personnages"
+          />
+        </a>
+        <?php else: ?>
+        <a href="/character" class="sidebar__link">
+          <img
+            src="/src/style/assets/icon_sidebar/icon_perso.svg"
+            alt="Personnages"
+          />
+        </a>
+        <?php endif; ?>
+      </li>
+      <li class="sidebar__menu-item">
+        <?php if (isset($user) && isset($user['username'])): ?>
+        <a
+          href="/<?php echo htmlspecialchars($user['username']); ?>/univers"
+          class="sidebar__link"
+        >
+          <img
+            src="/src/style/assets/icon_sidebar/icon_uni.svg"
+            alt="Univers"
+          />
+        </a>
+        <?php else: ?>
+        <a href="/univers" class="sidebar__link">
+          <img
+            src="/src/style/assets/icon_sidebar/icon_uni.svg"
+            alt="Univers"
+          />
+        </a>
+        <?php endif; ?>
+      </li>
+      <li class="sidebar__menu-item">
+        <?php if (isset($user) && isset($user['username'])): ?>
+        <a
+          href="/<?php echo htmlspecialchars($user['username']); ?>/place"
+          class="sidebar__link"
+        >
+          <img
+            src="/src/style/assets/icon_sidebar/icon_place.svg"
+            alt="Lieux"
+          />
+        </a>
+        <?php else: ?>
+        <a href="/place" class="sidebar__link">
+          <img
+            src="/src/style/assets/icon_sidebar/icon_place.svg"
+            alt="Lieux"
+          />
+        </a>
+        <?php endif; ?>
+      </li>
+      <li class="sidebar__menu-item">
+        <?php if (isset($user) && isset($user['username'])): ?>
+        <a
+          href="/<?php echo htmlspecialchars($user['username']); ?>/quest"
+          class="sidebar__link"
+        >
+          <img
+            src="/src/style/assets/icon_sidebar/icon_rules.svg"
+            alt="Quêtes"
+          />
+        </a>
+        <?php else: ?>
+        <a href="/quest" class="sidebar__link">
+          <img
+            src="/src/style/assets/icon_sidebar/icon_rules.svg"
+            alt="Quêtes"
+          />
+        </a>
+        <?php endif; ?>
+      </li>
+      <li class="sidebar__menu-item">
+        <a href="/user/profile" class="sidebar__link">
+          <img
+            src="/src/style/assets/icon_sidebar/icon_settings.svg"
+            alt="Paramètres"
+          />
         </a>
       </li>
     </ul>
@@ -55,6 +140,8 @@
       class="sidebar__theme-toggle"
       id="themeToggle"
       aria-label="Changer de thème">
+      aria-label="Changer de thème"
+    >
       <span class="sidebar__theme-toggle-icon">🌙</span>
     </button>
 
@@ -67,6 +154,15 @@
       <a href="/logout" class="button button--sm button--danger" id="logoutBtn"
         >Déconnexion</a
       >
+      <form method="POST" action="/logout" style="display: inline">
+        <button
+          type="submit"
+          class="button button--sm button--danger"
+          id="logoutBtn"
+        >
+          Déconnexion
+        </button>
+      </form>
       <?php else: ?>
       <a href="/login" class="button button--sm button--primary">Connexion</a>
       <a href="/register" class="button button--sm button--primary"

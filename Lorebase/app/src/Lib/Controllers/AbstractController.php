@@ -4,6 +4,7 @@ namespace App\Lib\Controllers;
 
 use App\Lib\Http\Request;
 use App\Lib\Http\Response;
+use App\Repositories\UserRepository;
 
 abstract class AbstractController
 {
@@ -82,5 +83,41 @@ abstract class AbstractController
         }
 
         return null;
+    }
+
+    protected function getUserFromUsername(Request $request): ?array
+    {
+        $username = $request->getSlug('username');
+
+        if (!$username) {
+            return null;
+        }
+
+        $userRepository = new UserRepository();
+        $user = $userRepository->findByUsername($username);
+
+        if (!$user) {
+            return null;
+        }
+
+        $currentUserEmail = $_SESSION['user']['email'] ?? null;
+        $isOwner = $currentUserEmail === $user->email;
+
+        return [
+            'user' => $user,
+            'isOwner' => $isOwner,
+            'currentUserEmail' => $currentUserEmail,
+        ];
+    }
+
+
+    protected function isEntityOwner(?object $entity): bool
+    {
+        if (!$entity || !isset($entity->user_id)) {
+            return false;
+        }
+
+        $currentUserEmail = $_SESSION['user']['email'] ?? null;
+        return $currentUserEmail !== null && $entity->user_id === $currentUserEmail;
     }
 }

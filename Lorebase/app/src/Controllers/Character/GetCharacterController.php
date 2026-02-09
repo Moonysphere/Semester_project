@@ -13,6 +13,10 @@ class GetCharacterController extends AbstractController
 {
     public function process(Request $request): Response
     {
+        if (session_status() !== PHP_SESSION_ACTIVE) {
+            session_start();
+        }
+
         $characterRepository = new CharacterRepository();
         $roleRepository = new RoleRepository();
         $universRepository = new UniversRepository();
@@ -41,6 +45,8 @@ class GetCharacterController extends AbstractController
             $universName = $universRepository->getUniversName($character->univers_id);
         }
 
-        return $this->render('character', 'detail', ['character' => $character, 'roleName' => $roleName, 'universName' => $universName]);
+        $isOwnEntity = $this->isEntityOwner($character);
+
+        return $this->render('character', 'detail', ['character' => $character, 'roleName' => $roleName, 'universName' => $universName, 'isOwnEntity' => $isOwnEntity]);
     }
 }

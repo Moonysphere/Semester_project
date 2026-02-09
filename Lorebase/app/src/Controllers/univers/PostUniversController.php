@@ -11,6 +11,10 @@ class PostUniversController extends AbstractController
 {
     public function process(Request $request): Response
     {
+        if (session_status() !== PHP_SESSION_ACTIVE) {
+            session_start();
+        }
+
         $data = $request->getPayload();
 
         if ($data === null || $data === '') {
@@ -72,6 +76,9 @@ class PostUniversController extends AbstractController
             );
         }
 
-        return new Response('', 302, ['Location' => '/univers']);
+        $username = $_SESSION['user']['username'] ?? null;
+        $redirectUrl = $username ? "/$username/univers" : '/univers';
+
+        return new Response('', 302, ['Location' => $redirectUrl]);
     }
 }

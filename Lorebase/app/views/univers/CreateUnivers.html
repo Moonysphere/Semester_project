@@ -80,7 +80,10 @@
   </head>
   <body>
     <h1>Créer un Univers</h1>
-    <form method="POST" action="/univers">
+    <form
+      method="POST"
+      action="/<?php echo htmlspecialchars($_SESSION['user']['username'] ?? ''); ?>/univers"
+    >
       <div class="form-group">
         <label for="name">Nom de l’univers :</label>
         <input type="text" id="name" name="name" required />

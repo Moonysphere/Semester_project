@@ -8,8 +8,11 @@ use App\Lib\Controllers\AbstractController;
 
 class GetCreateUniversController extends AbstractController
 {
-     public function process(Request $request): Response
+    public function process(Request $request): Response
     {
-        return $this->render('univers','CreateUnivers');
+        if (session_status() !== PHP_SESSION_ACTIVE) {
+            session_start();
+        }
+        return $this->render('univers', 'CreateUnivers');
     }
 }

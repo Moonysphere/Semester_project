@@ -11,6 +11,10 @@ class DeleteUniversController extends AbstractController
 {
     public function process(Request $request): Response
     {
+        if (session_status() !== PHP_SESSION_ACTIVE) {
+            session_start();
+        }
+
         $universRepository = new UniversRepository();
 
         $univers = $universRepository->find($request->getSlug('id'));

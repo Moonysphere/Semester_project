@@ -106,9 +106,18 @@
       </div>
 
       <div class="buttons">
-        <a href="/quest" class="btn btn-back">Retour</a>
+        <?php if (isset($_SESSION['user']) &&
+        isset($_SESSION['user']['username'])): ?>
         <a
-          href="/quest/<?php echo $quest->slug; ?>/edit"
+          href="/<?php echo htmlspecialchars($_SESSION['user']['username']); ?>/quest"
+          class="btn btn-back"
+          >Retour</a
+        >
+        <?php else: ?>
+        <a href="/quest" class="btn btn-back">Retour</a>
+        <?php endif; ?> <?php if (isset($isOwnEntity) && $isOwnEntity): ?>
+        <a
+          href="/<?php echo htmlspecialchars($_SESSION['user']['username'] ?? ''); ?>/quest/<?php echo $quest->slug; ?>/edit"
           class="btn"
           style="background-color: #ffc107; color: black"
           >Modifier</a
@@ -120,20 +129,22 @@
         >
           Supprimer
         </button>
+        <?php endif; ?>
       </div>
     </div>
 
     <script>
       function deleteQuest(id) {
         if (confirm("Êtes-vous sûr de vouloir supprimer cette quête ?")) {
-          fetch(`/quest/${id}`, {
+          const username = '<?php echo htmlspecialchars($_SESSION['user']['username'] ?? ''); ?>';
+          fetch(`/${username}/quest/${id}`, {
             method: "DELETE",
             headers: {
               "Content-Type": "application/json",
             },
           }).then((response) => {
             if (response.ok) {
-              window.location.href = "/quest";
+              window.location.href = `/${username}/quest`;
             } else {
               alert("Erreur lors de la suppression");
             }
