@@ -10,12 +10,12 @@
 </head>
 
 <body>
-  
+
   <?php require "../components/sidebar.html"; ?>
-  
+
   <!-- ========== CONTENU PRINCIPAL ========== -->
   <div class="main-content">
-    
+
     <!-- Hero -->
     <section class="hero">
       <h1>Bienvenue sur <span>Lorebase</span></h1>
@@ -23,22 +23,22 @@
         Créez et gérez vos univers fictifs, personnages, et règles de jeu en un
         seul endroit.
       </p>
-      
+
       <?php if (!isset($user)): ?>
       <a href="/register" class="button button--lg button--primary">
         Commencer gratuitement
       </a>
       <?php endif; ?>
     </section>
-    
-    
-    
+
+
+
     <footer class="footer">
       <p>&copy; 2026 Lorebase - Projet Semestre</p>
     </footer>
-    
+
   </div>
-  
+
 </body>
 
 

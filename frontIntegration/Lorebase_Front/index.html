@@ -11,67 +11,140 @@
 
 <body>
 
-  <!-- BOUTON TOGGLE MOBILE -->
-  <button class="sidebar-toggle" id="sidebarToggle">☰</button>
+  <!-- Sidebar Component -->
+  <div class="sidebar-container">
+    <style>
 
-  <!-- OVERLAY MOBILE -->
+    </style>
+
+    <div class="sidebar" id="sidebar">
+      <!-- Header -->
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <div class="sidebar-logo-icon">
+            <img src="./src/assets/icon_sidebar/logo.svg" alt="">
+          </div>
+          <span class="sidebar-logo-text">Lorebase</span>
+        </div>
+        <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2">
+            <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z"></path>
+            <path d="M9 4v16"></path>
+            <path d="M14 10l2 2l-2 2"></path>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Menu -->
+      <nav class="sidebar-menu">
+        <!-- Home -->
+        <div class="sidebar-item" data-tooltip="Personnage">
+          <a href="#home" class="sidebar-link active">
+            <img src="./src/assets/icon_sidebar/icon_perso.svg" alt="Icône personnage">
+            <span class="sidebar-text">Personnage</span>
+          </a>
+        </div>
+
+        <!-- Dashboard -->
+        <div class="sidebar-item" data-tooltip="Place">
+          <a href="#home" class="sidebar-link active">
+            <img src="./src/assets/icon_sidebar/icon_place.svg" alt="Icône place">
+            <span class="sidebar-text">Place</span>
+          </a>
+        </div>
+
+        <!-- Projects -->
+        <div class="sidebar-item" data-tooltip="Règle">
+          <a href="#home" class="sidebar-link active">
+            <img src="./src/assets/icon_sidebar/icon_rules.svg" alt="Icône règle">
+            <span class="sidebar-text">Règle</span>
+          </a>
+        </div>
+
+        <!-- Messages -->
+        <div class="sidebar-item" data-tooltip="Paramètre">
+          <a href="#home" class="sidebar-link active">
+            <img src="./src/assets/icon_sidebar/icon_settings.svg" alt="Icône paramètre">
+            <span class="sidebar-text">Paramètre</span>
+          </a>
+        </div>
+
+        <div class="sidebar-item" data-tooltip="Univers">
+          <a href="#home" class="sidebar-link active">
+            <img src="./src/assets/icon_sidebar/icon_uni.svg" alt="Icône uni">
+            <span class="sidebar-text">"Univers</span>
+          </a>
+        </div>
+
+        <!-- Divider -->
+        <div class="sidebar-divider"></div>
+
+        <!-- Settings -->
+        <div class="sidebar-item" data-tooltip="Paramètres">
+          <a href="#settings" class="sidebar-link">
+            <svg class="sidebar-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2">
+              <path
+                d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94-1.543.826-3.31 2.37-2.37c1 .608 2.296.07 2.572-1.065z">
+              </path>
+              <path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"></path>
+            </svg>
+            <span class="sidebar-text">Paramètres</span>
+          </a>
+        </div>
+      </nav>
+
+      <!-- Footer -->
+      <div class="sidebar-footer">
+        <div class="sidebar-item" data-tooltip="Déconnexion">
+          <a href="#logout" class="sidebar-link">
+            <svg class="sidebar-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2">
+              <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2">
+              </path>
+              <path d="M9 12h12l-3 -3"></path>
+              <path d="M18 15l3 -3"></path>
+            </svg>
+            <span class="sidebar-text">Déconnexion</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
-  <!-- ========== SIDEBAR ========== -->
-  <aside class="sidebar" id="sidebar">
+  <script>
+    // Toggle sidebar
+    const sidebar = document.getElementById('sidebar');
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    const sidebarContainer = document.querySelector('.sidebar-container');
+    const sidebarOverlay = document.getElementById('sidebarOverlay');
 
-    <!-- HEADER -->
-    <div class="sidebar__header">
-      <div class="sidebar__logo">
-        <img src="/src/assets/icon_sidebar/logo.svg" alt="logo" class="">
-      </div>
-    </div>
+    sidebarToggle.addEventListener('click', () => {
+      sidebar.classList.toggle('closed');
 
-    <!-- NAVIGATION -->
-    <nav class="sidebar__nav">
+      // Dispatch event pour ajuster le contenu principal
+      window.dispatchEvent(new CustomEvent('sidebar-toggle', {
+        detail: { isClosed: sidebar.classList.contains('closed') }
+      }));
+    });
 
-      <!-- Section Contenu -->
-      <ul class="sidebar__menu">
-        <li class="sidebar__menu-item">
-          <a href="#" class="sidebar__link">
-            <img src="/src/assets/icon_sidebar/icon_perso.svg" alt="logo" class="">
-          </a>
-        </li>
-        <li class="sidebar__menu-item">
-          <a href="#" class="sidebar__link">
-            <img src="/src/assets/icon_sidebar/icon_uni.svg" alt="logo" class="">
-          </a>
-        </li>
-        <li class="sidebar__menu-item">
-          <a href="#" class="sidebar__link">
-            <img src="/src/assets/icon_sidebar/icon_place.svg" alt="logo" class="">
-          </a>
-        </li>
-        <li class="sidebar__menu-item">
-          <a href="#" class="sidebar__link">
-            <img src="/src/assets/icon_sidebar/icon_rules.svg" alt="logo" class="">
-          </a>
-        </li>
-        <li class="sidebar__menu-item">
-          <a href="#" class="sidebar__link">
-            <img src="/src/assets/icon_sidebar/icon_settings.svg" alt="logo" class="">
-          </a>
-        </li>
-      </ul>
+    // Fermer sur mobile avec overlay
+    sidebarOverlay.addEventListener('click', () => {
+      sidebarContainer.classList.remove('mobile-open');
+    });
 
-    </nav>
-
-    <!-- FOOTER / PROFIL -->
-    <div class="sidebar__footer">
-      <button class="sidebar__theme-toggle" id="themeToggle" aria-label="Changer de thème">
-        <span class="sidebar__theme-toggle-icon">🌙</span>
-      </button>
-      <div class="sidebar__user">
-        <div class="sidebar__user-avatar">JD</div>
-      </div>
-    </div>
-
-  </aside>
+    // Active link
+    const links = document.querySelectorAll('.sidebar-link');
+    links.forEach(link => {
+      link.addEventListener('click', function (e) {
+        links.forEach(l => l.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+  </script>
 
   <!-- ========== CONTENU PRINCIPAL ========== -->
   <main class="main-content">
@@ -116,65 +189,6 @@
     </div>
   </main>
 
-  <!-- JAVASCRIPT POUR TOGGLE MOBILE -->
-  <script>
-    const sidebar = document.getElementById('sidebar');
-    const sidebarToggle = document.getElementById('sidebarToggle');
-    const sidebarOverlay = document.getElementById('sidebarOverlay');
-
-    // Ouvrir/fermer la sidebar sur mobile
-    sidebarToggle.addEventListener('click', () => {
-      sidebar.classList.toggle('active');
-      sidebarOverlay.classList.toggle('active');
-    });
-
-    // Fermer en cliquant sur l'overlay
-    sidebarOverlay.addEventListener('click', () => {
-      sidebar.classList.remove('active');
-      sidebarOverlay.classList.remove('active');
-    });
-  </script>
-  <!-- JAVASCRIPT POUR THEME TOGGLE -->
-  <script>
-    const themeToggle = document.getElementById('themeToggle');
-    const themeIcon = themeToggle?.querySelector('.sidebar__theme-toggle-icon');
-    const htmlElement = document.documentElement;
-
-    // Récupérer le thème sauvegardé ou utiliser le thème système
-    const savedTheme = localStorage.getItem('theme');
-    const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    const currentTheme = savedTheme || systemTheme;
-
-    // Appliquer le thème au chargement
-    if (currentTheme === 'dark') {
-      htmlElement.setAttribute('data-theme', 'dark');
-      if (themeIcon) themeIcon.textContent = '🌙';
-    } else {
-      htmlElement.setAttribute('data-theme', 'light');
-      if (themeIcon) themeIcon.textContent = '☀️';
-    }
-
-    // Toggle theme on click
-    if (themeToggle) {
-      themeToggle.addEventListener('click', function () {
-        const currentTheme = htmlElement.getAttribute('data-theme');
-        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-
-        // Animation de rotation
-        themeToggle.classList.add('rotating');
-        setTimeout(() => themeToggle.classList.remove('rotating'), 600);
-
-        // Changer le thème
-        htmlElement.setAttribute('data-theme', newTheme);
-        localStorage.setItem('theme', newTheme);
-
-        // Changer l'icône
-        if (themeIcon) {
-          themeIcon.textContent = newTheme === 'dark' ? '🌙' : '☀️';
-        }
-      });
-    }
-  </script>
 
 </body>
 

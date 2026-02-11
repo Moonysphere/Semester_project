@@ -1,132 +1,97 @@
 <!doctype html>
 <html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Créer un Personnage</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        max-width: 600px;
-        margin: 50px auto;
-        padding: 20px;
-      }
-      form {
-        border: 1px solid #ccc;
-        padding: 20px;
-        border-radius: 5px;
-      }
-      .form-group {
-        margin-bottom: 15px;
-      }
-      label {
-        display: block;
-        margin-bottom: 5px;
-        font-weight: bold;
-      }
-      input,
-      textarea,
-      select {
-        width: 100%;
-        padding: 8px;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        box-sizing: border-box;
-      }
-      select {
-        cursor: pointer;
-        background-color: #fff;
-      }
-      textarea {
-        resize: vertical;
-        min-height: 100px;
-      }
-      button {
-        background-color: #4caf50;
-        color: white;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 16px;
-      }
-      button:hover {
-        background-color: #45a049;
-      }
-      .brouillon {
-        background-color: #f0ad4e;
-        color: white;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 16px;
-      }
-      .brouillon:hover {
-        background-color: #ec971f;
-      }
-      .archived {
-        background-color: #dc3545;
-        color: white;
-      }
-    </style>
-  </head>
-  <body>
-    <h1>Créer un Personnage</h1>
-    <form method="POST" action="/character">
-      <div class="form-group">
-        <label for="name">Nom :</label>
-        <input type="text" id="name" name="name" required />
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Créer un personnage</title>
+  <link href="../src/style/css/framework.css" rel="stylesheet">
+  <link href="../src/style/css/home.css" rel="stylesheet">
+</head>
+
+<body>
+  <div class="container">
+    <h1>Créer un nouveau personnage</h1>
+
+    <form class="form" method="POST" action="/character/store">
+
+      <div class="form__group">
+        <label class="form__label">
+          Nom <span class="form__required">*</span>
+        </label>
+        <input type="text" name="name" class="form__input" required placeholder="Entrez le nom du personnage"
+          autofocus />
       </div>
-      <div class="form-group">
-        <label for="role_id">Rôle :</label>
-        <select id="role_id" name="role_id" required>
-          <option value="">-- Choisir un rôle --</option>
-          <?php foreach ($roles as $role): ?>
-          <option
-            value="<?= $role->id ?>"
-            title="<?= htmlspecialchars($role->description ?? '') ?>"
-          >
+
+      <div class="form__group">
+        <label class="form__label">
+          Rôle <span class="form__required">*</span>
+        </label>
+        <select name="role_id" class="form__select" required>
+          <option value="">-- Sélectionnez un rôle --</option>
+          <?php foreach($roles as $role): ?>
+          <option value="<?= $role->id ?>">
             <?= htmlspecialchars($role->name) ?>
           </option>
           <?php endforeach; ?>
         </select>
       </div>
-      <div class="form-group">
-        <label for="origin">Origine :</label>
-        <input type="text" id="origin" name="origin" required />
+
+      <div class="form__group">
+        <label class="form__label">Origine</label>
+        <input type="text" name="origin" class="form__input" placeholder="Ex: Paris, France" />
       </div>
-      <div class="form-group">
-        <label for="pv">Points de Vie :</label>
-        <input type="number" id="pv" name="pv" required />
+
+      <div class="form__group">
+        <label class="form__label">
+          Points de vie <span class="form__required">*</span>
+        </label>
+        <input type="number" name="pv" class="form__input" value="100" min="0" max="999" required />
       </div>
-      <div class="form-group">
-        <label for="description">Description :</label>
-        <textarea id="description" name="description" required></textarea>
+
+      <div class="form__group">
+        <label class="form__label">Description</label>
+        <textarea name="description" class="form__textarea" placeholder="Décrivez le personnage..."></textarea>
       </div>
-      <div class="form-group">
-        <label for="univers_id">Univers</label>
-        <select id="univers_id" name="univers_id" required>
-          <option value="">-- Choisir un univers --</option>
-          <?php foreach ($universes as $univers): ?>
-          <option
-            value="<?= $univers->id ?>"
-            title="<?= htmlspecialchars($univers->description ?? '') ?>"
-          >
-            <?= htmlspecialchars($univers->name) ?>
+
+      <div class="form__group">
+        <label class="form__label">
+          Statut <span class="form__required">*</span>
+        </label>
+        <select name="status" class="form__select" required>
+          <option value="vivant" selected>Vivant</option>
+          <option value="mort">Mort</option>
+          <option value="inconnu">Inconnu</option>
+        </select>
+      </div>
+
+      <div class="form__group">
+        <label class="form__label">
+          Univers <span class="form__required">*</span>
+        </label>
+        <select name="univers_id" class="form__select" required>
+          <option value="">-- Sélectionnez un univers --</option>
+          <?php foreach($univers as $univ): ?>
+          <option value="<?= $univ->id ?>">
+            <?= htmlspecialchars($univ->name) ?>
           </option>
           <?php endforeach; ?>
         </select>
       </div>
-      <button class="create" type="submit" name="status" value="published">
-        Créer le personnage
-      </button>
-      <button class="brouillon" type="submit" name="status" value="draft">
-        Brouillon
-      </button>
-      <button class="archived" type="submit" name="status" value="archived">
-        Archiver
-      </button>
+
+      <div class="form__group">
+        <label class="form__checkbox">
+          <input type="checkbox" name="is_active" value="1" checked>
+          <span>Personnage actif</span>
+        </label>
+      </div>
+
+      <div class="form__actions">
+        <a href="/character" class="button--sm button--secondary">Annuler</a>
+        <button type="submit" class="button--sm button--primary">Créer le personnage</button>
+      </div>
     </form>
-  </body>
+  </div>
+</body>
+
 </html>
