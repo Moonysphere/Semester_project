@@ -1,75 +1,160 @@
 @use "../partials/functions" as f;
 @use "../partials/fonts" as fo;
 
-@layer components {
-  .card {
-    display: flex;
-    align-items: center;
-    gap: f.rem(10);
-    width: auto;
-    padding: f.rem(10) f.rem(20);
-    max-width: f.rem(400);
-    max-height: f.rem(600);
-    border-radius: f.rem(8);
-    background-color: color-mix(in srgb, var(--primary) 70%, transparent);
-    color: var(--text-color);
-    padding: f.rem(40);
-    overflow: hidden;
-    &__brouillon{
-      background-color: color-mix(in srgb, var(--brouillon-color) 70%, transparent);
-    }
-    &__content {
-      flex: auto;
-      align-items: center;
-      z-index: 2;
-      display: flex;
-      flex-direction: column;
-      gap: f.rem(18);
-      min-width: 0;
-      justify-content: space-between;
-    }
+.card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: auto;
+  max-width: f.rem(400);
+  border-radius: f.rem(16);
+  background: linear-gradient(135deg,
+      color-mix(in srgb, var(--primary) 75%, transparent),
+      color-mix(in srgb, var(--primary) 60%, transparent));
+  backdrop-filter: blur(10px);
+  color: var(--text-color);
+  padding: f.rem(40);
+  padding-bottom: f.rem(40); // ← Assure le padding en bas
+  overflow: hidden;
+  box-shadow:
+    0 f.rem(4) f.rem(24) color-mix(in srgb, var(--primary) 20%, transparent),
+    0 f.rem(1) f.rem(3) color-mix(in srgb, var(--primary) 10%, transparent);
 
-    &__image {
-      margin-block: f.rem(-20) f.rem(10);
-      margin-inline: f.rem(-20);
-      max-width: unset;
-      width: inherit;
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg,
+        transparent 0%,
+        color-mix(in srgb, white 10%, transparent) 50%,
+        transparent 100%);
+    opacity: 0;
+  }
+
+  &:hover {
+    box-shadow:
+      0 f.rem(20) f.rem(40) color-mix(in srgb, var(--primary) 30%, transparent),
+      0 f.rem(8) f.rem(16) color-mix(in srgb, var(--primary) 20%, transparent);
+
+    &::before {
+      opacity: 1;
+    }
+  }
+
+  &--brouillon {
+    background: linear-gradient(135deg,
+        color-mix(in srgb, var(--brouillon-color) 75%, transparent),
+        color-mix(in srgb, var(--brouillon-color) 60%, transparent));
+    box-shadow:
+      0 f.rem(4) f.rem(24) color-mix(in srgb, var(--brouillon-color) 20%, transparent),
+      0 f.rem(1) f.rem(3) color-mix(in srgb, var(--brouillon-color) 10%, transparent);
+
+    &:hover {
+      box-shadow:
+        0 f.rem(20) f.rem(40) color-mix(in srgb, var(--brouillon-color) 30%, transparent),
+        0 f.rem(8) f.rem(16) color-mix(in srgb, var(--brouillon-color) 20%, transparent);
+    }
+  }
+
+  &__content {
+    position: relative;
+    flex: 1;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: f.rem(24);
+    min-width: 0;
+    width: 100%;
+  }
+
+  &__image {
+    position: relative;
+    width: 70%;
+    height: f.rem(180);
+    margin-inline: f.rem(-40);
+    margin-block-start: f.rem(-40);
+    margin-block-end: f.rem(20);
+    overflow: hidden;
+    border-radius: f.rem(16) f.rem(16) 0 0;
+
+
+    img {
+      width: 100%;
+      height: 100%;
       object-fit: cover;
     }
 
-    &__title {
-      margin: 0;
-      line-height: 1;
-      color: var(--text-color);
+    &::after {
+      content: '';
+      position: absolute;
+      top: f.rem(16);
+      right: f.rem(16);
+      width: f.rem(12);
+      height: f.rem(12);
+      border-radius: 50%;
+      background: color-mix(in srgb, white 80%, transparent);
+      box-shadow: 0 0 f.rem(16) color-mix(in srgb, white 60%, transparent);
+      animation: pulse 2s ease-in-out infinite;
+    }
+  }
 
-      &_main-font {
-        font-family: fo.$mainFont;
-        font-weight: 700;
-        font-size: f.rem(24);
+  &__title {
+    margin: 0;
+    line-height: 1.2;
+    color: var(--text-color);
+    text-align: center;
 
-        letter-spacing: f.rem(2);
-        margin: 0;
-      }
-
-      &_secondary-font {
-        font-family: fo.$secondaryFont;
-        font-weight: 800;
-        font-size: f.rem(32);
-        margin: 0;
-      }
+    &--main-font {
+      font-family: fo.$mainFont;
+      font-weight: 700;
+      font-size: f.rem(28);
+      letter-spacing: f.rem(3);
+      text-transform: uppercase;
+      background: linear-gradient(135deg,
+          currentColor 0%,
+          color-mix(in srgb, currentColor 70%, transparent) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
     }
 
-  &__text {
-  font-size: f.rem(16);
-  font-weight: 400;
-  line-height: f.rem(24);
-  margin-block: 0;
+    &--secondary-font {
+      font-family: fo.$secondaryFont;
+      font-weight: 800;
+      font-size: f.rem(36);
+    }
+  }
 
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  overflow: hidden;
+  &__text {
+    font-size: f.rem(15);
+    font-weight: 400;
+    line-height: f.rem(24);
+    text-align: center;
+    margin: 0;
+    color: color-mix(in srgb, var(--text-color) 90%, transparent);
+
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+  }
+
+  .button {
+    margin-block-start: f.rem(8);
+    width: 100%;
+  }
 }
 
+@keyframes pulse {
+
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.6;
+    transform: scale(1.2);
   }
 }
