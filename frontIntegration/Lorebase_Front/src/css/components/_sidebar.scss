@@ -150,7 +150,6 @@
     width: 20px;
     height: 20px;
     flex-shrink: 0;
-    color: rgb(88, 88, 88)
 }
 
 .sidebar-text {
@@ -179,13 +178,27 @@
 }
 
 .main-content {
-    margin-left: 280px;
+    margin-left: 270px;
     padding: 2rem;
     min-height: 100vh;
     transition: margin-left 0.3s ease;
 }
 
-// Responsive
+.footer {
+    margin-left: 270px;
+    transition: margin-left 0.3s ease;
+}
+
+body.sidebar-closed {
+    .main-content {
+        margin-left: 80px;
+    }
+
+    .footer {
+        margin-left: 80px;
+    }
+}
+
 @media (max-width: 768px) {
     .sidebar-container {
         transform: translateX(-100%);
@@ -205,6 +218,10 @@
     }
 
     .main-content {
+        margin-left: 0 !important;
+    }
+
+    .footer {
         margin-left: 0 !important;
     }
 }

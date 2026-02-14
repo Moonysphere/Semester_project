@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Créer une Place - Lorebase</title>
+    <link rel="stylesheet" href="/src/css/main.scss" />
+    <script type="module" src="/src/js/main.js"></script>
+</head>
+
+<body>
+    <div class="form-container">
+        <h1 class="form-title">Créer une nouvelle place</h1>
+
+        <form class="form" action="/place" method="POST">
+
+            <!-- Nom de la place -->
+            <div class="form__group">
+                <label class="form__label" for="name">Nom de la place</label>
+                <input class="form__input" type="text" id="name" name="name" required
+                    placeholder="Ex : Château d'Argelune" />
+            </div>
+
+            <!-- Description -->
+            <div class="form__group">
+                <label class="form__label" for="description">Description</label>
+                <textarea class="form__textarea" id="description" name="description"
+                    placeholder="Décrivez cette place (histoire, ambiance, particularités...)"></textarea>
+            </div>
+
+            <!-- Type -->
+            <div class="form__group">
+                <label class="form__label" for="type">Type</label>
+                <input class="form__input" type="text" id="type" name="type"
+                    placeholder="Ville, Château, Forêt, Montagne..." />
+            </div>
+
+            <!-- Univers -->
+            <div class="form__group">
+                <label class="form__label" for="univers_id">Univers</label>
+                <select class="form__select" id="univers_id" name="univers_id" required>
+                    <option value="">-- Choisir un univers --</option>
+                    <option value="1">Terre du Milieu</option>
+                    <option value="2">Royaume de Westeros</option>
+                    <option value="3">Galaxy Star Wars</option>
+                    <option value="4">Univers Marvel</option>
+                    <option value="5">Monde Magique Harry Potter</option>
+                </select>
+            </div>
+
+            <!-- Actions -->
+            <div class="form__actions">
+                <button class="form__button form__button--create" type="submit" name="status" value="published">
+                    Créer la place
+                </button>
+                <button class="form__button form__button--draft" type="submit" name="status" value="draft">
+                    Brouillon
+                </button>
+                <button class="form__button form__button--archived" type="submit" name="status" value="archived">
+                    Archiver
+                </button>
+            </div>
+
+        </form>
+    </div>
+</body>
+
+</html>
