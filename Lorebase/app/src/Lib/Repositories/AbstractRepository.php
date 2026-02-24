@@ -21,7 +21,7 @@ abstract class AbstractRepository
         'lte' => '<=',
         'gt' => '>',
         'gte' => '>=',
-        'like' => 'LIKE',
+        'like' => 'ILIKE',
         'in' => 'IN'
     ];
 
@@ -137,14 +137,38 @@ abstract class AbstractRepository
 
     public function andWhere(string $field, string $condition, ?string $table = null): self
     {
-        $this->queryString .= " AND  ";
-        return $this->where($field, $condition, $table);
+        $this->queryString .= " AND ";
+        if ($table !== null) {
+            $this->queryString .= "$table.";
+        } else {
+            $this->queryString .= "$this->tableAlias.";
+        }
+
+        $this->queryString .= "$field $condition";
+
+        if (!in_array(strtoupper($condition), ['IS NULL', 'IS NOT NULL'], true)) {
+            $this->queryString .= " :$field";
+        }
+
+        return $this;
     }
 
     public function orWhere(string $field, string $condition, ?string $table = null): self
     {
-        $this->queryString .= " OR  ";
-        return $this->where($field, $condition, $table);
+        $this->queryString .= " OR ";
+        if ($table !== null) {
+            $this->queryString .= "$table.";
+        } else {
+            $this->queryString .= "$this->tableAlias.";
+        }
+
+        $this->queryString .= "$field $condition";
+
+        if (!in_array(strtoupper($condition), ['IS NULL', 'IS NOT NULL'], true)) {
+            $this->queryString .= " :$field";
+        }
+
+        return $this;
     }
 
     public function where(string $field, string $condition, ?string $table = null): self
@@ -156,7 +180,13 @@ abstract class AbstractRepository
             $this->queryString .= "$this->tableAlias.";
         }
 
-        $this->queryString .= "$field $condition :$field";
+        $this->queryString .= "$field $condition";
+
+        // N'ajoute le placeholder que si ce n'est pas IS NULL ou IS NOT NULL
+        if (!in_array(strtoupper($condition), ['IS NULL', 'IS NOT NULL'], true)) {
+            $this->queryString .= " :$field";
+        }
+
         return $this;
     }
 
