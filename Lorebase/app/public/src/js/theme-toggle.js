@@ -1,83 +1,97 @@
-// src/js/theme-toggle.js
-
 class ThemeToggle {
     constructor() {
-        this.theme = localStorage.getItem('theme') || 'light';
+        this.theme = localStorage.getItem('theme') || this._getSystemTheme();
         this.button = null;
         this.init();
     }
 
+    _getSystemTheme() {
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+
     init() {
-        // Applique le thème sauvegardé IMMÉDIATEMENT
         this.applyTheme(this.theme);
 
-        // Attend que le DOM soit prêt pour créer le bouton
         if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', () => {
-                this.createButton();
-                this.setupEventListeners();
-            });
+            document.addEventListener('DOMContentLoaded', () => this._setup());
         } else {
-            // DOM déjà prêt
-            this.createButton();
-            this.setupEventListeners();
+            this._setup();
         }
     }
 
+    _setup() {
+        this.createButton();
+        this.setupEventListeners();
+    }
+
     createButton() {
-        // Vérifie que le bouton n'existe pas déjà
-        if (document.getElementById('themeToggle')) {
-            console.warn('Theme toggle already exists');
+        const footer = document.getElementById('sidebarFooter');
+
+        if (!footer) {
+            console.warn('[ThemeToggle] #sidebarFooter introuvable dans le DOM');
             return;
         }
 
-        // Crée le bouton
+        if (document.getElementById('themeToggle')) {
+            console.warn('[ThemeToggle] Bouton déjà présent, init annulée');
+            return;
+        }
+
+        const item = document.createElement('div');
+        item.classList.add('sidebar-item');
+        item.setAttribute('data-tooltip', this.theme === 'dark' ? 'Mode clair' : 'Mode sombre');
+
         this.button = document.createElement('button');
-        this.button.classList.add('theme-toggle');
+        this.button.classList.add('sidebar-link', 'sidebar-theme-toggle');
         this.button.id = 'themeToggle';
         this.button.setAttribute('aria-label', 'Changer le thème');
         this.button.setAttribute('data-tooltip', this.theme === 'dark' ? 'Mode clair' : 'Mode sombre');
 
-        // Crée l'icône
         const icon = document.createElement('span');
-        icon.classList.add('theme-toggle__icon');
+        icon.classList.add('sidebar-icon', 'sidebar-theme-icon');
         icon.textContent = this.theme === 'dark' ? '☀️' : '🌙';
 
-        this.button.appendChild(icon);
-        document.body.appendChild(this.button);
+        const label = document.createElement('span');
+        label.classList.add('sidebar-text');
+        label.textContent = this.theme === 'dark' ? 'Mode clair' : 'Mode sombre';
 
-        console.log('✅ Theme toggle button created');
+        this.button.appendChild(icon);
+        this.button.appendChild(label);
+        item.appendChild(this.button);
+
+        footer.insertBefore(item, footer.firstChild);
+
+        console.log('[ThemeToggle] Bouton injecté dans #sidebarFooter');
     }
 
     setupEventListeners() {
         if (this.button) {
             this.button.addEventListener('click', () => this.toggleTheme());
-            console.log('✅ Theme toggle listener attached');
+            console.log('[ThemeToggle] Listener attaché');
         }
     }
 
     toggleTheme() {
-        // Ajoute animation de rotation
         this.button.classList.add('rotating');
 
-        // Change le thème
         this.theme = this.theme === 'light' ? 'dark' : 'light';
         this.applyTheme(this.theme);
         localStorage.setItem('theme', this.theme);
 
-        // Met à jour l'icône et le tooltip
-        const icon = this.button.querySelector('.theme-toggle__icon');
-        if (icon) {
-            icon.textContent = this.theme === 'dark' ? '☀️' : '🌙';
-        }
-        this.button.setAttribute('data-tooltip', this.theme === 'dark' ? 'Mode clair' : 'Mode sombre');
+        const icon = this.button.querySelector('.sidebar-theme-icon');
+        if (icon) icon.textContent = this.theme === 'dark' ? '☀️' : '🌙';
 
-        // Retire l'animation après 600ms
-        setTimeout(() => {
-            this.button.classList.remove('rotating');
-        }, 600);
+        const label = this.button.querySelector('.sidebar-text');
+        if (label) label.textContent = this.theme === 'dark' ? 'Mode clair' : 'Mode sombre';
 
-        console.log(`Theme switched to: ${this.theme}`);
+        const item = this.button.closest('.sidebar-item');
+        const tooltip = this.theme === 'dark' ? 'Mode clair' : 'Mode sombre';
+        if (item) item.setAttribute('data-tooltip', tooltip);
+        this.button.setAttribute('data-tooltip', tooltip);
+
+        setTimeout(() => this.button.classList.remove('rotating'), 600);
+
+        console.log(`[ThemeToggle] Thème → ${this.theme}`);
     }
 
     applyTheme(theme) {
@@ -85,7 +99,6 @@ class ThemeToggle {
     }
 }
 
-// Auto-initialisation IMMÉDIATE
 new ThemeToggle();
 
 export default ThemeToggle;

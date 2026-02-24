@@ -11,17 +11,28 @@
 
 <body>
 
-  <div class="sidebar-container">
+  <button class="sidebar-burger-mobile" id="sidebarBurger" aria-label="Ouvrir le menu" aria-expanded="false">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+      <line x1="3" y1="6" x2="21" y2="6" />
+      <line x1="3" y1="12" x2="21" y2="12" />
+      <line x1="3" y1="18" x2="21" y2="18" />
+    </svg>
+  </button>
+
+  <div class="sidebar-container" id="sidebarContainer">
     <div class="sidebar" id="sidebar">
 
       <div class="sidebar-header">
         <div class="sidebar-logo">
-          <div class="sidebar-logo-icon">
-            <img src="./src/assets/icon_sidebar/logo.svg" alt="Logo Lorebase">
-          </div>
-          <span class="sidebar-logo-text">Lorebase</span>
+          <a href="/" class="sidebar-link">
+            <div class="sidebar-logo-icon" data-tooltip="Logo Lorebase">
+              <img src="./src/assets/icon_sidebar/logo.svg" alt="Logo Lorebase">
+            </div>
+            <span class="sidebar-logo-text">Lorebase</span>
+          </a>
+
         </div>
-        <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
+        <button class="sidebar-toggle" id="sidebarToggle" aria-label="Réduire la sidebar">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
             stroke-width="2">
             <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z"></path>
@@ -63,22 +74,12 @@
 
         <div class="sidebar-divider"></div>
 
-        <div class="sidebar-item" data-tooltip="Paramètres">
-          <a href="/parametres" class="sidebar-link">
-            <svg class="sidebar-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2">
-              <path
-                d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94-1.543.826-3.31 2.37-2.37c1 .608 2.296.07 2.572-1.065z">
-              </path>
-              <path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"></path>
-            </svg>
-            <span class="sidebar-text">Paramètres</span>
-          </a>
-        </div>
 
       </nav>
 
-      <div class="sidebar-footer">
+      <div class="sidebar-footer" id="sidebarFooter">
+
+
         <div class="sidebar-item" data-tooltip="Déconnexion">
           <a href="/logout" class="sidebar-link">
             <svg class="sidebar-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
@@ -90,6 +91,7 @@
             <span class="sidebar-text">Déconnexion</span>
           </a>
         </div>
+
       </div>
 
     </div>
@@ -102,19 +104,16 @@
 
       <section>
         <h2>.button</h2>
-
         <p>
           <button class="button button--lg button--primary">Bouton Large</button>
           <button class="button button--primary">Bouton Normal</button>
           <button class="button button--sm button--primary">Bouton Small</button>
         </p>
-
         <p>
           <button class="button button--lg button--secondary">Bouton Large</button>
           <button class="button button--secondary">Bouton Normal</button>
           <button class="button button--sm button--secondary">Bouton Small</button>
         </p>
-
         <p>
           <a href="#" class="button button--lg button--danger">Bouton Large</a>
           <a href="#" class="button button--danger">Bouton Normal</a>
@@ -122,13 +121,10 @@
         </p>
       </section>
 
-      <!-- Section Cards -->
       <section>
         <h2>.card</h2>
-
         <div style="display: flex; gap: 2rem; align-items: flex-start; flex-wrap: wrap;">
 
-          <!-- Card 1 -->
           <article class="card">
             <div class="card__content">
               <div class="card__image">
@@ -143,7 +139,6 @@
             </div>
           </article>
 
-          <!-- Card 2 -->
           <article class="card">
             <div class="card__content">
               <div class="card__image">
@@ -164,14 +159,9 @@
     </div>
   </main>
 
-
-  <!-- ========================================== -->
-  <!-- FOOTER -->
-  <!-- ========================================== -->
   <footer class="footer">
     <div class="footer__container">
 
-      <!-- Colonne Logo & Description -->
       <div class="footer__column footer__column--brand">
         <div class="footer__logo">
           <img src="./src/assets/icon_sidebar/logo.svg" alt="Logo Lorebase">
@@ -202,7 +192,6 @@
         </div>
       </div>
 
-      <!-- Colonne Navigation -->
       <div class="footer__column">
         <h3 class="footer__title">Navigation</h3>
         <ul class="footer__list">
@@ -213,7 +202,6 @@
         </ul>
       </div>
 
-      <!-- Colonne Ressources -->
       <div class="footer__column">
         <h3 class="footer__title">Ressources</h3>
         <ul class="footer__list">
@@ -221,7 +209,6 @@
         </ul>
       </div>
 
-      <!-- Colonne Légal -->
       <div class="footer__column">
         <h3 class="footer__title">Légal</h3>
         <ul class="footer__list">
@@ -234,74 +221,74 @@
 
     </div>
 
-    <!-- Copyright -->
     <div class="footer__bottom">
-      <p class="footer__copyright">
-        © 2024 Lorebase. Tous droits réservés.
-      </p>
+      <p class="footer__copyright">© 2024 Lorebase. Tous droits réservés.</p>
     </div>
   </footer>
 
   <script>
-    // Éléments
     const sidebar = document.getElementById('sidebar');
     const sidebarToggle = document.getElementById('sidebarToggle');
-    const sidebarContainer = document.querySelector('.sidebar-container');
-    const sidebarOverlay = document.getElementById('sidebarOverlay');
+    const sidebarContainer = document.getElementById('sidebarContainer');
     const body = document.body;
 
-    // Toggle sidebar
     sidebarToggle.addEventListener('click', () => {
       sidebar.classList.toggle('closed');
       body.classList.toggle('sidebar-closed');
-
-      // Sauvegarder l'état
       localStorage.setItem('sidebarClosed', sidebar.classList.contains('closed'));
     });
 
-    // Fermer sur mobile avec overlay
-    sidebarOverlay.addEventListener('click', () => {
+    const sidebarBurger = document.getElementById('sidebarBurger');
+    const sidebarOverlay = document.getElementById('sidebarOverlay');
+
+    function openMobileSidebar() {
+      sidebarContainer.classList.add('mobile-open');
+      sidebarOverlay.classList.add('active');
+      sidebarBurger.setAttribute('aria-expanded', 'true');
+    }
+
+    function closeMobileSidebar() {
       sidebarContainer.classList.remove('mobile-open');
+      sidebarOverlay.classList.remove('active');
+      sidebarBurger.setAttribute('aria-expanded', 'false');
+    }
+
+    sidebarBurger.addEventListener('click', () => {
+      sidebarContainer.classList.contains('mobile-open')
+        ? closeMobileSidebar()
+        : openMobileSidebar();
     });
 
-    // Gérer les liens actifs
+    sidebarOverlay.addEventListener('click', closeMobileSidebar);
+
     const links = document.querySelectorAll('.sidebar-link');
 
-    // Au chargement, mettre en actif le lien correspondant à la page actuelle
     const currentPath = window.location.pathname;
     links.forEach(link => {
-      const linkPath = new URL(link.href).pathname;
-      if (linkPath === currentPath) {
-        link.classList.add('active');
+      if (link.href) {
+        const linkPath = new URL(link.href, location.origin).pathname;
+        if (linkPath === currentPath) {
+          links.forEach(l => l.classList.remove('active'));
+          link.classList.add('active');
+        }
       }
     });
 
-    // Au clic, sauvegarder le lien actif
     links.forEach(link => {
-      link.addEventListener('click', function (e) {
-        // Retirer active de tous les liens
+      link.addEventListener('click', function () {
         links.forEach(l => l.classList.remove('active'));
-
-        // Ajouter active au lien cliqué
         this.classList.add('active');
-
-        // Sauvegarder dans localStorage
         localStorage.setItem('activeLink', this.href);
-
-        // La navigation se fait normalement (pas de e.preventDefault())
       });
     });
 
-    // Restaurer l'état au chargement
     document.addEventListener('DOMContentLoaded', () => {
-      // Restaurer sidebar
       const wasClosed = localStorage.getItem('sidebarClosed') === 'true';
       if (wasClosed) {
         sidebar.classList.add('closed');
         body.classList.add('sidebar-closed');
       }
 
-      // Restaurer le lien actif
       const activeLink = localStorage.getItem('activeLink');
       if (activeLink) {
         links.forEach(link => {
@@ -314,6 +301,99 @@
     });
   </script>
 
+  <script type="module">
+    class ThemeToggle {
+      constructor() {
+        this.theme = localStorage.getItem('theme') || this._getSystemTheme();
+        this.button = null;
+        this.init();
+      }
+
+      _getSystemTheme() {
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+
+      init() {
+        this.applyTheme(this.theme);
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', () => this._setup());
+        } else {
+          this._setup();
+        }
+      }
+
+      _setup() {
+        this.createButton();
+        this.setupEventListeners();
+      }
+
+      createButton() {
+        const footer = document.getElementById('sidebarFooter');
+        if (!footer) {
+          console.warn('[ThemeToggle] #sidebarFooter introuvable');
+          return;
+        }
+        if (document.getElementById('themeToggle')) {
+          console.warn('[ThemeToggle] Bouton déjà présent');
+          return;
+        }
+
+        const item = document.createElement('div');
+        item.classList.add('sidebar-item');
+        item.setAttribute('data-tooltip', this.theme === 'dark' ? 'Mode clair' : 'Mode sombre');
+
+        this.button = document.createElement('button');
+        this.button.classList.add('sidebar-link', 'sidebar-theme-toggle');
+        this.button.id = 'themeToggle';
+        this.button.setAttribute('aria-label', 'Changer le thème');
+
+        const icon = document.createElement('span');
+        icon.classList.add('sidebar-icon', 'sidebar-theme-icon');
+        icon.textContent = this.theme === 'dark' ? '☀️' : '🌙';
+
+        const label = document.createElement('span');
+        label.classList.add('sidebar-text');
+        label.textContent = this.theme === 'dark' ? 'Mode clair' : 'Mode sombre';
+
+        this.button.appendChild(icon);
+        this.button.appendChild(label);
+        item.appendChild(this.button);
+
+        footer.insertBefore(item, footer.firstChild);
+      }
+
+      setupEventListeners() {
+        if (this.button) {
+          this.button.addEventListener('click', () => this.toggleTheme());
+        }
+      }
+
+      toggleTheme() {
+        this.button.classList.add('rotating');
+
+        this.theme = this.theme === 'light' ? 'dark' : 'light';
+        this.applyTheme(this.theme);
+        localStorage.setItem('theme', this.theme);
+
+        const icon = this.button.querySelector('.sidebar-theme-icon');
+        const label = this.button.querySelector('.sidebar-text');
+        const item = this.button.closest('.sidebar-item');
+
+        if (icon) icon.textContent = this.theme === 'dark' ? '☀️' : '🌙';
+        if (label) label.textContent = this.theme === 'dark' ? 'Mode clair' : 'Mode sombre';
+        if (item) item.setAttribute('data-tooltip', this.theme === 'dark' ? 'Mode clair' : 'Mode sombre');
+
+        setTimeout(() => this.button.classList.remove('rotating'), 600);
+      }
+
+      applyTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+      }
+    }
+
+    new ThemeToggle();
+  </script>
 
 </body>
 
