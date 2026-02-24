@@ -1,153 +1,171 @@
 <!doctype html>
 <html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><?php echo htmlspecialchars($character->name); ?></title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 20px;
-        background-color: #f5f5f5;
-      }
 
-      .container {
-        max-width: 600px;
-        margin: 0 auto;
-        background-color: white;
-        padding: 30px;
-        border-radius: 8px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>
+    <?php echo htmlspecialchars($character->name); ?>
+  </title>
+  <script>
+    const theme = localStorage.getItem('theme') ||
+      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+  </script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f5f5f5;
+    }
 
-      h1 {
-        margin-top: 0;
-      }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: white;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
 
-      .field {
-        margin: 15px 0;
-      }
+    h1 {
+      margin-top: 0;
+    }
 
-      .field label {
-        font-weight: bold;
-        display: block;
-        margin-bottom: 5px;
-      }
+    .field {
+      margin: 15px 0;
+    }
 
-      .field p {
-        margin: 0;
-        color: #333;
-      }
+    .field label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 5px;
+    }
 
-      .buttons {
-        display: flex;
-        gap: 10px;
-        margin-top: 30px;
-      }
+    .field p {
+      margin: 0;
+      color: #333;
+    }
 
-      .btn {
-        padding: 10px 20px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 14px;
-        text-decoration: none;
-        display: inline-block;
-      }
+    .buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 30px;
+    }
 
-      .btn-back {
-        background-color: #007bff;
-        color: white;
-      }
+    .btn {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      text-decoration: none;
+      display: inline-block;
+    }
 
-      .btn-back:hover {
-        background-color: #0056b3;
-      }
+    .btn-back {
+      background-color: #007bff;
+      color: white;
+    }
 
-      .btn-delete {
-        background-color: #dc3545;
-        color: white;
-      }
+    .btn-back:hover {
+      background-color: #0056b3;
+    }
 
-      .btn-delete:hover {
-        background-color: #c82333;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <h1><?php echo htmlspecialchars($character->name); ?></h1>
+    .btn-delete {
+      background-color: #dc3545;
+      color: white;
+    }
 
-      <div class="field">
-        <label>Rôle :</label>
-        <p><?= htmlspecialchars($roleName ?? 'Non défini') ?></p>
-      </div>
+    .btn-delete:hover {
+      background-color: #c82333;
+    }
+  </style>
+</head>
 
-      <div class="field">
-        <label>Origine :</label>
-        <p><?= htmlspecialchars($character->origin) ?></p>
-      </div>
+<body>
+  <div class="container">
+    <h1>
+      <?php echo htmlspecialchars($character->name); ?>
+    </h1>
 
-      <div class="field">
-        <label>Points de vie :</label>
-        <p><?= htmlspecialchars($character->pv) ?></p>
-      </div>
-
-      <div class="field">
-        <label>Description :</label>
-        <p><?= htmlspecialchars($character->description) ?></p>
-      </div>
-      <div class="field">
-        <label>Statut :</label>
-        <p><?= htmlspecialchars($character->status) ?></p>
-      </div>
-
-      <div class="field">
-        <label>Univers :</label>
-        <p><?= htmlspecialchars($universName ?? 'Non défini') ?></p>
-      </div>
-
-      <div class="field">
-        <label>Univers :</label>
-        <p><?php echo htmlspecialchars($character->univers_id); ?></p>
-      </div>
-
-      <div class="buttons">
-        <a href="/character" class="btn btn-back">Retour</a>
-        <a
-          href="/character/<?php echo $character->slug; ?>/edit"
-          class="btn"
-          style="background-color: #ffc107; color: black"
-          >Modifier</a
-        >
-        <button
-          type="button"
-          class="btn btn-delete"
-          onclick="deleteCharacter(<?php echo $character->id; ?>)"
-        >
-          Supprimer
-        </button>
-      </div>
+    <div class="field">
+      <label>Rôle :</label>
+      <p>
+        <?= htmlspecialchars($roleName ?? 'Non défini') ?>
+      </p>
     </div>
 
-    <script>
-      function deleteCharacter(id) {
-        if (confirm("Êtes-vous sûr de vouloir supprimer ce personnage ?")) {
-          fetch(`/character/${id}`, {
-            method: "DELETE",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }).then((response) => {
-            if (response.ok) {
-              window.location.href = "/character";
-            } else {
-              alert("Erreur lors de la suppression");
-            }
-          });
-        }
+    <div class="field">
+      <label>Origine :</label>
+      <p>
+        <?= htmlspecialchars($character->origin) ?>
+      </p>
+    </div>
+
+    <div class="field">
+      <label>Points de vie :</label>
+      <p>
+        <?= htmlspecialchars($character->pv) ?>
+      </p>
+    </div>
+
+    <div class="field">
+      <label>Description :</label>
+      <p>
+        <?= htmlspecialchars($character->description) ?>
+      </p>
+    </div>
+    <div class="field">
+      <label>Statut :</label>
+      <p>
+        <?= htmlspecialchars($character->status) ?>
+      </p>
+    </div>
+
+    <div class="field">
+      <label>Univers :</label>
+      <p>
+        <?= htmlspecialchars($universName ?? 'Non défini') ?>
+      </p>
+    </div>
+
+    <div class="field">
+      <label>Univers :</label>
+      <p>
+        <?php echo htmlspecialchars($character->univers_id); ?>
+      </p>
+    </div>
+
+    <div class="buttons">
+      <a href="/character" class="btn btn-back">Retour</a>
+      <a href="/character/<?php echo $character->slug; ?>/edit" class="btn"
+        style="background-color: #ffc107; color: black">Modifier</a>
+      <button type="button" class="btn btn-delete" onclick="deleteCharacter(<?php echo $character->id; ?>)">
+        Supprimer
+      </button>
+    </div>
+  </div>
+
+  <script>
+    function deleteCharacter(id) {
+      if (confirm("Êtes-vous sûr de vouloir supprimer ce personnage ?")) {
+        fetch(`/character/${id}`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }).then((response) => {
+          if (response.ok) {
+            window.location.href = "/character";
+          } else {
+            alert("Erreur lors de la suppression");
+          }
+        });
       }
-    </script>
-  </body>
+    }
+  </script>
+</body>
+
 </html>

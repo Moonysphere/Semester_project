@@ -1,191 +1,190 @@
 <!doctype html>
 <html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Modifier <?php echo htmlspecialchars($role->name); ?></title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 20px;
-        background-color: #f5f5f5;
-      }
 
-      .container {
-        max-width: 600px;
-        margin: 0 auto;
-        background-color: white;
-        padding: 30px;
-        border-radius: 8px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>
+    const theme = localStorage.getItem('theme') ||
+      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+  </script>
+  <title>Modifier
+    <?php echo htmlspecialchars($role->name); ?>
+  </title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f5f5f5;
+    }
 
-      h1 {
-        margin-top: 0;
-      }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: white;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
 
-      .form-group {
-        margin: 20px 0;
-      }
+    h1 {
+      margin-top: 0;
+    }
 
-      label {
-        display: block;
-        font-weight: bold;
-        margin-bottom: 5px;
-      }
+    .form-group {
+      margin: 20px 0;
+    }
 
-      input,
-      textarea {
-        width: 100%;
-        padding: 8px;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        box-sizing: border-box;
-        font-family: Arial, sans-serif;
-      }
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
 
-      textarea {
-        resize: vertical;
-        min-height: 100px;
-      }
+    input,
+    textarea {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
 
-      .buttons {
-        display: flex;
-        gap: 10px;
-        margin-top: 30px;
-      }
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
 
-      .btn {
-        padding: 10px 20px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 14px;
-      }
+    .buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 30px;
+    }
 
-      .btn-submit {
-        background-color: #28a745;
-        color: white;
-      }
+    .btn {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+    }
 
-      .btn-submit:hover {
-        background-color: #218838;
-      }
-      .btn-draft {
-        background-color: #f0ad4e;
-        color: white;
-      }
-      .btn-draft:hover {
-        background-color: #ec971f;
-      }
-      .btn-archived {
-        background-color: #dc3545;
-        color: white;
-      }
-      .btn-archived:hover {
-        background-color: #c82333;
-      }
-      .btn-cancel {
-        background-color: #6c757d;
-        color: white;
-        text-decoration: none;
-        display: inline-block;
-      }
+    .btn-submit {
+      background-color: #28a745;
+      color: white;
+    }
 
-      .btn-cancel:hover {
-        background-color: #5a6268;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <h1>Modifier <?php echo htmlspecialchars($role->name); ?></h1>
-      <form id="editForm">
-        <div class="form-group">
-          <label for="name">Nom :</label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            value="<?php echo htmlspecialchars($role->name); ?>"
-            required />
-        </div>
+    .btn-submit:hover {
+      background-color: #218838;
+    }
 
-        <div class="form-group">
-          <label for="description">Description :</label>
-          <textarea id="description" name="description" required>
-<?php echo htmlspecialchars($role->description); ?></textarea
-          >
-        </div>
-        <div class="buttons">
-          <button
-            type="submit"
-            class="btn btn-submit"
-            name="status"
-            value="published">
-            Publier
-          </button>
+    .btn-draft {
+      background-color: #f0ad4e;
+      color: white;
+    }
 
-          <button
-            type="submit"
-            class="btn btn-draft"
-            name="status"
-            value="draft">
-            Brouillon
-          </button>
+    .btn-draft:hover {
+      background-color: #ec971f;
+    }
 
-          <button
-            type="submit"
-            class="btn btn-archived"
-            name="status"
-            value="archived">
-            Archiver
-          </button>
+    .btn-archived {
+      background-color: #dc3545;
+      color: white;
+    }
 
-          <a href="/role/<?php echo $role->slug; ?>" class="btn btn-cancel">
-            Annuler
-          </a>
-        </div>
-      </form>
-    </div>
-    <script>
-      document
-        .getElementById("editForm")
-        .addEventListener("submit", function (e) {
-          e.preventDefault();
+    .btn-archived:hover {
+      background-color: #c82333;
+    }
 
-          const submitter = e.submitter;
-          const statusValue = submitter ? submitter.value : null;
+    .btn-cancel {
+      background-color: #6c757d;
+      color: white;
+      text-decoration: none;
+      display: inline-block;
+    }
 
-          // Récupérer tous les champs du formulaire
-          const formData = new FormData(this);
-          const data = Object.fromEntries(formData);
+    .btn-cancel:hover {
+      background-color: #5a6268;
+    }
+  </style>
+</head>
 
-          // Si un bouton status est cliqué, ajouter/écraser le status
-          if (statusValue && submitter.name === "status") {
-            data.status = statusValue;
-          }
+<body>
+  <div class="container">
+    <h1>Modifier
+      <?php echo htmlspecialchars($role->name); ?>
+    </h1>
+    <form id="editForm">
+      <div class="form-group">
+        <label for="name">Nom :</label>
+        <input type="text" id="name" name="name" value="<?php echo htmlspecialchars($role->name); ?>" required />
+      </div>
 
-          fetch(`/role/<?php echo $role->id; ?>`, {
-            method: "PATCH",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(data),
+      <div class="form-group">
+        <label for="description">Description :</label>
+        <textarea id="description" name="description" required>
+<?php echo htmlspecialchars($role->description); ?></textarea>
+      </div>
+      <div class="buttons">
+        <button type="submit" class="btn btn-submit" name="status" value="published">
+          Publier
+        </button>
+
+        <button type="submit" class="btn btn-draft" name="status" value="draft">
+          Brouillon
+        </button>
+
+        <button type="submit" class="btn btn-archived" name="status" value="archived">
+          Archiver
+        </button>
+
+        <a href="/role/<?php echo $role->slug; ?>" class="btn btn-cancel">
+          Annuler
+        </a>
+      </div>
+    </form>
+  </div>
+  <script>
+    document
+      .getElementById("editForm")
+      .addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const submitter = e.submitter;
+        const statusValue = submitter ? submitter.value : null;
+
+        // Récupérer tous les champs du formulaire
+        const formData = new FormData(this);
+        const data = Object.fromEntries(formData);
+
+        // Si un bouton status est cliqué, ajouter/écraser le status
+        if (statusValue && submitter.name === "status") {
+          data.status = statusValue;
+        }
+
+        fetch(`/role/<?php echo $role->id; ?>`, {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        })
+          .then(async (response) => {
+            if (!response.ok) {
+              throw new Error("Erreur serveur");
+            }
+
+            const result = await response.json();
+
+            window.location.href = `/role/${result.slug}`;
           })
-            .then(async (response) => {
-              if (!response.ok) {
-                throw new Error("Erreur serveur");
-              }
+          .catch((error) => {
+            console.error("Erreur:", error);
+            alert("Erreur lors de la modification");
+          });
+      });
+  </script>
+</body>
 
-              const result = await response.json();
-
-              window.location.href = `/role/${result.slug}`;
-            })
-            .catch((error) => {
-              console.error("Erreur:", error);
-              alert("Erreur lors de la modification");
-            });
-        });
-    </script>
-  </body>
 </html>

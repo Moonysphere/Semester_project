@@ -39,7 +39,6 @@
     "method": "DELETE",
     "controller": "Character\\DeleteCharacterController"
   },
-
   {
     "path": "/quest/create",
     "method": "GET",
@@ -309,5 +308,10 @@
     "path": "/user/profile",
     "method": "GET",
     "controller": "Auth\\GetProfileController"
+  },
+  {
+    "path": "/sitemap.xml",
+    "method": "GET",
+    "controller": "Sitemap\\GetSitemapController"
   }
 ]

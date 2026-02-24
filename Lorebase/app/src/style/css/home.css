@@ -1,6 +1,5 @@
 /* ========================================
    AJUSTEMENTS DE LAYOUT UNIQUEMENT
-   Pour mettre les cards en ligne et espacer proprement
    ======================================== */
 
 /* ========== BODY & MAIN CONTENT ========== */
@@ -11,7 +10,20 @@ body {
 
 .main-content {
     padding: 2rem;
-    height: 100vh;
+    min-height: 100vh;
+    margin-left: 280px;
+    transition: margin-left .3s ease;
+}
+
+body.sidebar-closed .main-content {
+    margin-left: 80px;
+}
+
+@media (max-width: 768px) {
+    .main-content {
+        margin-left: 0 !important;
+        padding: 1rem;
+    }
 }
 
 /* ========== HEADER ========== */
@@ -125,7 +137,7 @@ body {
     flex-direction: column;
     gap: 0.5rem;
     text-align: center;
-    color:white;
+    color: white;
     width: 100%;
 }
 
