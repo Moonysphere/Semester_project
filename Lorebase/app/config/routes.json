@@ -4,7 +4,6 @@
     "method": "GET",
     "controller": "Homepage\\GetHomepageController"
   },
-
   {
     "path": "/character",
     "method": "GET",
@@ -50,7 +49,6 @@
     "method": "DELETE",
     "controller": "Character\\DeleteCharacterController"
   },
-
   {
     "path": "/:username/quest/create",
     "method": "GET",
@@ -345,5 +343,10 @@
     "path": "/admin/user/role",
     "method": "PATCH",
     "controller": "Admin\\PatchUserRole"
+  },
+  {
+    "path": "/sitemap.xml",
+    "method": "GET",
+    "controller": "Sitemap\\GetSitemapController"
   }
 ]

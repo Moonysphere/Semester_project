@@ -1,150 +1,86 @@
 <!doctype html>
 <html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><?php echo htmlspecialchars($place->name); ?></title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 20px;
-        background-color: #f5f5f5;
-      }
 
-      .container {
-        max-width: 600px;
-        margin: 0 auto;
-        background-color: white;
-        padding: 30px;
-        border-radius: 8px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>
+    const theme = localStorage.getItem('theme') ||
+      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+  </script>
+  <link rel="stylesheet" href="../../src/style/css/framework.css">
+  <link rel="stylesheet" href="../../src/style/css/place/detail.css">
+  <link rel="stylesheet" href="../../src/style/css/theme.css">
+  <link rel="stylesheet" href="../../src/style/css/responsive.css">
+  <title>
+    <?php echo htmlspecialchars($place->name); ?>
+  </title>
 
-      h1 {
-        margin-top: 0;
-      }
+</head>
 
-      .field {
-        margin: 15px 0;
-      }
+<body>
+  <div class="container">
+    <h1>
+      <?php echo htmlspecialchars($place->name); ?>
+    </h1>
 
-      .field label {
-        font-weight: bold;
-        display: block;
-        margin-bottom: 5px;
-      }
-
-      .field p {
-        margin: 0;
-        color: #333;
-      }
-
-      .buttons {
-        display: flex;
-        gap: 10px;
-        margin-top: 30px;
-      }
-
-      .btn {
-        padding: 10px 20px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 14px;
-        text-decoration: none;
-        display: inline-block;
-      }
-
-      .btn-back {
-        background-color: #007bff;
-        color: white;
-      }
-
-      .btn-back:hover {
-        background-color: #0056b3;
-      }
-
-      .btn-delete {
-        background-color: #dc3545;
-        color: white;
-      }
-
-      .btn-delete:hover {
-        background-color: #c82333;
-      }
-    </style>
-  </head>
-
-  <body>
-    <div class="container">
-      <h1><?php echo htmlspecialchars($place->name); ?></h1>
-
-      <div class="field">
-        <label>Type:</label>
-        <p><?php echo htmlspecialchars($place->type); ?></p>
-      </div>
-
-      <div class="field">
-        <label>Description :</label>
-        <p><?php echo htmlspecialchars($place->description); ?></p>
-      </div>
-      <div class="field">
-        <label>Univers :</label>
-        <p><?= htmlspecialchars($universName ?? 'Non défini') ?></p>
-      </div>
-      <div class="field">
-        <label>Status :</label>
-        <p><?php echo htmlspecialchars($place->status); ?></p>
-      </div>
-
-      <div class="buttons">
-        <?php if (isset($_SESSION['user']) &&
-        isset($_SESSION['user']['username'])): ?>
-        <a
-          href="/<?php echo htmlspecialchars($_SESSION['user']['username']); ?>/place"
-          class="btn btn-back"
-          >Retour</a
-        >
-        <?php else: ?>
-        <a href="/place" class="btn btn-back">Retour</a>
-        <?php endif; ?> <?php if (isset($isOwnEntity) && $isOwnEntity): ?>
-        <a
-          href="/<?php echo htmlspecialchars($_SESSION['user']['username'] ?? ''); ?>/place/<?php echo $place->slug; ?>/edit"
-          class="btn"
-          style="background-color: #ffc107; color: black"
-          >Modifier</a
-        >
-        <button
-          type="button"
-          class="btn btn-delete"
-          onclick="deletePlace(<?php echo $place->id; ?>)"
-        >
-          Supprimer
-        </button>
-        <?php endif; ?>
-      </div>
+    <div class="field">
+      <label>Description :</label>
+      <p>
+        <?php echo htmlspecialchars($place->description); ?>
+      </p>
+    </div>
+    <div class="field">
+      <label>Univers :</label>
+      <p>
+        <?= htmlspecialchars($universName ?? 'Non défini') ?>
+      </p>
+    </div>
+    <div class="field">
+      <label>Status :</label>
+      <p>
+        <?php echo htmlspecialchars($place->status); ?>
+      </p>
     </div>
 
-    <script>
-      function deletePlace(id) {
-        if (confirm("Êtes-vous sûr de vouloir supprimer cette place ?")) {
-          const username =
-            '<?php echo htmlspecialchars($_SESSION["user"]["username"] ?? ""); ?>';
-          fetch(`/${username}/place/${id}`, {
-            method: "DELETE",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }).then((response) => {
-            if (response.ok) {
-              window.location.href = `/${username}/place`;
-            } else {
-              alert("Erreur lors de la suppression");
-            }
-          });
-        }
+    <div class="buttons">
+      <?php if (isset($_SESSION['user']) &&
+        isset($_SESSION['user']['username'])): ?>
+      <a href="/<?php echo htmlspecialchars($_SESSION['user']['username']); ?>/place" class="btn btn-back">Retour</a>
+      <?php else: ?>
+      <a href="/place" class="btn btn-back">Retour</a>
+      <?php endif; ?>
+      <?php if (isset($isOwnEntity) && $isOwnEntity): ?>
+      <a href="/<?php echo htmlspecialchars($_SESSION['user']['username'] ?? ''); ?>/place/<?php echo $place->slug; ?>/edit"
+        class="btn" style="background-color: #ffc107; color: black">Modifier</a>
+      <button type="button" class="btn btn-delete" onclick="deletePlace(<?php echo $place->id; ?>)">
+        Supprimer
+      </button>
+      <?php endif; ?>
+    </div>
+  </div>
+
+  <script>
+    function deletePlace(id) {
+      if (confirm("Êtes-vous sûr de vouloir supprimer cette place ?")) {
+        const username =
+          '<?php echo htmlspecialchars($_SESSION["user"]["username"] ?? ""); ?>';
+        fetch(`/${username}/place/${id}`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }).then((response) => {
+          if (response.ok) {
+            window.location.href = `/${username}/place`;
+          } else {
+            alert("Erreur lors de la suppression");
+          }
+        });
       }
-    </script>
-  </body>
+    }
+  </script>
+</body>
+
 </html>
