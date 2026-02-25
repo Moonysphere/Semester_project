@@ -10,7 +10,6 @@ use App\Repositories\CharacterRepository;
 use App\Repositories\PlaceRepository;
 use App\Repositories\QuestRepository;
 use App\Repositories\RoleRepository;
-use App\Repositories\RulerRepository;
 use App\Repositories\UniversRepository;
 
 class GetBackOffice extends AbstractController
@@ -28,7 +27,6 @@ class GetBackOffice extends AbstractController
         $placeRepo = new PlaceRepository();
         $questRepo = new QuestRepository();
         $roleRepo = new RoleRepository();
-        $rulerRepo = new RulerRepository();
         $universRepo = new UniversRepository();
 
         $data = [
@@ -37,7 +35,6 @@ class GetBackOffice extends AbstractController
             'places' => $placeRepo->findAll() ?? [],
             'quests' => $questRepo->findAll() ?? [],
             'roles' => $roleRepo->findAll() ?? [],
-            'rulers' => $rulerRepo->findAll() ?? [],
             'univers' => $universRepo->findAll() ?? [],
         ];
 

@@ -19,6 +19,31 @@
   <nav class="sidebar__nav">
     <ul class="sidebar__menu">
       <li class="sidebar__menu-item">
+        <a href="/character" class="sidebar__link">
+          <img
+            src="/src/style/assets/icon_sidebar/icon_perso.svg"
+            alt="Personnages" />
+        </a>
+      </li>
+      <li class="sidebar__menu-item">
+        <a href="/univers" class="sidebar__link">
+          <img
+            src="/src/style/assets/icon_sidebar/icon_uni.svg"
+            alt="Univers" />
+        </a>
+      </li>
+      <li class="sidebar__menu-item">
+        <a href="/place" class="sidebar__link">
+          <img
+            src="/src/style/assets/icon_sidebar/icon_place.svg"
+            alt="Lieux" />
+        </a>
+      </li>
+      <li class="sidebar__menu-item">
+        <a href="#" class="sidebar__link">
+          <img
+            src="/src/style/assets/icon_sidebar/icon_settings.svg"
+            alt="Paramètres" />
         <?php if (isset($user) && isset($user['username'])): ?>
         <a
           href="/<?php echo htmlspecialchars($user['username']); ?>/character"
@@ -114,6 +139,7 @@
     <button
       class="sidebar__theme-toggle"
       id="themeToggle"
+      aria-label="Changer de thème">
       aria-label="Changer de thème"
     >
       <span class="sidebar__theme-toggle-icon">🌙</span>
@@ -125,6 +151,9 @@
       <div class="user-info">
         <span>👤 <?= htmlspecialchars($user['username']) ?> </span>
       </div>
+      <a href="/logout" class="button button--sm button--danger" id="logoutBtn"
+        >Déconnexion</a
+      >
       <form method="POST" action="/logout" style="display: inline">
         <button
           type="submit"

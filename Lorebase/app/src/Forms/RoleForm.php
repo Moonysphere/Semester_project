@@ -25,16 +25,16 @@ class RoleForm extends AbstractForm
 
     public function save(): ?Role
     {
-        $ruler = $this->mapToEntity();
+        $$roles = $this->mapToEntity();
 
-        if ($ruler === null) {
+        if ($roles === null) {
             return null;
         }
 
         $repository = new RoleRepository();
-        $ruler->id = $repository->save($ruler);
+        $roles->id = $repository->save($roles);
 
-        return $ruler;
+        return $roles;
     }
 
     public function validateRequiredFields(): bool

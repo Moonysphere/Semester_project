@@ -266,7 +266,6 @@
           📜 Quêtes
         </button>
         <button class="nav-tab" onclick="showSection('roles')">👑 Rôles</button>
-        <button class="nav-tab" onclick="showSection('rulers')">
           📋 Règles
         </button>
         <button class="nav-tab" onclick="showSection('univers')">
@@ -516,125 +515,6 @@
         </div>
         <?php endif; ?>
       </div>
-
-      <!-- SECTION RÈGLES -->
-      <div id="rulers" class="section">
-        <h2>📋 Règles</h2>
-
-        <div class="stats">
-          <div class="stat-card">
-            <h3><?= $ruler_count ?></h3>
-            <p>Règles</p>
-          </div>
-        </div>
-
-        <?php if (!empty($rulers)): ?>
-        <table>
-          <thead>
-            <tr>
-              <th>Nom</th>
-              <th>Slug</th>
-              <th>Catégorie</th>
-              <th>Statut</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <?php foreach ($rulers as $ruler): ?>
-            <tr>
-              <td><?= htmlspecialchars($ruler->name) ?></td>
-              <td><?= htmlspecialchars($ruler->slug) ?></td>
-              <td><?= htmlspecialchars($ruler->categorie ?? '-') ?></td>
-              <td>
-                <span
-                  class="badge badge-<?= strtolower($ruler->status ?? 'draft') ?>"
-                >
-                  <?= ucfirst($ruler->status ?? 'draft') ?>
-                </span>
-              </td>
-              <td>
-                <div class="actions">
-                  <a href="/ruler/<?= $ruler->slug ?>/edit" class="btn btn-edit"
-                    >Modifier</a
-                  >
-                  <button
-                    class="btn btn-delete"
-                    onclick="deleteEntity('ruler', <?= $ruler->id ?>)"
-                  >
-                    Supprimer
-                  </button>
-                </div>
-              </td>
-            </tr>
-            <?php endforeach; ?>
-          </tbody>
-        </table>
-        <?php else: ?>
-        <div class="empty-state">
-          <p>Aucune règle</p>
-        </div>
-        <?php endif; ?>
-      </div>
-
-      <!-- SECTION UNIVERS -->
-      <div id="univers" class="section">
-        <h2>🌍 Univers</h2>
-
-        <div class="stats">
-          <div class="stat-card">
-            <h3><?= $univers_count ?></h3>
-            <p>Univers</p>
-          </div>
-        </div>
-
-        <?php if (!empty($univers)): ?>
-        <table>
-          <thead>
-            <tr>
-              <th>Nom</th>
-              <th>Slug</th>
-              <th>Statut</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <?php foreach ($univers as $univ): ?>
-            <tr>
-              <td><?= htmlspecialchars($univ->name) ?></td>
-              <td><?= htmlspecialchars($univ->slug) ?></td>
-              <td>
-                <span
-                  class="badge badge-<?= strtolower($univ->status ?? 'draft') ?>"
-                >
-                  <?= ucfirst($univ->status ?? 'draft') ?>
-                </span>
-              </td>
-              <td>
-                <div class="actions">
-                  <a
-                    href="/univers/<?= $univ->slug ?>/edit"
-                    class="btn btn-edit"
-                    >Modifier</a
-                  >
-                  <button
-                    class="btn btn-delete"
-                    onclick="deleteEntity('univers', <?= $univ->id ?>)"
-                  >
-                    Supprimer
-                  </button>
-                </div>
-              </td>
-            </tr>
-            <?php endforeach; ?>
-          </tbody>
-        </table>
-        <?php else: ?>
-        <div class="empty-state">
-          <p>Aucun univers</p>
-        </div>
-        <?php endif; ?>
-      </div>
-    </div>
 
     <script>
       function showSection(sectionId) {

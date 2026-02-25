@@ -390,7 +390,6 @@
           📜 Quêtes
         </button>
         <button class="nav-tab" onclick="showSection('roles')">👑 Rôles</button>
-        <button class="nav-tab" onclick="showSection('rulers')">
           📋 Règles
         </button>
         <button class="nav-tab" onclick="showSection('univers')">
@@ -703,66 +702,6 @@
         <?php else: ?>
         <div class="empty-state">
           <p>Aucun rôle trouvé</p>
-        </div>
-        <?php endif; ?>
-      </div>
-
-      <!-- SECTION RÈGLES -->
-      <div id="rulers" class="section">
-        <h2>📋 Gestion des Règles</h2>
-
-        <div class="stats">
-          <div class="stat-card">
-            <h3><?= count($rulers) ?></h3>
-            <p>Règles</p>
-          </div>
-          <a href="/ruler/create" class="stat-card add-btn">+</a>
-        </div>
-
-        <?php if (!empty($rulers)): ?>
-        <table>
-          <thead>
-            <tr>
-              <th>Nom</th>
-              <th>Slug</th>
-              <th>Statut</th>
-              <th>Univers</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <?php foreach ($rulers as $ruler): ?>
-            <tr>
-              <td><?= htmlspecialchars($ruler->name) ?></td>
-              <td><?= htmlspecialchars($ruler->slug) ?></td>
-              <td>
-                <span
-                  class="badge badge-<?= strtolower($ruler->status ?? 'draft') ?>"
-                >
-                  <?= ucfirst($ruler->status ?? 'draft') ?>
-                </span>
-              </td>
-              <td><?= $ruler->univers_id ?? '-' ?></td>
-              <td>
-                <div class="actions">
-                  <a href="/ruler/edit/<?= $ruler->slug ?>" class="btn btn-edit"
-                    >Modifier</a
-                  >
-                  <button
-                    class="btn btn-delete"
-                    onclick="deleteEntity('ruler', <?= $ruler->id ?>)"
-                  >
-                    Supprimer
-                  </button>
-                </div>
-              </td>
-            </tr>
-            <?php endforeach; ?>
-          </tbody>
-        </table>
-        <?php else: ?>
-        <div class="empty-state">
-          <p>Aucune règle trouvée</p>
         </div>
         <?php endif; ?>
       </div>
