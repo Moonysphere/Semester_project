@@ -4,7 +4,6 @@
     "method": "GET",
     "controller": "Homepage\\GetHomepageController"
   },
-
   {
     "path": "/character",
     "method": "GET",
@@ -50,7 +49,6 @@
     "method": "DELETE",
     "controller": "Character\\DeleteCharacterController"
   },
-
   {
     "path": "/:username/quest/create",
     "method": "GET",
@@ -140,41 +138,6 @@
     "path": "/:username/univers/:id",
     "method": "DELETE",
     "controller": "Univers\\DeleteUniversController"
-  },
-  {
-    "path": "/ruler",
-    "method": "GET",
-    "controller": "Ruler\\GetRulerAllController"
-  },
-  {
-    "path": "/ruler/create",
-    "method": "GET",
-    "controller": "Ruler\\GetCreateRulerController"
-  },
-  {
-    "path": "/ruler",
-    "method": "POST",
-    "controller": "Ruler\\PostRulerController"
-  },
-  {
-    "path": "/ruler/:id",
-    "method": "DELETE",
-    "controller": "Ruler\\DeleteRulerController"
-  },
-  {
-    "path": "/ruler/:slug",
-    "method": "GET",
-    "controller": "Ruler\\GetRulerController"
-  },
-  {
-    "path": "/ruler/:slug/edit",
-    "method": "GET",
-    "controller": "Ruler\\GetEditRuler"
-  },
-  {
-    "path": "/ruler/:id",
-    "method": "PATCH",
-    "controller": "Ruler\\PatchRulerController"
   },
   {
     "path": "/register",
@@ -357,16 +320,6 @@
     "controller": "Api\\Character\\GetApiCharactersController"
   },
   {
-    "path": "/api/rulers",
-    "method": "GET",
-    "controller": "Api\\Ruler\\GetApiRulersController"
-  },
-  {
-    "path": "/api/rulers/:slug",
-    "method": "GET",
-    "controller": "Api\\Ruler\\GetApiRulersController"
-  },
-  {
     "path": "/user/profile",
     "method": "PATCH",
     "controller": "Auth\\PatchUserController"
@@ -390,5 +343,10 @@
     "path": "/admin/user/role",
     "method": "PATCH",
     "controller": "Admin\\PatchUserRole"
+  },
+  {
+    "path": "/sitemap.xml",
+    "method": "GET",
+    "controller": "Sitemap\\GetSitemapController"
   }
 ]

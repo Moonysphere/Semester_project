@@ -1,67 +1,58 @@
 <?php
 
-
 namespace App\Controllers\Api\Univers;
 
 use App\Lib\Http\Request;
 use App\Lib\Http\Response;
-use App\Lib\Controllers\AbstractController;
+use App\Lib\Controllers\AbstractAPIController;
 use App\Repositories\UniversRepository;
 
-class GetApiUniversController extends AbstractController
+class GetApiUniversController extends AbstractAPIController
 {
     public function process(Request $request): Response
     {
+        $pagination = $this->getPaginationParams();
+        $search = $this->getSearchParam();
 
-        header('Access-Control-Allow-Origin: *');
-        header('Access-Control-Allow-Methods: GET');
-        header('Access-Control-Allow-Headers: Content-Type');
+        $userEmail = null;
+        if ($this->hasUserFilter()) {
+            $userEmail = $this->getUserFilter();
+            if (!$userEmail) {
+                return $this->apiError('User not found', 404);
+            }
+        }
 
-
-        $universRepository = new UniversRepository();
-
-
-        $page = isset($_GET['page']) ? max(1, (int)$_GET['page']) : 1;
-        $limit = isset($_GET['limit']) ? max(1, min(100, (int)$_GET['limit'])) : 20;
-        $offset = ($page - 1) * $limit;
-
-        $search = $_GET['search'] ?? null;
-
-        $queryBuilder = $universRepository->queryBuilder()
+        $repo = new UniversRepository();
+        $query = $repo->queryBuilder()
             ->select()
-            ->from('u') 
+            ->from('univers')
             ->where('status', '=')
             ->addParam('status', 'published');
 
+        $this->applyUserFilter($query, $userEmail);
         if ($search) {
-            $queryBuilder
-                ->andWhere('name', 'LIKE')
-                ->addParam('name', '%' . $search . '%');
+            $this->applySearchFilter($query, $search, 'name');
         }
 
-        $allUnivers = $queryBuilder->executeQuery()->getAllResults();
+        $all = $query->executeQuery()->getAllResults();
+        $univers = array_slice($all, $pagination['offset'], $pagination['limit']);
 
-
-        $univers = array_slice($allUnivers, $offset, $limit);
-
-
-        $universData = array_map(function($univers) {
+        $universData = array_map(function ($univers) {
             return [
                 'id' => $univers->id,
                 'name' => $univers->name,
                 'slug' => $univers->slug,
                 'description' => $univers->description,
                 'createdate' => $univers->createdate,
-                'status' => $univers->status
+                'status' => $univers->status,
+                'owner' => $univers->user_id
             ];
         }, $univers);
 
-
-        return new Response(
-            json_encode($universData, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT),
+        return $this->apiResponse(
+            $universData,
             200,
-            ['Content-Type' => 'application/json']
-        );  
+            $this->buildPagination($pagination['page'], $pagination['limit'], count($all))
+        );
     }
-
 }

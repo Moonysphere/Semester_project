@@ -9,7 +9,6 @@ use App\Repositories\CharacterRepository;
 use App\Repositories\PlaceRepository;
 use App\Repositories\QuestRepository;
 use App\Repositories\RoleRepository;
-use App\Repositories\RulerRepository;
 use App\Repositories\UniversRepository;
 use App\Repositories\UserRepository;
 
@@ -54,13 +53,11 @@ class GetBackOfficeUser extends AbstractController
         $placeRepository = new PlaceRepository();
         $questRepository = new QuestRepository();
         $roleRepository = new RoleRepository();
-        $rulerRepository = new RulerRepository();
         $universRepository = new UniversRepository();
 
         $characters = $characterRepository->findBy(['user_id' => $userEmail]);
         $places = $placeRepository->findBy(['user_id' => $userEmail]);
         $quests = $questRepository->findBy(['user_id' => $userEmail]);
-        $rulers = $rulerRepository->findBy(['user_id' => $userEmail]);
         $univers = $universRepository->findBy(['user_id' => $userEmail]);
 
         $roles = $roleRepository->findAll();
@@ -69,7 +66,7 @@ class GetBackOfficeUser extends AbstractController
         $places = $places ?? [];
         $quests = $quests ?? [];
         $roles = $roles ?? [];
-        $rulers = $rulers ?? [];
+
         $univers = $univers ?? [];
 
         $data = [
@@ -77,13 +74,11 @@ class GetBackOfficeUser extends AbstractController
             'places' => $places,
             'quests' => $quests,
             'roles' => $roles,
-            'rulers' => $rulers,
             'univers' => $univers,
             'character_count' => count($characters),
             'place_count' => count($places),
             'quest_count' => count($quests),
             'role_count' => count($roles),
-            'ruler_count' => count($rulers),
             'univers_count' => count($univers),
             'displayedUserName' => $displayedUserName,
         ];

@@ -1,205 +1,98 @@
 <!doctype html>
 <html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../../src/style/css/framework.css" />
-    <title>Quêtes</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 20px;
-        background-color: #f5f5f5;
-      }
 
-      h1 {
-        text-align: center;
-        margin-bottom: 30px;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quêtes</title>
+  <script>
+    const theme = localStorage.getItem("theme") ||
+      (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    document.documentElement.setAttribute("data-theme", theme);
+  </script>
+  <link rel="stylesheet" href="../../src/style/css/framework.css" />
+  <link rel="stylesheet" href="../../src/style/css/quest/list.css" />
+  <link rel="stylesheet" href="../../src/style/css/responsive.css">
+  <link rel="stylesheet" href="../../src/style/css/theme.css">
+</head>
 
-      .quests-container {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-        gap: 20px;
-        padding: 20px;
-        max-width: 1200px;
-        margin: 0 auto;
-      }
+<body>
+  <h1>Quêtes</h1>
+  <?php require "../components/sidebar.html"; ?>
+  <div class="main-content">
 
-      .quest-card {
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        padding: 20px;
-        text-align: center;
-        cursor: pointer;
-        transition:
-          transform 0.2s,
-          box-shadow 0.2s;
-        text-decoration: none;
-        color: inherit;
-        background-color: white;
-      }
+    <div class="quests-container">
+      <a href="/quest/create" class="quest-card add-card">+</a>
 
-      .quest-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      }
-
-      .quest-card h3 {
-        margin: 10px 0;
-      }
-
-      .add-card {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 48px;
-        background-color: #f0f0f0;
-      }
-
-      .add-card:hover {
-        background-color: #e0e0e0;
-      }
-    </style>
-  </head>
-  <body>
-    <h1>Quêtes</h1>
-    <?php require "../components/sidebar.html"; ?>
-    <div class="main-content">
-      <!-- SECTION: TES QUÊTES -->
-      <h2 style="text-align: center; margin-bottom: 10px; margin-top: 40px">
-        Tes quêtes :
-      </h2>
-      <div class="quests-container">
-        <a
-          href="/<?php echo htmlspecialchars($_SESSION['user']['username'] ?? ''); ?>/quest/create"
-          class="quest-card add-card"
-          >+</a
-        >
-
-        <!-- Cartes des quêtes publiées -->
-        <?php foreach ($quests as $quest): ?><?php if ($quest->status ===
-        'published'): ?>
-        <article class="card">
-          <div class="card__content">
-            <div class="card__image">
-              <img
-                src="../../src/style/assets/icon_sidebar/icon_quest.svg"
-                alt="logo"
-                class=""
-              />
-            </div>
-            <h2 class="card__title_main-font">
-              <?php echo htmlspecialchars($quest->title); ?>
-            </h2>
-            <p class="card__text">
-              <?php echo htmlspecialchars($quest->description); ?>
-            </p>
-            <a
-              href="/<?php echo htmlspecialchars($_SESSION['user']['username'] ?? ''); ?>/quest/<?php echo htmlspecialchars($quest->slug); ?>"
-              class="button button--primary p--6"
-              >détail</a
-            >
+      <?php foreach ($quests as $quest): ?>
+      <?php if ($quest->status === 'published'): ?>
+      <article class="card">
+        <div class="card__content">
+          <div class="card__image">
+            <img src="/src/style/assets/icon_sidebar/icon_rules.svg" alt="quete">
           </div>
-        </article>
-
-        <?php endif; ?> <?php endforeach; ?>
-      </div>
-      <!-- SECTION: QUÊTES PAR DÉFAUT -->
-      <h2 style="text-align: center; margin-bottom: 10px; margin-top: 30px">
-        Quêtes par défaut :
-      </h2>
-      <div class="quests-container">
-        <?php foreach ($defaultQuests as $quest): ?><?php if ($quest->status ===
-        'published'): ?>
-        <article class="card">
-          <div class="card__content">
-            <div class="card__image">
-              <img
-                src="../../src/style/assets/icon_sidebar/icon_quest.svg"
-                alt="logo"
-                class=""
-              />
-            </div>
-            <h2 class="card__title_main-font">
-              <?php echo htmlspecialchars($quest->title); ?>
-            </h2>
-            <p class="card__text">
-              <?php echo htmlspecialchars($quest->description); ?>
-            </p>
-            <a
-              href="/quest/<?php echo htmlspecialchars($quest->slug); ?>"
-              class="button button--primary p--6"
-              >détail</a
-            >
-          </div>
-        </article>
-
-        <?php endif; ?> <?php endforeach; ?>
-      </div>
-      <hr style="margin: 40px 0" />
-      <h2 style="text-align: center; margin-bottom: 10px">Brouillons :</h2>
-
-      <div class="quests-container">
-        <?php foreach ($quests as $quest): ?> <?php if ($quest->status ===
-        'draft'): ?>
-        <article class="card">
-          <div class="card__content">
-            <div class="card__image">
-              <img
-                src="../../src/style/assets/icon_sidebar/icon_quest.svg"
-                alt="logo"
-                class=""
-              />
-            </div>
-            <h2 class="card__title_main-font">
-              <?php echo htmlspecialchars($quest->title); ?>
-            </h2>
-            <p class="card__text">
-              <?php echo htmlspecialchars($quest->description); ?>
-            </p>
-            <a
-              href="/<?php echo htmlspecialchars($_SESSION['user']['username'] ?? ''); ?>/quest/<?php echo htmlspecialchars($quest->slug); ?>"
-              class="button button--primary p--6"
-              >détail</a
-            >
-            >
-          </div>
-        </article>
-        <?php endif; ?> <?php endforeach; ?>
-      </div>
-
-      <hr style="margin: 40px 0" />
-      <h2 style="text-align: center; margin-bottom: 10px">Archivées :</h2>
-
-      <div class="quests-container">
-        <?php foreach ($quests as $quest): ?> <?php if ($quest->status ===
-        'archived'): ?>
-        <article class="card">
-          <div class="card__content">
-            <div class="card__image">
-              <img
-                src="../../src/style/assets/icon_sidebar/icon_quest.svg"
-                alt="logo"
-                class=""
-              />
-            </div>
-            <h2 class="card__title_main-font">
-              <?php echo htmlspecialchars($quest->title); ?>
-            </h2>
-            <p class="card__text">
-              <?php echo htmlspecialchars($quest->description); ?>
-            </p>
-            <a
-              href="/<?php echo htmlspecialchars($_SESSION['user']['username'] ?? ''); ?>/quest/<?php echo htmlspecialchars($quest->slug); ?>"
-              class="button button--primary p--6"
-              >détail</a
-            >
-          </div>
-        </article>
-        <?php endif; ?> <?php endforeach; ?>
-      </div>
+          <h2 class="card__title_main-font">
+            <?php echo htmlspecialchars($quest->title); ?>
+          </h2>
+          <p class="card__text">
+            <?php echo htmlspecialchars($quest->description); ?>
+          </p>
+          <a href="/quest/<?php echo htmlspecialchars($quest->slug); ?>" class="button button--primary p--6">détail</a>
+        </div>
+      </article>
+      <?php endif; ?>
+      <?php endforeach; ?>
     </div>
-  </body>
+
+    <hr style="margin: 40px 0" />
+    <h2 style="text-align: center; margin-bottom: 10px">Brouillons :</h2>
+
+    <div class="quests-container">
+      <?php foreach ($quests as $quest): ?>
+      <?php if ($quest->status === 'draft'): ?>
+      <article class="card card--brouillon">
+        <div class="card__content">
+          <div class="card__image">
+            <img src="/src/style/assets/icon_sidebar/icon_rules.svg" alt="quete">
+          </div>
+          <h2 class="card__title_main-font">
+            <?php echo htmlspecialchars($quest->title); ?>
+          </h2>
+          <p class="card__text">
+            <?php echo htmlspecialchars($quest->description); ?>
+          </p>
+          <a href="/quest/<?php echo htmlspecialchars($quest->slug); ?>" class="button button--primary p--6">détail</a>
+        </div>
+      </article>
+      <?php endif; ?>
+      <?php endforeach; ?>
+    </div>
+
+    <hr style="margin: 40px 0" />
+    <h2 style="text-align: center; margin-bottom: 10px">Archivées :</h2>
+
+    <div class="quests-container">
+      <?php foreach ($quests as $quest): ?>
+      <?php if ($quest->status === 'archived'): ?>
+      <article class="card">
+        <div class="card__content">
+          <div class="card__image">
+            <img src="/src/style/assets/icon_sidebar/icon_rules.svg" alt="quete">
+          </div>
+          <h2 class="card__title_main-font">
+            <?php echo htmlspecialchars($quest->title); ?>
+          </h2>
+          <p class="card__text">
+            <?php echo htmlspecialchars($quest->description); ?>
+          </p>
+          <a href="/quest/<?php echo htmlspecialchars($quest->slug); ?>" class="button button--primary p--6">détail</a>
+        </div>
+      </article>
+      <?php endif; ?>
+      <?php endforeach; ?>
+    </div>
+
+  </div>
+</body>
+
 </html>

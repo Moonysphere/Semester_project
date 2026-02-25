@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+Disallow: /login
+Disallow: /register
+Disallow: /logout
+Disallow: /admin
+
+Sitemap: http://localhost:8080/public/sitemap.xml
