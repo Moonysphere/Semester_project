@@ -15,5 +15,13 @@ try {
     echo $response->getContent();
     exit();
 } catch(\Exception $e) {
-    echo $e->getMessage();
+    
+    if ($e->getCode() === 404) {
+        http_response_code(404);
+        require __DIR__ . '/../views/errors/404.html';
+        exit();
+    }
+
+    http_response_code(500);
+    require __DIR__ . '/../views/errors/500.html';
 }

@@ -24,13 +24,13 @@ class GetCharacterController extends AbstractController
         $slug = $request->getSlug('slug');
 
         if ($slug === '') {
-            return new Response('Slug manquant', 400, ['Content-Type' => 'application/json']);
+            throw new \Exception('Slug manquant', 400);
         }
 
         $character = $characterRepository->findBySlug($slug, 'character');
 
         if (!$character) {
-            return new Response('Personnage non trouvé', 404, ['Content-Type' => 'application/json']);
+            throw new \Exception('Personnage non trouvé', 404);
         }
 
         $roleName = null;

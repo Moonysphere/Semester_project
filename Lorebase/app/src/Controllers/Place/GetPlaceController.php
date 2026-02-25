@@ -21,10 +21,13 @@ class GetPlaceController extends AbstractController
         $slug = $request->getSlug('slug');
 
         if ($slug === '') {
-            return new Response('Slug manquant', 400, ['Content-Type' => 'application/json']);
-        }
+            throw new \Exception('Slug manquant', 400);        }
 
         $place = $placeRepository->findBySlug($slug, 'place');
+
+        if (!$place) {
+            throw new \Exception('Place non trouvé', 404);
+        }
         $universName = null;
 
         if (isset($place->univers_id) && $place->univers_id) {
