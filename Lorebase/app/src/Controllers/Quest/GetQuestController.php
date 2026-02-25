@@ -23,13 +23,13 @@ class GetQuestController extends AbstractController
         $slug = $request->getSlug('slug');
 
         if ($slug === '') {
-            return new Response('Slug manquant', 400, ['Content-Type' => 'application/json']);
+            throw new \Exception('Slug manquant', 404);
         }
 
         $quest = $questRepository->findBySlug($slug, 'quest');
 
         if (empty($quest)) {
-            return new Response('Personnage non trouvé', 404, ['Content-Type' => 'application/json']);
+            throw new \Exception('Quête non trouvée', 404);
         }
 
         $placeName = null;

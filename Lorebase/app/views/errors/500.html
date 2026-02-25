@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>404 – Lorebase</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500&display=swap"
+      rel="stylesheet" />
+    <style>
+      :root {
+        --purple: #6c47ff;
+        --purple-dark: #5535d4;
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "DM Sans", sans-serif;
+        background: #f5f5f7;
+        color: #1a1a2e;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .orb {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(90px);
+        opacity: 0.15;
+        animation: drift 8s ease-in-out infinite alternate;
+        pointer-events: none;
+      }
+
+      .orb-1 {
+        width: 500px;
+        height: 500px;
+        background: var(--purple);
+        top: -150px;
+        right: -100px;
+      }
+      .orb-2 {
+        width: 320px;
+        height: 320px;
+        background: #a084ff;
+        bottom: -80px;
+        left: 5%;
+        animation-delay: -4s;
+      }
+
+      @keyframes drift {
+        from {
+          transform: translate(0, 0) scale(1);
+        }
+        to {
+          transform: translate(20px, 30px) scale(1.06);
+        }
+      }
+
+      .content {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+        max-width: 540px;
+        animation: fadeUp 0.6s ease both;
+      }
+
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(28px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        background: rgba(108, 71, 255, 0.1);
+        border: 1px solid rgba(108, 71, 255, 0.25);
+        border-radius: 99px;
+        padding: 0.3rem 1rem;
+        font-size: 0.78rem;
+        color: var(--purple);
+        font-weight: 500;
+        letter-spacing: 0.05em;
+        margin-bottom: 1.6rem;
+      }
+
+      .big-404 {
+        font-family: "Syne", sans-serif;
+        font-size: clamp(8rem, 20vw, 14rem);
+        font-weight: 800;
+        line-height: 1;
+        background: linear-gradient(
+          135deg,
+          var(--purple) 0%,
+          #a084ff 60%,
+          #c084fc 100%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 0.3rem;
+        position: relative;
+      }
+
+      .big-404::before,
+      .big-404::after {
+        content: "404";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: inherit;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .big-404::before {
+        animation: glitch1 4s infinite;
+        clip-path: polygon(0 20%, 100% 20%, 100% 40%, 0 40%);
+        opacity: 0.55;
+      }
+
+      .big-404::after {
+        animation: glitch2 4s infinite;
+        clip-path: polygon(0 62%, 100% 62%, 100% 78%, 0 78%);
+        opacity: 0.4;
+      }
+
+      @keyframes glitch1 {
+        0%,
+        90%,
+        100% {
+          transform: none;
+        }
+        92% {
+          transform: translateX(-5px);
+        }
+        95% {
+          transform: translateX(5px);
+        }
+      }
+
+      @keyframes glitch2 {
+        0%,
+        87%,
+        100% {
+          transform: none;
+        }
+        89% {
+          transform: translateX(6px);
+        }
+        93% {
+          transform: translateX(-4px);
+        }
+      }
+
+      h1 {
+        font-family: "Syne", sans-serif;
+        font-size: clamp(1.3rem, 3vw, 1.9rem);
+        font-weight: 700;
+        margin-bottom: 0.7rem;
+      }
+
+      h1 em {
+        font-style: normal;
+        color: var(--purple);
+      }
+
+      p {
+        color: #888;
+        font-size: 0.97rem;
+        line-height: 1.65;
+        margin-bottom: 2.2rem;
+      }
+
+      .actions {
+        display: flex;
+        gap: 0.9rem;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .btn-primary {
+        background: var(--purple);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        padding: 0.75rem 1.7rem;
+        font-size: 0.92rem;
+        font-family: "DM Sans", sans-serif;
+        font-weight: 500;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        transition:
+          background 0.2s,
+          transform 0.15s;
+      }
+
+      .btn-primary:hover {
+        background: var(--purple-dark);
+        transform: translateY(-2px);
+      }
+
+      .btn-secondary {
+        background: transparent;
+        color: var(--purple);
+        border: 1.5px solid rgba(108, 71, 255, 0.3);
+        border-radius: 12px;
+        padding: 0.75rem 1.7rem;
+        font-size: 0.92rem;
+        font-family: "DM Sans", sans-serif;
+        font-weight: 500;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        transition:
+          border-color 0.2s,
+          background 0.2s,
+          transform 0.15s;
+      }
+
+      .btn-secondary:hover {
+        border-color: var(--purple);
+        background: rgba(108, 71, 255, 0.06);
+        transform: translateY(-2px);
+      }
+
+      footer {
+        position: absolute;
+        bottom: 1.4rem;
+        color: #bbb;
+        font-size: 0.75rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+
+    <div class="content">
+      <div class="badge">⚠ Erreur serveur</div>
+
+      <div class="big-404">500</div>
+
+      <h1>Une erreur est survenue <em>dans cet univers</em></h1>
+      <p>
+        La page que vous cherchez a peut-être été déplacée,<br />supprimée, ou
+        n'a jamais existé.
+      </p>
+
+      <div class="actions">
+        <a href="/" class="btn-primary">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="white">
+            <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+          </svg>
+          Retour à l'accueil
+        </a>
+        <a href="javascript:history.back()" class="btn-secondary">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" />
+          </svg>
+          Page précédente
+        </a>
+      </div>
+    </div>
+
+    <footer>© 2026 Lorebase – Projet Semestre</footer>
+  </body>
+</html>
