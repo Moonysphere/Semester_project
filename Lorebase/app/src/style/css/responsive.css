@@ -1,0 +1,598 @@
+:root {
+    --sidebar-open: 270px;
+    --sidebar-closed: 80px;
+    --topbar-h: 56px;
+    /* hauteur burger mobile */
+    --sidebar-trans: 0.3s ease;
+    --page-padding: 2rem;
+    --page-padding-sm: 1rem;
+}
+
+.sidebar-burger-mobile {
+    display: none;
+    position: fixed;
+    top: .75rem;
+    left: .75rem;
+    z-index: 1100;
+    background: #1a1d2e;
+    border: none;
+    border-radius: 10px;
+    padding: .5rem;
+    cursor: pointer;
+    color: #fff;
+    width: 42px;
+    height: 42px;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, .30);
+    transition: background .2s, transform .2s;
+}
+
+.sidebar-burger-mobile:hover {
+    background: #2d3154;
+    transform: scale(1.05);
+}
+
+.sidebar-burger-mobile svg {
+    width: 22px;
+    height: 22px;
+}
+
+.sidebar-burger-mobile:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 3px;
+}
+
+.sidebar-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 1000;
+    transition: transform var(--sidebar-trans);
+}
+
+.sidebar {
+    width: var(--sidebar-open);
+    transition: width var(--sidebar-trans);
+}
+
+.sidebar.closed {
+    width: var(--sidebar-closed);
+}
+
+.sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, .50);
+    z-index: 999;
+    cursor: pointer;
+}
+
+.sidebar-overlay.active {
+    display: block;
+}
+
+.main-content {
+    margin-left: var(--sidebar-open);
+    padding: var(--page-padding);
+    min-height: 100vh;
+    transition: margin-left var(--sidebar-trans);
+}
+
+body.sidebar-closed .main-content {
+    margin-left: var(--sidebar-closed);
+}
+
+.footer {
+    margin-left: var(--sidebar-open);
+    transition: margin-left var(--sidebar-trans);
+}
+
+body.sidebar-closed .footer {
+    margin-left: var(--sidebar-closed);
+}
+
+body:not(:has(.sidebar-container)) {
+    padding: 2rem 1rem;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 640px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 2rem 2.5rem;
+    border-radius: 10px;
+    box-sizing: border-box;
+}
+
+body>h1:first-child {
+    text-align: center;
+}
+
+body>form {
+    max-width: 620px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 2rem;
+    border: 1px solid var(--th-border, #ddd);
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 2rem;
+    margin-bottom: 2.5rem;
+    border-radius: 16px;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.logo {
+    font-size: 1.75rem;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.auth-buttons {
+    display: flex;
+    gap: .75rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.hero {
+    text-align: center;
+    padding: 3rem 1rem;
+}
+
+.hero h1 {
+    font-size: clamp(1.75rem, 5vw, 3.5rem);
+    font-weight: 800;
+    line-height: 1.15;
+    margin-bottom: 1.25rem;
+}
+
+.hero p {
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    max-width: 600px;
+    margin: 0 auto 2rem;
+    line-height: 1.6;
+}
+
+.nav-section {
+    padding: 1.5rem 2rem;
+    max-width: 1400px;
+    margin: 0 auto 3rem;
+}
+
+.nav-section h2 {
+    text-align: center;
+    font-size: clamp(1.25rem, 2.5vw, 2rem);
+    font-weight: 700;
+    margin-bottom: 2.5rem;
+}
+
+.nav-grid {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    align-items: stretch;
+    flex-wrap: wrap;
+}
+
+.nav-grid .card {
+    flex: 1 1 280px;
+    max-width: 380px;
+    min-width: 240px;
+}
+
+.characters-container,
+.place-container,
+.rulers-container,
+.univers-container,
+.quests-container,
+.roles-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1.25rem;
+    padding: 1.25rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.form-row {
+    display: flex;
+    gap: 1rem;
+}
+
+.form-row .form-group {
+    flex: 1;
+    min-width: 0;
+}
+
+.btn-login,
+.btn-register {
+    width: 100%;
+}
+
+.buttons,
+.form-actions,
+.actions {
+    display: flex;
+    gap: .625rem;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.footer__container {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto 2rem;
+}
+
+.footer__column {
+    flex: 1;
+    min-width: 140px;
+}
+
+.footer__column--brand {
+    flex: 2;
+    min-width: 220px;
+}
+
+@media (max-width: 1279px) {
+    .nav-grid .card {
+        flex: 1 1 calc(50% - .75rem);
+        max-width: none;
+    }
+}
+
+
+@media (max-width: 1023px) {
+
+    .sidebar {
+        width: var(--sidebar-closed);
+    }
+
+    .sidebar .sidebar-logo-text,
+    .sidebar .sidebar-text {
+        opacity: 0;
+        width: 0;
+        overflow: hidden;
+    }
+
+    .sidebar-toggle svg {
+        transform: rotate(180deg);
+    }
+
+    .main-content {
+        margin-left: var(--sidebar-closed);
+    }
+
+    .footer {
+        margin-left: var(--sidebar-closed);
+    }
+
+    .nav-grid .card {
+        flex: 1 1 calc(50% - .75rem);
+        max-width: none;
+    }
+
+    .header {
+        padding: 1rem 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .characters-container,
+    .place-container,
+    .rulers-container,
+    .univers-container,
+    .quests-container,
+    .roles-container {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+}
+
+@media (max-width: 767px) {
+
+    .sidebar-burger-mobile {
+        display: flex;
+    }
+
+    .sidebar-container {
+        transform: translateX(-100%);
+    }
+
+    .sidebar-container.mobile-open {
+        transform: translateX(0);
+    }
+
+    .sidebar,
+    .sidebar.closed {
+        width: 280px !important;
+    }
+
+    .sidebar .sidebar-logo-text,
+    .sidebar .sidebar-text {
+        opacity: 1 !important;
+        width: auto !important;
+        overflow: visible !important;
+    }
+
+    .main-content,
+    body.sidebar-closed .main-content {
+        margin-left: 0 !important;
+        padding: var(--page-padding-sm);
+        padding-top: calc(var(--topbar-h) + .5rem);
+    }
+
+    .footer,
+    body.sidebar-closed .footer {
+        margin-left: 0 !important;
+        padding: 2rem 1rem 1rem;
+    }
+
+    .footer__container {
+        flex-direction: column;
+    }
+
+    .footer__column,
+    .footer__column--brand {
+        min-width: 100%;
+    }
+
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: .75rem;
+        padding: 1rem;
+        margin-bottom: 1.25rem;
+        border-radius: 12px;
+    }
+
+    .auth-buttons {
+        width: 100%;
+        justify-content: flex-end;
+    }
+
+    .hero {
+        padding: 1.5rem .5rem;
+    }
+
+    .hero h1 {
+        font-size: 1.75rem;
+    }
+
+    .hero p {
+        font-size: .95rem;
+    }
+
+    .nav-grid {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .nav-grid .card {
+        flex: none;
+        max-width: 100%;
+        min-width: unset;
+        width: 100%;
+    }
+
+    .nav-section {
+        padding: .75rem .5rem;
+    }
+
+    .nav-section h2 {
+        font-size: 1.25rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .characters-container,
+    .place-container,
+    .rulers-container,
+    .univers-container,
+    .quests-container,
+    .roles-container {
+        grid-template-columns: 1fr;
+        padding: .75rem;
+        gap: .875rem;
+    }
+
+    body:not(:has(.sidebar-container)) {
+        padding-top: calc(var(--topbar-h) + 1rem);
+    }
+
+    .container {
+        padding: 1.25rem 1rem;
+    }
+
+    body>form {
+        padding: 1.25rem 1rem;
+        margin: 0 .5rem;
+    }
+
+    .login-container,
+    .register-container {
+        padding: 1.5rem 1.25rem;
+        border-radius: 8px;
+    }
+
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .info-group {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: .25rem;
+        padding: 12px 0;
+    }
+
+    .info-value {
+        margin-left: 0;
+    }
+
+    .buttons,
+    .form-actions,
+    .actions {
+        flex-wrap: wrap;
+        gap: .5rem;
+    }
+
+    .buttons button,
+    .buttons a,
+    .edit-buttons button,
+    .form-actions button,
+    .form-actions a,
+    .actions button {
+        flex: 1 1 auto;
+        min-width: 100px;
+        padding: 10px 14px;
+        font-size: .875rem;
+        text-align: center;
+    }
+
+    body>h1:first-child {
+        font-size: 1.5rem;
+        padding: 0 1rem;
+    }
+}
+
+@media (max-width: 479px) {
+
+    .hero h1 {
+        font-size: 1.5rem;
+    }
+
+    .hero p {
+        font-size: .875rem;
+    }
+
+    .container {
+        padding: 1rem .75rem;
+        border-radius: 8px;
+    }
+
+    .container h1 {
+        font-size: 1.25rem;
+    }
+
+    .login-container,
+    .register-container {
+        padding: 1.25rem 1rem;
+    }
+
+    .login-container h1,
+    .register-container h1 {
+        font-size: 1.4rem;
+        margin-bottom: 1.25rem;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+        padding: 9px 11px;
+        font-size: 15px;
+    }
+
+    .btn-login,
+    .btn-register {
+        padding: 12px;
+        font-size: 15px;
+    }
+
+    body>form {
+        padding: 1rem .75rem;
+        margin: 0 .25rem;
+    }
+
+    body>h1:first-child {
+        font-size: 1.35rem;
+    }
+
+    .nav-grid .card {
+        padding: 1.5rem;
+    }
+
+    .logo {
+        font-size: 1.35rem;
+    }
+
+    .nav-section {
+        padding: .5rem;
+    }
+
+    .nav-section h2 {
+        font-size: 1.1rem;
+    }
+
+    .sidebar-footer {
+        padding: .75rem;
+    }
+
+    .characters-container,
+    .place-container,
+    .rulers-container,
+    .univers-container,
+    .quests-container,
+    .roles-container {
+        padding: .5rem;
+        gap: .625rem;
+    }
+}
+
+@media (max-width: 767px) {
+    .hide-mobile {
+        display: none !important;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+    .hide-tablet {
+        display: none !important;
+    }
+}
+
+@media (min-width: 1024px) {
+    .hide-desktop {
+        display: none !important;
+    }
+}
+
+.show-mobile {
+    display: none !important;
+}
+
+@media (max-width: 767px) {
+    .show-mobile {
+        display: block !important;
+    }
+}
+
+.sidebar-link:focus-visible,
+.btn-login:focus-visible,
+.btn-register:focus-visible,
+.btn:focus-visible,
+button:focus-visible,
+a.btn:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}

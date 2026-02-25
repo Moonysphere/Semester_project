@@ -88,7 +88,6 @@
   const sidebarContainer = document.getElementById('sidebarContainer');
   const body = document.body;
 
-  // ✅ Restaurer l'état au chargement IMMÉDIATEMENT (pas dans DOMContentLoaded)
   const wasClosed = localStorage.getItem('sidebarClosed') === 'true';
   if (wasClosed) {
     sidebar.classList.add('closed');
