@@ -157,6 +157,39 @@
       </section>
 
     </div>
+    <div id="cookie-banner" class="cookie-banner" role="dialog" aria-modal="false" aria-label="Gestion des cookies"
+      aria-live="polite" hidden>
+      <div class="cookie-banner__inner">
+
+        <span class="cookie-banner__icon" aria-hidden="true">🍪</span>
+
+        <div class="cookie-banner__content">
+          <p class="cookie-banner__title">Ce site utilise des cookies</p>
+          <p class="cookie-banner__text">
+            Nous utilisons des cookies <strong>strictement nécessaires</strong>
+            (session, préférences d'affichage) et des cookies
+            <strong>analytiques</strong> pour mesurer l'audience.
+            Vous pouvez accepter ou refuser les cookies non essentiels.
+            <a href="/politique-confidentialite" class="cookie-banner__link">
+              En savoir plus
+            </a>
+          </p>
+        </div>
+
+        <div class="cookie-banner__actions">
+          <button id="cookie-decline" class="cookie-banner__btn cookie-banner__btn--decline" type="button"
+            aria-label="Refuser les cookies non essentiels">
+            Refuser
+          </button>
+          <button id="cookie-accept" class="cookie-banner__btn cookie-banner__btn--accept" type="button"
+            aria-label="Accepter tous les cookies">
+            Accepter
+          </button>
+        </div>
+
+      </div>
+    </div>
+
   </main>
 
   <footer class="footer">
@@ -393,6 +426,120 @@
     }
 
     new ThemeToggle();
+
+
+    (function () {
+      'use strict';
+
+      var COOKIE_NAME = 'lorebase_cookie_consent';
+      var COOKIE_MONTHS = 13; /* max légal CNIL */
+
+      var banner = document.getElementById('cookie-banner');
+      var btnAccept = document.getElementById('cookie-accept');
+      var btnDecline = document.getElementById('cookie-decline');
+
+      /* ── Lecture cookie ── */
+      function getCookie(name) {
+        var match = document.cookie.match(
+          new RegExp('(?:^|; )' + name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '=([^;]*)')
+        );
+        return match ? decodeURIComponent(match[1]) : null;
+      }
+
+      /* ── Écriture cookie ── */
+      function setCookie(name, value, months) {
+        var expires = new Date();
+        expires.setMonth(expires.getMonth() + months);
+        var secure = location.protocol === 'https:' ? '; Secure' : '';
+        document.cookie =
+          name + '=' + encodeURIComponent(value) +
+          '; expires=' + expires.toUTCString() +
+          '; path=/' +
+          '; SameSite=Lax' +
+          secure;
+      }
+
+      /*
+       * ── Chargement analytics ──
+       * Colle ton script ici quand tu auras un vrai outil.
+       *
+       * Exemple Google Analytics 4 :
+       *   var s = document.createElement('script');
+       *   s.src = 'https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX';
+       *   s.async = true;
+       *   document.head.appendChild(s);
+       *   window.dataLayer = window.dataLayer || [];
+       *   function gtag(){dataLayer.push(arguments);}
+       *   gtag('js', new Date());
+       *   gtag('config', 'G-XXXXXXXXXX');
+       *
+       * Exemple Matomo :
+       *   var _paq = window._paq = window._paq || [];
+       *   _paq.push(['trackPageView']);
+       *   (function() {
+       *     var u = 'https://TON_DOMAINE_MATOMO/';
+       *     _paq.push(['setTrackerUrl', u+'matomo.php']);
+       *     _paq.push(['setSiteId', '1']);
+       *     var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+       *     g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+       *   })();
+       */
+      function loadAnalytics() {
+        /* ↓ Ton script analytics ici ↓ */
+        console.log('[Lorebase] Analytics chargés.');
+        /* ↑ Ton script analytics ici ↑ */
+      }
+
+      /* ── Fermeture avec animation ── */
+      function hideBanner(callback) {
+        banner.classList.add('cookie-banner--hiding');
+        banner.addEventListener('animationend', function handler() {
+          banner.removeEventListener('animationend', handler);
+          banner.hidden = true;
+          banner.classList.remove('cookie-banner--hiding');
+          if (callback) callback();
+        });
+      }
+
+      function onAccept() {
+        setCookie(COOKIE_NAME, 'accepted', COOKIE_MONTHS);
+        hideBanner(loadAnalytics);
+      }
+
+      function onDecline() {
+        setCookie(COOKIE_NAME, 'declined', COOKIE_MONTHS);
+        hideBanner();
+      }
+
+      function init() {
+        var consent = getCookie(COOKIE_NAME);
+
+        if (consent === 'accepted') { loadAnalytics(); return; }
+        if (consent === 'declined') { return; }
+
+        /* Première visite */
+        banner.hidden = false;
+        btnAccept.addEventListener('click', onAccept);
+        btnDecline.addEventListener('click', onDecline);
+
+        /* Échap = refuser */
+        document.addEventListener('keydown', function handler(e) {
+          if (e.key === 'Escape') {
+            document.removeEventListener('keydown', handler);
+            onDecline();
+          }
+        });
+
+        /* Focus sur "Refuser" par défaut (choix neutre) */
+        setTimeout(function () { btnDecline.focus(); }, 400);
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
+    })();
   </script>
 
 </body>
