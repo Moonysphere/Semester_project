@@ -10,61 +10,11 @@
     document.documentElement.setAttribute('data-theme', theme);
   </script>
   <link rel="stylesheet" href="../../src/style/css/framework.css">
-
+  <link rel="stylesheet" href="../../src/style/css/place/list.css">
+  <link rel="stylesheet" href="../../src/style/css/theme.css">
+  <link rel="stylesheet" href="../../src/style/css/responsive.css">
   <title>Place</title>
-  <style>
-    body {
-      background: linear-gradient(135deg, var(--color-bg-primary) 0%, var(--color-bg-secondary) 100%);
-      min-height: 100vh;
-      margin: 0;
-      padding: 0;
-    }
 
-    h1,
-    h2 {
-      text-align: center;
-      color: var(--color-font);
-    }
-
-    .place-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-      gap: 20px;
-      padding: 20px;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .place-card {
-      border: 1px solid var(--color-border);
-      border-radius: 8px;
-      padding: 20px;
-      text-align: center;
-      cursor: pointer;
-      transition: transform 0.2s, box-shadow 0.2s;
-      text-decoration: none;
-      color: var(--color-font);
-      background-color: var(--color-bg-primary);
-    }
-
-    .place-card:hover {
-      transform: translateY(-5px);
-      box-shadow: var(--shadow-md);
-    }
-
-    .add-card {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 48px;
-      background-color: var(--color-bg-secondary);
-      color: var(--color-font);
-    }
-
-    .add-card:hover {
-      background-color: var(--color-border);
-    }
-  </style>
 </head>
 
 <body>
