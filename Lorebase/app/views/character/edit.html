@@ -12,16 +12,35 @@
           : "light");
       document.documentElement.setAttribute("data-theme", theme);
     </script>
-    <link rel="stylesheet" href="../../src/style/css/framework.css" />
-    <link rel="stylesheet" href="../../src/style/css/character/edit.css" />
-    <link rel="stylesheet" href="../../src/style/css/theme.css" />
-    <link rel="stylesheet" href="../../src/style/css/responsive.css" />
+
+    <!-- Utiliser des chemins absolus pour éviter les problèmes de chemin relatifs -->
+    <link rel="stylesheet" href="/src/style/css/framework.css" />
+    <link rel="stylesheet" href="/src/style/css/character/edit.css" />
+    <link rel="stylesheet" href="/src/style/css/theme.css" />
+    <link rel="stylesheet" href="/src/style/css/responsive.css" />
+
+    <!-- Petit style de secours si les fichiers CSS externes ne chargent pas -->
+    <style>
+      /* fallback minimal pour que le formulaire reste lisible */
+      body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; background:#fff; color:#111; padding:20px; }
+      form { max-width:900px; margin:0 auto; display:block; }
+      .form-group { margin-bottom:12px; }
+      label { display:block; font-weight:600; margin-bottom:6px; }
+      input[type="text"], input[type="number"], select, textarea { width:100%; padding:8px; border:1px solid #ccc; border-radius:6px; font-size:14px; }
+      .form-actions { display:flex; gap:8px; align-items:center; margin-top:10px; flex-wrap:wrap; }
+      .btn-cancel { text-decoration:none; padding:8px 12px; border-radius:6px; background:#eee; color:#111; }
+      button { padding:8px 12px; border-radius:6px; border:none; cursor:pointer; }
+      .create { background:#2f8fef; color:#fff; }
+      .brouillon { background:#999; color:#fff; }
+      .archived { background:#d9534f; color:#fff; }
+      textarea { min-height:120px; resize:vertical; }
+    </style>
   </head>
 
   <body>
     <h1>Modifier <?php echo htmlspecialchars($character->name); ?></h1>
 
-    <form id="editForm">
+    <form id="editForm" novalidate>
       <div class="form-group">
         <label for="name">Nom :</label>
         <input
@@ -32,6 +51,7 @@
           required
         />
       </div>
+
       <div class="form-group">
         <label for="role_id">Rôle :</label>
         <select id="role_id" name="role_id" required>
@@ -40,12 +60,14 @@
           <option
             value="<?= $role->id ?>"
             title="<?= htmlspecialchars($role->description ?? '') ?>"
+            <?= (isset($character->role_id) && $character->role_id == $role->id) ? 'selected' : '' ?>
           >
             <?= htmlspecialchars($role->name) ?>
           </option>
           <?php endforeach; ?>
         </select>
       </div>
+
       <div class="form-group">
         <label for="origin">Origine :</label>
         <input
@@ -56,6 +78,7 @@
           required
         />
       </div>
+
       <div class="form-group">
         <label for="pv">Points de vie :</label>
         <input
@@ -66,12 +89,12 @@
           required
         />
       </div>
+
       <div class="form-group">
         <label for="description">Description :</label>
-        <textarea id="description" name="description" required>
-<?php echo htmlspecialchars($character->description); ?></textarea
-        >
+        <textarea id="description" name="description" required><?php echo htmlspecialchars($character->description); ?></textarea>
       </div>
+
       <div class="form-group">
         <label for="univers_id">Univers</label>
         <select id="univers_id" name="univers_id" required>
@@ -80,12 +103,14 @@
           <option
             value="<?= $univers->id ?>"
             title="<?= htmlspecialchars($univers->description ?? '') ?>"
+            <?= (isset($character->univers_id) && $character->univers_id == $univers->id) ? 'selected' : '' ?>
           >
             <?= htmlspecialchars($univers->name) ?>
           </option>
           <?php endforeach; ?>
         </select>
       </div>
+
       <div class="form-actions">
         <a
           href="/<?php echo htmlspecialchars($_SESSION['user']['username'] ?? ''); ?>/character/<?php echo $character->slug  ; ?>"
@@ -115,7 +140,14 @@
 
           // Récupérer tous les champs du formulaire
           const formData = new FormData(this);
-          const data = Object.fromEntries(formData);
+          const data = {};
+
+          // Filtrer les champs vides pour ne pas écraser en BDD les valeurs non modifiées
+          for (let [k, v] of formData.entries()) {
+            if (v !== '' && v !== null && v !== undefined) {
+              data[k] = v;
+            }
+          }
 
           // Si un bouton status est cliqué, ajouter/écraser le status
           if (statusValue && submitter.name === "status") {
@@ -125,7 +157,7 @@
           // Envoyer tous les champs + le status
           const username =
             '<?php echo htmlspecialchars($_SESSION["user"]["username"] ?? ""); ?>';
-          const characterId = <?php echo $character->id; ?>;
+          const characterId = <?php echo (int)$character->id; ?>;
 
           fetch(`/${username}/character/${characterId}`, {
             method: "PATCH",
@@ -134,7 +166,8 @@
           })
             .then(async (response) => {
               if (!response.ok) {
-                throw new Error("Erreur serveur");
+                const text = await response.text();
+                throw new Error(text || "Erreur serveur");
               }
 
               const result = await response.json();
