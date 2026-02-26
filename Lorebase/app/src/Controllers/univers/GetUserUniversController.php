@@ -38,7 +38,7 @@ class GetUserUniversController extends AbstractController
         }
 
         $data = [
-            'universes' => $userUniverses,
+            'univers' => $userUniverses,
             'defaultUniverses' => $defaultUniverses,
             'isLoggedIn' => $userEmail !== null,
             'isOwner' => $isOwner,

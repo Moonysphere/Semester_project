@@ -1,105 +1,108 @@
 <!doctype html>
 <html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><?php echo htmlspecialchars($character->name); ?></title>
+    <script>
+      const theme =
+        localStorage.getItem("theme") ||
+        (window.matchMedia("(prefers-color-scheme: dark)").matches
+          ? "dark"
+          : "light");
+      document.documentElement.setAttribute("data-theme", theme);
+    </script>
+    <link rel="stylesheet" href="../../src/style/css/framework.css" />
+    <link rel="stylesheet" href="../../src/style/css/character/detail.css" />
+    <link rel="stylesheet" href="../../src/style/css/theme.css" />
+    <link rel="stylesheet" href="../../src/style/css/responsive.css" />
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>
-    <?php echo htmlspecialchars($character->name); ?>
-  </title>
-  <script>
-    const theme = localStorage.getItem('theme') ||
-      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-    document.documentElement.setAttribute('data-theme', theme);
-  </script>
-  <link rel="stylesheet" href="../../src/style/css/framework.css">
-  <link rel="stylesheet" href="../../src/style/css/character/detail.css">
-  <link rel="stylesheet" href="../../src/style/css/theme.css">
-  <link rel="stylesheet" href="../../src/style/css/responsive.css">
-</head>
+  <body>
+    <div class="container">
+      <h1><?php echo htmlspecialchars($character->name); ?></h1>
 
-<body>
-  <div class="container">
-    <h1>
-      <?php echo htmlspecialchars($character->name); ?>
-    </h1>
+      <div class="field">
+        <label>Rôle :</label>
+        <p><?= htmlspecialchars($roleName ?? 'Non défini') ?></p>
+      </div>
 
-    <div class="field">
-      <label>Rôle :</label>
-      <p>
-        <?= htmlspecialchars($roleName ?? 'Non défini') ?>
-      </p>
+      <div class="field">
+        <label>Origine :</label>
+        <p><?= htmlspecialchars($character->origin) ?></p>
+      </div>
+
+      <div class="field">
+        <label>Points de vie :</label>
+        <p><?= htmlspecialchars($character->pv) ?></p>
+      </div>
+
+      <div class="field">
+        <label>Description :</label>
+        <p><?= htmlspecialchars($character->description) ?></p>
+      </div>
+      <div class="field">
+        <label>Statut :</label>
+        <p><?= htmlspecialchars($character->status) ?></p>
+      </div>
+
+      <div class="field">
+        <label>Univers :</label>
+        <p><?= htmlspecialchars($universName ?? 'Non défini') ?></p>
+      </div>
+
+      <div class="field">
+        <label>Univers :</label>
+        <p><?php echo htmlspecialchars($character->univers_id); ?></p>
+      </div>
+
+      <div class="buttons">
+        <?php if (isset($_SESSION['user']) &&
+        isset($_SESSION['user']['username'])): ?>
+        <a
+          href="/<?php echo htmlspecialchars($_SESSION['user']['username']); ?>/character"
+          class="btn btn-back"
+          >Retour</a
+        >
+        <?php else: ?>
+        <a href="/character" class="btn btn-back">Retour</a>
+        <?php endif; ?> <?php if (isset($isOwnEntity) && $isOwnEntity): ?>
+        <a
+          href="/<?php echo htmlspecialchars($_SESSION['user']['username'] ?? ''); ?>/character/<?php echo $character->slug; ?>/edit"
+          class="btn"
+          style="background-color: #ffc107; color: black"
+          >Modifier</a
+        >
+        <button
+          type="button"
+          class="btn btn-delete"
+          onclick="deleteCharacter(<?php echo $character->id; ?>)"
+        >
+          Supprimer
+        </button>
+        <?php endif; ?>
+      </div>
     </div>
 
-    <div class="field">
-      <label>Origine :</label>
-      <p>
-        <?= htmlspecialchars($character->origin) ?>
-      </p>
-    </div>
-
-    <div class="field">
-      <label>Points de vie :</label>
-      <p>
-        <?= htmlspecialchars($character->pv) ?>
-      </p>
-    </div>
-
-    <div class="field">
-      <label>Description :</label>
-      <p>
-        <?= htmlspecialchars($character->description) ?>
-      </p>
-    </div>
-    <div class="field">
-      <label>Statut :</label>
-      <p>
-        <?= htmlspecialchars($character->status) ?>
-      </p>
-    </div>
-
-    <div class="field">
-      <label>Univers :</label>
-      <p>
-        <?= htmlspecialchars($universName ?? 'Non défini') ?>
-      </p>
-    </div>
-
-    <div class="field">
-      <label>Univers :</label>
-      <p>
-        <?php echo htmlspecialchars($character->univers_id); ?>
-      </p>
-    </div>
-
-    <div class="buttons">
-      <a href="/character" class="btn btn-back">Retour</a>
-      <a href="/character/<?php echo $character->slug; ?>/edit" class="btn"
-        style="background-color: #ffc107; color: black">Modifier</a>
-      <button type="button" class="btn btn-delete" onclick="deleteCharacter(<?php echo $character->id; ?>)">
-        Supprimer
-      </button>
-    </div>
-  </div>
-
-  <script>
-    function deleteCharacter(id) {
-      if (confirm("Êtes-vous sûr de vouloir supprimer ce personnage ?")) {
-        fetch(`/character/${id}`, {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }).then((response) => {
-          if (response.ok) {
-            window.location.href = "/character";
-          } else {
-            alert("Erreur lors de la suppression");
-          }
-        });
+    <script>
+      function deleteCharacter(id) {
+        if (confirm("Êtes-vous sûr de vouloir supprimer ce personnage ?")) {
+          const username =
+            '<?php echo htmlspecialchars($_SESSION["user"]["username"] ?? ""); ?>';
+          fetch(`/${username}/character/${id}`, {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }).then((response) => {
+            if (response.ok) {
+              window.location.href = `/${username}/character`;
+            } else {
+              alert("Erreur lors de la suppression");
+            }
+          });
+        }
       }
-    }
-  </script>
-</body>
-
+    </script>
+  </body>
 </html>

@@ -1,92 +1,105 @@
 <!doctype html>
 <html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Créer un personnage</title>
+    <script>
+      const theme =
+        localStorage.getItem("theme") ||
+        (window.matchMedia("(prefers-color-scheme: dark)").matches
+          ? "dark"
+          : "light");
+      document.documentElement.setAttribute("data-theme", theme);
+    </script>
+    <link rel="stylesheet" href="../../src/style/css/framework.css" />
+    <link
+      rel="stylesheet"
+      href="../../src/style/css/character/Createcharacter.css"
+    />
+    <link rel="stylesheet" href="../../src/style/css/theme.css" />
+    <link rel="stylesheet" href="../../src/style/css/responsive.css" />
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Créer un personnage</title>
-  <script>
-    const theme = localStorage.getItem('theme') ||
-      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-    document.documentElement.setAttribute('data-theme', theme);
-  </script>
-  <link rel="stylesheet" href="../../src/style/css/framework.css">
-  <link rel="stylesheet" href="../../src/style/css/character/Createcharacter.css">
-  <link rel="stylesheet" href="../../src/style/css/theme.css">
-  <link rel="stylesheet" href="../../src/style/css/responsive.css">
-</head>
+  <body>
+    <h1>Créer un nouveau personnage</h1>
 
-<body>
-  <h1>Créer un nouveau personnage</h1>
+    <form
+      method="POST"
+      action="/<?php echo htmlspecialchars($_SESSION['user']['username'] ?? ''); ?>/character"
+    >
+      <div class="form-group">
+        <label>Nom <span class="required">*</span></label>
+        <input
+          type="text"
+          name="name"
+          required
+          placeholder="Entrez le nom du personnage"
+          autofocus
+        />
+      </div>
 
-  <form method="POST" action="/character/store">
+      <div class="form-group">
+        <label>Rôle <span class="required">*</span></label>
+        <select name="role_id" required>
+          <option value="">-- Sélectionnez un rôle --</option>
+          <?php foreach($roles as $role): ?>
+          <option value="<?= $role->id ?>">
+            <?= htmlspecialchars($role->name) ?>
+          </option>
+          <?php endforeach; ?>
+        </select>
+      </div>
 
-    <div class="form-group">
-      <label>Nom <span class="required">*</span></label>
-      <input type="text" name="name" required placeholder="Entrez le nom du personnage" autofocus />
-    </div>
+      <div class="form-group">
+        <label>Origine</label>
+        <input type="text" name="origin" placeholder="Ex: Paris, France" />
+      </div>
 
-    <div class="form-group">
-      <label>Rôle <span class="required">*</span></label>
-      <select name="role_id" required>
-        <option value="">-- Sélectionnez un rôle --</option>
-        <?php foreach($roles as $role): ?>
-        <option value="<?= $role->id ?>">
-          <?= htmlspecialchars($role->name) ?>
-        </option>
-        <?php endforeach; ?>
-      </select>
-    </div>
+      <div class="form-group">
+        <label>Points de vie <span class="required">*</span></label>
+        <input type="number" name="pv" value="100" min="0" max="999" required />
+      </div>
 
-    <div class="form-group">
-      <label>Origine</label>
-      <input type="text" name="origin" placeholder="Ex: Paris, France" />
-    </div>
+      <div class="form-group">
+        <label>Description</label>
+        <textarea
+          name="description"
+          placeholder="Décrivez le personnage..."
+        ></textarea>
+      </div>
 
-    <div class="form-group">
-      <label>Points de vie <span class="required">*</span></label>
-      <input type="number" name="pv" value="100" min="0" max="999" required />
-    </div>
+      <div class="form-group">
+        <label>Univers <span class="required">*</span></label>
+        <select id="univers_id" name="univers_id" required>
+          <option value="">-- Choisir un univers --</option>
+          <?php foreach ($universes as $univers): ?>
+          <option
+            value="<?= $univers->id ?>"
+            title="<?= htmlspecialchars($univers->description ?? '') ?>"
+          >
+            <?= htmlspecialchars($univers->name) ?>
+          </option>
+          <?php endforeach; ?>
+        </select>
+      </div>
 
-    <div class="form-group">
-      <label>Description</label>
-      <textarea name="description" placeholder="Décrivez le personnage..."></textarea>
-    </div>
-
-    <div class="form-group">
-      <label>Statut <span class="required">*</span></label>
-      <select name="status" required>
-        <option value="vivant" selected>Vivant</option>
-        <option value="mort">Mort</option>
-        <option value="inconnu">Inconnu</option>
-      </select>
-    </div>
-
-    <div class="form-group">
-      <label>Univers <span class="required">*</span></label>
-      <select name="univers_id" required>
-        <option value="">-- Sélectionnez un univers --</option>
-        <?php foreach($univers as $univ): ?>
-        <option value="<?= $univ->id ?>">
-          <?= htmlspecialchars($univ->name) ?>
-        </option>
-        <?php endforeach; ?>
-      </select>
-    </div>
-
-    <div class="form-group">
-      <label>
-        <input type="checkbox" name="is_activeæ" value="1" checked>
-        Personnage actif
-      </label>
-    </div>
-
-    <div class="form-actions">
-      <a href="/character" class="btn-cancel">Annuler</a>
-      <button type="submit">Créer le personnage</button>
-    </div>
-
-  </form>
-</body>
-
+      <div class="form-actions">
+        <a
+          href="/<?php echo htmlspecialchars($_SESSION['user']['username'] ?? ''); ?>/character"
+          class="btn-cancel"
+          >Annuler</a
+        >
+        <button class="create" type="submit" name="status" value="published">
+          Créer le personnage
+        </button>
+        <button class="brouillon" type="submit" name="status" value="draft">
+          Brouillon
+        </button>
+        <button class="archived" type="submit" name="status" value="archived">
+          Archiver
+        </button>
+      </div>
+    </form>
+  </body>
 </html>
