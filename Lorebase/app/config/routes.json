@@ -6,6 +6,132 @@
   },
 
   {
+    "path": "/admin/backoffice",
+    "method": "GET",
+    "controller": "Admin\\GetBackOffice"
+  },
+  {
+    "path": "/admin/user/:email",
+    "method": "GET",
+    "controller": "Admin\\GetBackOfficeUser"
+  },
+  {
+    "path": "/admin/user/role",
+    "method": "PATCH",
+    "controller": "Admin\\PatchUserRole"
+  },
+  {
+    "path": "/admin/user/delete/:email",
+    "method": "DELETE",
+    "controller": "Admin\\DeleteUser"
+  },
+  {
+    "path": "/admin/character/create",
+    "method": "GET",
+    "controller": "Admin\\CreateAdminCharacter"
+  },
+  {
+    "path": "/admin/character",
+    "method": "POST",
+    "controller": "Admin\\CreateAdminCharacter"
+  },
+  {
+    "path": "/admin/character/:id",
+    "method": "GET",
+    "controller": "Admin\\PatchAdminCharacter"
+  },
+  {
+    "path": "/admin/character/:id",
+    "method": "PATCH",
+    "controller": "Admin\\PatchAdminCharacter"
+  },
+  {
+    "path": "/admin/place/create",
+    "method": "GET",
+    "controller": "Admin\\CreateAdminPlace"
+  },
+  {
+    "path": "/admin/place",
+    "method": "POST",
+    "controller": "Admin\\CreateAdminPlace"
+  },
+  {
+    "path": "/admin/place/:id",
+    "method": "GET",
+    "controller": "Admin\\PatchAdminPlace"
+  },
+  {
+    "path": "/admin/place/:id",
+    "method": "PATCH",
+    "controller": "Admin\\PatchAdminPlace"
+  },
+  {
+    "path": "/admin/quest/create",
+    "method": "GET",
+    "controller": "Admin\\CreateAdminQuest"
+  },
+  {
+    "path": "/admin/quest",
+    "method": "POST",
+    "controller": "Admin\\CreateAdminQuest"
+  },
+  {
+    "path": "/admin/quest/:id",
+    "method": "GET",
+    "controller": "Admin\\PatchAdminQuest"
+  },
+  {
+    "path": "/admin/quest/:id",
+    "method": "PATCH",
+    "controller": "Admin\\PatchAdminQuest"
+  },
+  {
+    "path": "/admin/univers/create",
+    "method": "GET",
+    "controller": "Admin\\CreateAdminUnivers"
+  },
+  {
+    "path": "/admin/univers",
+    "method": "POST",
+    "controller": "Admin\\CreateAdminUnivers"
+  },
+  {
+    "path": "/admin/univers/:id",
+    "method": "GET",
+    "controller": "Admin\\PatchAdminUnivers"
+  },
+  {
+    "path": "/admin/univers/:id",
+    "method": "PATCH",
+    "controller": "Admin\\PatchAdminUnivers"
+  },
+  {
+    "path": "/admin/character/delete/:id",
+    "method": "DELETE",
+    "controller": "Admin\\DeleteAdminCharacter"
+  },
+  {
+    "path": "/admin/place/delete/:id",
+    "method": "DELETE",
+    "controller": "Admin\\DeleteAdminPlace"
+  },
+  {
+    "path": "/admin/quest/delete/:id",
+    "method": "DELETE",
+    "controller": "Admin\\DeleteAdminQuest"
+  },
+  {
+    "path": "/admin/univers/delete/:id",
+    "method": "DELETE",
+    "controller": "Admin\\DeleteAdminUnivers"
+  },
+  {
+    "path": "/admin/role/delete/:id",
+    "method": "DELETE",
+    "controller": "Admin\\DeleteAdminRole"
+  },
+
+  {
     "path": "/character",
     "method": "GET",
     "controller": "Character\\GetCharactersController"
@@ -167,24 +293,34 @@
     "controller": "Auth\\LogoutController"
   },
   {
+    "path": "/admin/role/create",
+    "method": "GET",
+    "controller": "Admin\\CreateAdminRole"
+  },
+  {
+    "path": "/admin/role",
+    "method": "POST",
+    "controller": "Admin\\CreateAdminRole"
+  },
+  {
+    "path": "/admin/role/:id",
+    "method": "GET",
+    "controller": "Admin\\PatchAdminRole"
+  },
+  {
+    "path": "/admin/role/:id",
+    "method": "PATCH",
+    "controller": "Admin\\PatchAdminRole"
+  },
+  {
+    "path": "/admin/role/:id",
+    "method": "DELETE",
+    "controller": "Admin\\DeleteAdminRole"
+  },
+  {
     "path": "/role/create",
     "method": "GET",
-    "controller": "Role\\GetCreateRoleController"
-  },
-  {
-    "path": "/role/:slug/edit",
-    "method": "GET",
-    "controller": "Role\\GetEditRoleController"
-  },
-  {
-    "path": "/role",
-    "method": "GET",
-    "controller": "Role\\GetRolesController"
-  },
-  {
-    "path": "/role/:slug",
-    "method": "GET",
-    "controller": "Role\\GetRoleController"
+    "controller": "Admin\\GetBackOffice"
   },
   {
     "path": "/role",
@@ -330,20 +466,5 @@
     "path": "/user/profile",
     "method": "GET",
     "controller": "Auth\\GetProfileController"
-  },
-  {
-    "path": "/admin/backoffice",
-    "method": "GET",
-    "controller": "Admin\\GetBackOffice"
-  },
-  {
-    "path": "/admin/user/:email",
-    "method": "GET",
-    "controller": "Admin\\GetBackOfficeUser"
-  },
-  {
-    "path": "/admin/user/role",
-    "method": "PATCH",
-    "controller": "Admin\\PatchUserRole"
   }
 ]

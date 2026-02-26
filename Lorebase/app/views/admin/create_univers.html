@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Créer un Rôle</title>
+    <title>Créer un Univers</title>
     <style>
       * {
         margin: 0;
@@ -95,9 +95,9 @@
   </head>
   <body>
     <div class="container">
-      <h1>👑 Créer un Rôle</h1>
+      <h1>🌍 Créer un Univers (Admin)</h1>
 
-      <form method="POST" action="/role">
+      <form method="POST" action="/admin/univers">
         <div class="form-group">
           <label for="name">Nom *</label>
           <input type="text" id="name" name="name" required />
@@ -115,7 +115,7 @@
             name="status"
             value="published"
           >
-            Créer le rôle
+            Créer l'univers
           </button>
           <button type="submit" class="btn-save" name="status" value="draft">
             Brouillon

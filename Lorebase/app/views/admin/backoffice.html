@@ -20,10 +20,19 @@
 
       .container {
         max-width: 1400px;
-        margin: 0 auto;
-      }
-
-      header {
+        margin: 0 aut              <td>
+                <div class="actions">
+                  <a href="/admin/role/<?= htmlspecialchars($role->id) ?>" class="btn btn-edit"
+                    >Modifier</a
+                  >
+                  <button
+                    class="btn btn-delete"
+                    onclick="deleteEntity('role', <?= $role->id ?>)"
+                  >
+                    Supprimer
+                  </button>
+                </div>
+              </td>     header {
         background: white;
         padding: 30px;
         border-radius: 8px;
@@ -390,8 +399,6 @@
           📜 Quêtes
         </button>
         <button class="nav-tab" onclick="showSection('roles')">👑 Rôles</button>
-          📋 Règles
-        </button>
         <button class="nav-tab" onclick="showSection('univers')">
           🌍 Univers
         </button>
@@ -476,7 +483,7 @@
             <h3><?= count($characters) ?></h3>
             <p>Personnages</p>
           </div>
-          <a href="/character/create" class="stat-card add-btn">+</a>
+          <a href="/admin/character/create" class="stat-card add-btn">+</a>
         </div>
 
         <?php if (!empty($characters)): ?>
@@ -508,7 +515,7 @@
               <td>
                 <div class="actions">
                   <a
-                    href="/character/edit/<?= $char->slug ?>"
+                    href="/admin/character/<?= $char->id ?>"
                     class="btn btn-edit"
                     >Modifier</a
                   >
@@ -540,7 +547,7 @@
             <h3><?= count($places) ?></h3>
             <p>Lieux</p>
           </div>
-          <a href="/place/create" class="stat-card add-btn">+</a>
+          <a href="/admin/place/create" class="stat-card add-btn">+</a>
         </div>
 
         <?php if (!empty($places)): ?>
@@ -569,7 +576,7 @@
               <td><?= $place->univers_id ?? '-' ?></td>
               <td>
                 <div class="actions">
-                  <a href="/place/edit/<?= $place->slug ?>" class="btn btn-edit"
+                  <a href="/admin/place/<?= $place->id ?>" class="btn btn-edit"
                     >Modifier</a
                   >
                   <button
@@ -600,7 +607,7 @@
             <h3><?= count($quests) ?></h3>
             <p>Quêtes</p>
           </div>
-          <a href="/quest/create" class="stat-card add-btn">+</a>
+          <a href="/admin/quest/create" class="stat-card add-btn">+</a>
         </div>
 
         <?php if (!empty($quests)): ?>
@@ -617,7 +624,7 @@
           <tbody>
             <?php foreach ($quests as $quest): ?>
             <tr>
-              <td><?= htmlspecialchars($quest->name) ?></td>
+              <td><?= htmlspecialchars($quest->title) ?></td>
               <td><?= htmlspecialchars($quest->slug) ?></td>
               <td>
                 <span
@@ -629,7 +636,7 @@
               <td><?= $quest->place_id ?? '-' ?></td>
               <td>
                 <div class="actions">
-                  <a href="/quest/edit/<?= $quest->slug ?>" class="btn btn-edit"
+                  <a href="/admin/quest/<?= $quest->id ?>" class="btn btn-edit"
                     >Modifier</a
                   >
                   <button
@@ -660,7 +667,7 @@
             <h3><?= count($roles) ?></h3>
             <p>Rôles</p>
           </div>
-          <a href="/role/create" class="stat-card add-btn">+</a>
+          <a href="/admin/role/create" class="stat-card add-btn">+</a>
         </div>
 
         <?php if (!empty($roles)): ?>
@@ -684,7 +691,9 @@
               </td>
               <td>
                 <div class="actions">
-                  <a href="/role/edit/<?= $role->slug ?>" class="btn btn-edit"
+                  <a
+                    href="/admin/role/<?= htmlspecialchars($role->id) ?>"
+                    class="btn btn-edit"
                     >Modifier</a
                   >
                   <button
@@ -715,7 +724,7 @@
             <h3><?= count($univers) ?></h3>
             <p>Univers</p>
           </div>
-          <a href="/univers/create" class="stat-card add-btn">+</a>
+          <a href="/admin/univers/create" class="stat-card add-btn">+</a>
         </div>
 
         <?php if (!empty($univers)): ?>
@@ -742,9 +751,7 @@
               </td>
               <td>
                 <div class="actions">
-                  <a
-                    href="/univers/edit/<?= $univ->slug ?>"
-                    class="btn btn-edit"
+                  <a href="/admin/univers/<?= $univ->id ?>" class="btn btn-edit"
                     >Modifier</a
                   >
                   <button
@@ -767,29 +774,6 @@
       </div>
     </div>
 
-    <!-- MODAL CHANGER RÔLE -->
-    <div id="roleModal" class="modal">
-      <div class="modal-content">
-        <h3>Changer le rôle utilisateur</h3>
-        <input type="hidden" id="userEmail" />
-        <label>Nouveau rôle :</label>
-        <select id="newRole">
-          <option value="reader">Reader</option>
-          <option value="author">Author</option>
-          <option value="editor">Editor</option>
-          <option value="admin">Admin</option>
-        </select>
-        <div class="modal-buttons">
-          <button class="modal-btn-cancel" onclick="closeRoleModal()">
-            Annuler
-          </button>
-          <button class="modal-btn-save" onclick="saveNewRole()">
-            Sauvegarder
-          </button>
-        </div>
-      </div>
-    </div>
-
     <script>
       function showSection(sectionId) {
         document
@@ -802,67 +786,41 @@
         event.target.classList.add("active");
       }
 
-      function openChangeRole(email, currentRole) {
-        document.getElementById("userEmail").value = email;
-        document.getElementById("newRole").value = currentRole;
-        document.getElementById("roleModal").classList.add("active");
-      }
-
-      function closeRoleModal() {
-        document.getElementById("roleModal").classList.remove("active");
-      }
-
-      async function saveNewRole() {
-        const email = document.getElementById("userEmail").value;
-        const newRole = document.getElementById("newRole").value;
-
-        console.log("Envoi:", { email, role: newRole });
-
-        try {
-          const response = await fetch("/admin/user/role", {
-            method: "PATCH",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ email, role: newRole }),
-          });
-
-          const result = await response.json();
-          console.log("Response:", result);
-
-          if (result.success) {
-            alert("Rôle mis à jour avec succès !");
-            location.reload();
-          } else {
-            alert(
-              "Erreur: " +
-                (result.error || result.message || "Erreur inconnue"),
-            );
-          }
-        } catch (error) {
-          console.error("Erreur:", error);
-          alert("Erreur réseau: " + error.message);
-        }
-
-        closeRoleModal();
-      }
-
       async function deleteUser(email) {
         if (!confirm("Êtes-vous sûr de vouloir supprimer cet utilisateur ?"))
           return;
 
         try {
-          const response = await fetch(`/admin/user/delete/${email}`, {
-            method: "DELETE",
-          });
+          console.log("Suppression de l'utilisateur:", email);
+          console.log(
+            "URL:",
+            `/admin/user/delete/${encodeURIComponent(email)}`,
+          );
+          const response = await fetch(
+            `/admin/user/delete/${encodeURIComponent(email)}`,
+            {
+              method: "DELETE",
+            },
+          );
+
+          console.log("Status:", response.status);
+          const text = await response.text();
+          console.log("Response:", text);
 
           if (response.ok) {
             alert("Utilisateur supprimé");
             location.reload();
           } else {
-            alert("Erreur lors de la suppression");
+            alert(
+              "Erreur lors de la suppression: " +
+                response.status +
+                " - " +
+                text,
+            );
           }
         } catch (error) {
           console.error("Erreur:", error);
-          alert("Erreur réseau");
+          alert("Erreur réseau: " + error.message);
         }
       }
 

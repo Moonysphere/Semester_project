@@ -90,4 +90,15 @@ class UserRepository extends AbstractRepository
             ])
             ->executeQuery();
     }
+
+    public function remove($user)
+    {
+        $this->queryBuilder()
+            ->delete()
+            ->from($this->getTable())
+            ->where('email', self::CONDITIONS['eq'])
+            ->addParam('email', $user->email)
+            ->debug()
+            ->executeQuery();
+    }
 }

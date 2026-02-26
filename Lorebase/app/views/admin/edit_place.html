@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Modifier <?php echo htmlspecialchars($role->name); ?></title>
+    <title>Modifier <?php echo htmlspecialchars($place->name); ?></title>
     <style>
       body {
         font-family: Arial, sans-serif;
@@ -36,7 +36,8 @@
       }
 
       input,
-      textarea {
+      textarea,
+      select {
         width: 100%;
         padding: 8px;
         border: 1px solid #ddd;
@@ -98,9 +99,10 @@
       }
     </style>
   </head>
+
   <body>
     <div class="container">
-      <h1>Modifier <?php echo htmlspecialchars($role->name); ?></h1>
+      <h1>🗺️ Modifier <?php echo htmlspecialchars($place->name); ?></h1>
       <form id="editForm">
         <div class="form-group">
           <label for="name">Nom :</label>
@@ -108,16 +110,40 @@
             type="text"
             id="name"
             name="name"
-            value="<?php echo htmlspecialchars($role->name); ?>"
+            value="<?php echo htmlspecialchars($place->name); ?>"
             required
           />
         </div>
-
         <div class="form-group">
-          <label for="description">Description :</label>
-          <textarea id="description" name="description" required>
-<?php echo htmlspecialchars($role->description); ?></textarea
-          >
+          <label for="type">Type:</label>
+          <textarea
+            id="type"
+            name="type"
+            required
+          ><?php echo htmlspecialchars($place->type); ?></textarea>
+        </div>
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea
+            id="description"
+            name="description"
+            required
+          ><?php echo htmlspecialchars($place->description); ?></textarea>
+        </div>
+        <div class="form-group">
+          <label for="univers_id">Univers</label>
+          <select id="univers_id" name="univers_id" required>
+            <option value="">-- Choisir un univers --</option>
+            <?php foreach ($universes as $univers): ?>
+            <option
+              value="<?= $univers->id ?>"
+              title="<?= htmlspecialchars($univers->description ?? '') ?>"
+              <?= $place->univers_id == $univers->id ? 'selected' : '' ?>
+            >
+              <?= htmlspecialchars($univers->name) ?>
+            </option>
+            <?php endforeach; ?>
+          </select>
         </div>
         <div class="buttons">
           <button
@@ -146,10 +172,12 @@
           >
             Archiver
           </button>
-
-          <a href="/admin/backoffice" class="btn btn-cancel"> Annuler </a>
         </div>
       </form>
+
+      <div class="buttons" style="margin-top: 10px">
+        <a href="/admin/backoffice" class="btn btn-cancel">Annuler</a>
+      </div>
     </div>
     <script>
       document
@@ -169,7 +197,8 @@
             data.status = statusValue;
           }
 
-          fetch(`/role/<?php echo $role->id; ?>`, {
+          // Envoyer tous les champs + le status
+          fetch(`/admin/place/<?php echo $place->id; ?>`, {
             method: "PATCH",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(data),
@@ -179,6 +208,7 @@
                 throw new Error("Erreur serveur");
               }
 
+              // ✅ Rediriger vers /admin/backoffice
               window.location.href = `/admin/backoffice`;
             })
             .catch((error) => {

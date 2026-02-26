@@ -20,7 +20,10 @@ class GetBackOffice extends AbstractController
             session_start();
         }
 
-
+        // Vérifier que l'utilisateur est admin
+        if (!isset($_SESSION['user']) || !isset($_SESSION['user']['role']) || $_SESSION['user']['role'] !== 'admin') {
+            return new Response('Unauthorized', 403);
+        }
 
         $userRepo = new UserRepository();
         $characterRepo = new CharacterRepository();
@@ -29,13 +32,43 @@ class GetBackOffice extends AbstractController
         $roleRepo = new RoleRepository();
         $universRepo = new UniversRepository();
 
+        // Récupérer les entités par défaut (user_id IS NULL)
+        $characters = $characterRepo->queryBuilder()
+            ->select()
+            ->from('character')
+            ->where('user_id', 'IS NULL')
+            ->executeQuery()
+            ->getAllResults() ?? [];
+
+        $places = $placeRepo->queryBuilder()
+            ->select()
+            ->from('place')
+            ->where('user_id', 'IS NULL')
+            ->executeQuery()
+            ->getAllResults() ?? [];
+
+        $quests = $questRepo->queryBuilder()
+            ->select()
+            ->from('quest')
+            ->where('user_id', 'IS NULL')
+            ->executeQuery()
+            ->getAllResults() ?? [];
+
+        $roles = $roleRepo->findAll() ?? [];
+        $univers = $universRepo->queryBuilder()
+            ->select()
+            ->from('univers')
+            ->where('user_id', 'IS NULL')
+            ->executeQuery()
+            ->getAllResults() ?? [];
+
         $data = [
             'users' => $userRepo->findAll() ?? [],
-            'characters' => $characterRepo->findAll() ?? [],
-            'places' => $placeRepo->findAll() ?? [],
-            'quests' => $questRepo->findAll() ?? [],
-            'roles' => $roleRepo->findAll() ?? [],
-            'univers' => $universRepo->findAll() ?? [],
+            'characters' => $characters,
+            'places' => $places,
+            'quests' => $quests,
+            'roles' => $roles,
+            'univers' => $univers,
         ];
 
         return $this->render('admin', 'backoffice', $data);

@@ -20,6 +20,11 @@ class GetBackOfficeUser extends AbstractController
             session_start();
         }
 
+        // Vérifier que l'utilisateur est admin
+        if (!isset($_SESSION['user']) || !isset($_SESSION['user']['role']) || $_SESSION['user']['role'] !== 'admin') {
+            return new Response('Unauthorized', 403);
+        }
+
         $sessionUser = $_SESSION['user'] ?? null;
         if (!$sessionUser) {
             return new Response(json_encode(['error' => 'Not logged in']), 403, ['Content-Type' => 'application/json']);

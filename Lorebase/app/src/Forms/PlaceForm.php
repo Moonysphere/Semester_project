@@ -18,7 +18,7 @@ class PlaceForm extends AbstractForm
         $place->slug = $repository->checkSlug("slug", "place", $repository->slugify($this->data['name']));
         $place->type = $this->data['type'] ?? null;
         $place->description = $this->data['description'] ?? null;
-        $place->univers_id = $this->data['univers_id'] ?? null;
+        $place->univers_id = intval($this->data['univers_id'] ?? 0);
         $place->status = $this->data['status'];
         $place->user_id = $this->data['user_id'] ?? null;
 

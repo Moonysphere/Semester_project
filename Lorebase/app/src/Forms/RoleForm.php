@@ -15,7 +15,7 @@ class RoleForm extends AbstractForm
         $repository = new RoleRepository();
         $role = new Role();
         $role->name = $this->data['name'] ?? null;
-        $role->slug =$repository->checkSlug("slug","role",$repository->slugify($this->data['name'])) ;
+        $role->slug = $repository->checkSlug("slug", "role", $repository->slugify($this->data['name']));
         $role->description = $this->data['description'] ?? null;
         $role->status = $this->data['status'];
 
@@ -25,16 +25,16 @@ class RoleForm extends AbstractForm
 
     public function save(): ?Role
     {
-        $$roles = $this->mapToEntity();
+        $role = $this->mapToEntity();
 
-        if ($roles === null) {
+        if ($role === null) {
             return null;
         }
 
         $repository = new RoleRepository();
-        $roles->id = $repository->save($roles);
+        $role->id = $repository->save($role);
 
-        return $roles;
+        return $role;
     }
 
     public function validateRequiredFields(): bool
@@ -54,6 +54,5 @@ class RoleForm extends AbstractForm
             $this->errors[] = 'Invalid status';
         }
         return empty($this->errors);
-        
     }
 }

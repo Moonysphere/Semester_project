@@ -59,6 +59,6 @@ class PostRoleController extends AbstractController
             );
         }
 
-        return new Response('', 302, ['Location' => '/role']);
+        return new Response('', 302, ['Location' => '/admin/backoffice']);
     }
 }

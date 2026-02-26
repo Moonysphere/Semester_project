@@ -16,12 +16,12 @@ class CharacterForm extends AbstractForm
         $character = new Character();
         $character->name = $this->data['name'] ?? null;
         $character->slug = $repository->checkSlug("slug", "character", $repository->slugify($this->data['name']));
-        $character->role_id = $this->data['role_id'] ?? null;
+        $character->role_id = intval($this->data['role_id'] ?? 0);
         $character->origin = $this->data['origin'] ?? null;
         $character->pv = (int)($this->data['pv'] ?? 0);
         $character->description = $this->data['description'] ?? null;
         $character->status = $this->data['status'] ?? null;
-        $character->univers_id = $this->data['univers_id'] ?? null;
+        $character->univers_id = intval($this->data['univers_id'] ?? 0);
         $character->user_id = $this->data['user_id'] ?? null;
 
         return $character;

@@ -13,3 +13,6 @@ create-base:
 # for add schema
 inject-schema:
 	docker exec -it php-framework-php php /var/www/html/bin/console.php -c CreateSchema
+
+create-admin:
+	docker exec -it php-framework-php php /var/www/html/bin/console.php -c CreateAdmin

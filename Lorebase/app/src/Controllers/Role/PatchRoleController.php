@@ -29,7 +29,7 @@ class PatchRoleController extends AbstractController
         }
 
         $role->name = $data['name'] ?? $role->name;
-        $role->slug = $roleRepository->checkSlug("slug","role",$roleRepository->slugify($data['name'])) ?? $role->slug;
+        $role->slug = $roleRepository->checkSlug("slug", "role", $roleRepository->slugify($data['name'])) ?? $role->slug;
         $role->description = $data['description'] ?? $role->description;
 
         if (isset($data['status']) && in_array($data['status'], ['draft', 'published', 'archived'], true)) {
@@ -38,11 +38,6 @@ class PatchRoleController extends AbstractController
 
         $roleRepository->update($role);
 
-
-        return new Response(
-            json_encode(['success' => true, 'id' => $role->getId(),'slug' => $role->slug]),
-            200,
-            ['Content-Type' => 'application/json']
-        );
+        return new Response('', 302, ['Location' => '/admin/backoffice']);
     }
 }

@@ -11,6 +11,15 @@ class PatchUserRole extends AbstractController
 {
     public function process(Request $request): Response
     {
+        if (session_status() !== PHP_SESSION_ACTIVE) {
+            session_start();
+        }
+
+        // Vérifier que l'utilisateur est admin
+        if (!isset($_SESSION['user']) || !isset($_SESSION['user']['role']) || $_SESSION['user']['role'] !== 'admin') {
+            return new Response('Unauthorized', 403);
+        }
+
         $payload = $request->getPayload();
 
         if (is_string($payload)) {

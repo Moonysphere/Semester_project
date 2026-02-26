@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Modifier <?php echo htmlspecialchars($role->name); ?></title>
+    <title>Modifier <?php echo htmlspecialchars($univers->name); ?></title>
     <style>
       body {
         font-family: Arial, sans-serif;
@@ -11,7 +11,6 @@
         padding: 20px;
         background-color: #f5f5f5;
       }
-
       .container {
         max-width: 600px;
         margin: 0 auto;
@@ -20,21 +19,17 @@
         border-radius: 8px;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
       }
-
       h1 {
         margin-top: 0;
       }
-
       .form-group {
         margin: 20px 0;
       }
-
       label {
         display: block;
         font-weight: bold;
         margin-bottom: 5px;
       }
-
       input,
       textarea {
         width: 100%;
@@ -44,18 +39,15 @@
         box-sizing: border-box;
         font-family: Arial, sans-serif;
       }
-
       textarea {
         resize: vertical;
         min-height: 100px;
       }
-
       .buttons {
         display: flex;
         gap: 10px;
         margin-top: 30px;
       }
-
       .btn {
         padding: 10px 20px;
         border: none;
@@ -63,12 +55,10 @@
         cursor: pointer;
         font-size: 14px;
       }
-
       .btn-submit {
         background-color: #28a745;
         color: white;
       }
-
       .btn-submit:hover {
         background-color: #218838;
       }
@@ -92,7 +82,6 @@
         text-decoration: none;
         display: inline-block;
       }
-
       .btn-cancel:hover {
         background-color: #5a6268;
       }
@@ -100,7 +89,7 @@
   </head>
   <body>
     <div class="container">
-      <h1>Modifier <?php echo htmlspecialchars($role->name); ?></h1>
+      <h1>🌍 Modifier <?php echo htmlspecialchars($univers->name); ?></h1>
       <form id="editForm">
         <div class="form-group">
           <label for="name">Nom :</label>
@@ -108,15 +97,14 @@
             type="text"
             id="name"
             name="name"
-            value="<?php echo htmlspecialchars($role->name); ?>"
+            value="<?php echo htmlspecialchars($univers->name); ?>"
             required
           />
         </div>
-
         <div class="form-group">
           <label for="description">Description :</label>
           <textarea id="description" name="description" required>
-<?php echo htmlspecialchars($role->description); ?></textarea
+<?php echo htmlspecialchars($univers->description); ?></textarea
           >
         </div>
         <div class="buttons">
@@ -146,11 +134,15 @@
           >
             Archiver
           </button>
-
-          <a href="/admin/backoffice" class="btn btn-cancel"> Annuler </a>
         </div>
       </form>
+
+      <!-- Bouton Annuler HORS du formulaire -->
+      <div class="buttons" style="margin-top: 10px">
+        <a href="/admin/backoffice" class="btn btn-cancel"> Annuler </a>
+      </div>
     </div>
+
     <script>
       document
         .getElementById("editForm")
@@ -169,7 +161,7 @@
             data.status = statusValue;
           }
 
-          fetch(`/role/<?php echo $role->id; ?>`, {
+          fetch(`/admin/univers/<?php echo $univers->id; ?>`, {
             method: "PATCH",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(data),
@@ -179,6 +171,7 @@
                 throw new Error("Erreur serveur");
               }
 
+              // ✅ Rediriger vers /admin/backoffice
               window.location.href = `/admin/backoffice`;
             })
             .catch((error) => {

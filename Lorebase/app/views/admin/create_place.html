@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Créer un Rôle</title>
+    <title>Créer un Lieu</title>
     <style>
       * {
         margin: 0;
@@ -52,7 +52,6 @@
       .buttons {
         display: flex;
         gap: 10px;
-        flex-wrap: wrap;
         margin-top: 20px;
       }
       button,
@@ -84,28 +83,41 @@
       .btn-save[value="archived"]:hover {
         background: #c82333;
       }
-      .btn-cancel {
-        background: #6c757d;
-        color: white;
-      }
-      .btn-cancel:hover {
-        background: #5a6268;
-      }
     </style>
   </head>
   <body>
     <div class="container">
-      <h1>👑 Créer un Rôle</h1>
+      <h1>🏰 Créer un Lieu (Admin)</h1>
 
-      <form method="POST" action="/role">
+      <form method="POST" action="/admin/place">
         <div class="form-group">
           <label for="name">Nom *</label>
           <input type="text" id="name" name="name" required />
         </div>
 
         <div class="form-group">
+          <label for="type">Type</label>
+          <input type="text" id="type" name="type" />
+        </div>
+
+        <div class="form-group">
           <label for="description">Description</label>
           <textarea id="description" name="description"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="univers_id">Univers</label>
+          <select id="univers_id" name="univers_id" required>
+            <option value="">-- Choisir un univers --</option>
+            <?php foreach ($universes as $univers): ?>
+            <option
+              value="<?= $univers->id ?>"
+              title="<?= htmlspecialchars($univers->description ?? '') ?>"
+            >
+              <?= htmlspecialchars($univers->name) ?>
+            </option>
+            <?php endforeach; ?>
+          </select>
         </div>
 
         <div class="buttons">
@@ -115,7 +127,7 @@
             name="status"
             value="published"
           >
-            Créer le rôle
+            Créer la place
           </button>
           <button type="submit" class="btn-save" name="status" value="draft">
             Brouillon

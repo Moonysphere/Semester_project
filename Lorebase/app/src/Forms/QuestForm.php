@@ -20,8 +20,8 @@ class QuestForm extends AbstractForm
         $quest->statut_quest = $this->data['statut_quest']; // En cours, Terminé, Pas commencé
         $quest->levelrequirements = (int) ($this->data['levelrequirements']);
         $quest->status = $this->data['status']; // 'draft' ou 'published' pas confondre avec le statut de la quête
-        $quest->univers_id = $this->data['univers_id'] ?? null;
-        $quest->place_id = $this->data['place_id'] ?? null;
+        $quest->univers_id = intval($this->data['univers_id'] ?? 0);
+        $quest->place_id = intval($this->data['place_id'] ?? 1);
         $quest->user_id = $this->data['user_id'] ?? null;
 
         return $quest;
