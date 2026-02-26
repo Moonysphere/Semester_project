@@ -4,7 +4,6 @@
     "method": "GET",
     "controller": "Homepage\\GetHomepageController"
   },
-
   {
     "path": "/admin/backoffice",
     "method": "GET",
@@ -176,7 +175,6 @@
     "method": "DELETE",
     "controller": "Character\\DeleteCharacterController"
   },
-
   {
     "path": "/:username/quest/create",
     "method": "GET",
@@ -466,5 +464,10 @@
     "path": "/user/profile",
     "method": "GET",
     "controller": "Auth\\GetProfileController"
+  },
+  {
+    "path": "/sitemap.xml",
+    "method": "GET",
+    "controller": "Sitemap\\GetSitemapController"
   }
 ]

@@ -4,113 +4,43 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>
+    const theme = localStorage.getItem('theme') ||
+      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+  </script>
   <link href="../src/style/css/framework.css" rel="stylesheet">
   <link href="../src/style/css/home.css" rel="stylesheet">
+  <link rel="stylesheet" href="../src/style/css/responsive.css">
+  <link rel="stylesheet" href="../src/style/css/theme.css">
   <title>Lorebase - Accueil</title>
 </head>
 
-<body>
+<body class="has-sidebar">
 
-  <!-- BOUTON TOGGLE MOBILE -->
-  <button class="sidebar-toggle" id="sidebarToggle">☰</button>
-
-  <!-- OVERLAY MOBILE -->
-  <div class="sidebar-overlay" id="sidebarOverlay"></div>
-
-  <!-- ========== SIDEBAR ========== -->
-  <aside class="sidebar" id="sidebar">
-
-    <!-- HEADER -->
-    <div class="sidebar__header">
-      <div class="sidebar__logo">
-        <a href="/" class="logo">
-          <img src="/src/style/assets/icon_sidebar/logo.svg" alt="logo">
-        </a>
-      </div>
-    </div>
-
-    <!-- NAVIGATION -->
-    <nav class="sidebar__nav">
-      <ul class="sidebar__menu">
-        <li class="sidebar__menu-item">
-          <a href="/character" class="sidebar__link">
-            <img src="/src/style/assets/icon_sidebar/icon_perso.svg" alt="Personnages">
-          </a>
-        </li>
-        <li class="sidebar__menu-item">
-          <a href="/univers" class="sidebar__link">
-            <img src="/src/style/assets/icon_sidebar/icon_uni.svg" alt="Univers">
-          </a>
-        </li>
-        <li class="sidebar__menu-item">
-          <a href="/place" class="sidebar__link">
-            <img src="/src/style/assets/icon_sidebar/icon_place.svg" alt="Lieux">
-          </a>
-        </li>
-        <li class="sidebar__menu-item">
-          <a href="#" class="sidebar__link">
-            <img src="/src/style/assets/icon_sidebar/icon_settings.svg" alt="Paramètres">
-          </a>
-        </li>
-      </ul>
-    </nav>
-
-    <!-- FOOTER / PROFIL + THEME TOGGLE -->
-    <div class="sidebar__footer">
-      <!-- Bouton changement de thème -->
-      <button class="sidebar__theme-toggle" id="themeToggle" aria-label="Changer de thème">
-        <span class="sidebar__theme-toggle-icon">🌙</span>
-      </button>
-
-      <div class="auth-buttons">
-        <?php if (isset($user)): ?>
-        <div class="user-info">
-          <a href="/user/profile" class="user-link">
-            👤 <?= htmlspecialchars($user['username']) ?>
-          </a>
-        </div>
-        <form method="POST" action="/logout" style="display: inline;">
-          <button type="submit" class="button button--sm button--danger">Déconnexion</button>
-        </form>
-        <?php else: ?>
-        <a href="/login" class="button button--sm button--primary">Connexion</a>
-        <a href="/register" class="button button--sm button--primary">S'inscrire</a>
-        <?php endif; ?>
-      </div>
-
-
-  </aside>
-
-  
   <?php require "../components/sidebar.html"; ?>
-  
-  <!-- ========== CONTENU PRINCIPAL ========== -->
+
   <div class="main-content">
-    
-    <!-- Hero -->
+
     <section class="hero">
       <h1>Bienvenue sur <span>Lorebase</span></h1>
       <p>
         Créez et gérez vos univers fictifs, personnages, et règles de jeu en un
         seul endroit.
       </p>
-      
+
       <?php if (!isset($user)): ?>
       <a href="/register" class="button button--lg button--primary">
         Commencer gratuitement
       </a>
       <?php endif; ?>
     </section>
-    
-    
-    
-    <footer class="footer">
-      <p>&copy; 2026 Lorebase - Projet Semestre</p>
-    </footer>
-    
-  </div>
-  
-</body>
 
+  </div>
+
+  <?php require "../components/footer.html"; ?>
+  <?php require "../components/bandeau.html"; ?>
+
+</body>
 
 </html>

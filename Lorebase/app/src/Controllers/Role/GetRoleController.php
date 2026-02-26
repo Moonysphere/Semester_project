@@ -17,10 +17,14 @@ class GetRoleController extends AbstractController
          $slug = $request->getSlug('slug');
 
         if ($slug === '') {
-            return new Response('Slug manquant', 400, ['Content-Type' => 'application/json']);
+            throw new \Exception('Slug manquant', 404);
         }
 
         $role = $roleRepository->findBySlug($slug, 'role');
+
+        if (!$role) {
+            throw new \Exception('Rôle non trouvé', 404);
+        }
 
         return $this->render('role', 'detail', ['role' => $role]);
     }

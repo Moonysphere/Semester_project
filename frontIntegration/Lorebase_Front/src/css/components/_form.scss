@@ -1,0 +1,165 @@
+$form-bg: #ffffff;
+$body-bg: #f4f4f4;
+$input-border: #e0e0e0;
+$input-focus: #333333;
+$text-primary: #333333;
+$text-secondary: #666666;
+$success: #4caf50;
+$warning: #f0ad4e;
+$danger: #dc3545;
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: $body-bg;
+    padding: 20px;
+    min-height: 100vh;
+}
+
+.form-container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: $form-bg;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.form-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: $text-primary;
+    margin-bottom: 40px;
+    letter-spacing: -0.5px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+
+    &__group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    &__label {
+        font-size: 14px;
+        font-weight: 600;
+        color: $text-primary;
+        letter-spacing: 0.3px;
+        text-transform: uppercase;
+    }
+
+    &__input,
+    &__textarea,
+    &__select {
+        width: 100%;
+        padding: 14px 16px;
+        border: 2px solid $input-border;
+        border-radius: 8px;
+        font-size: 15px;
+        color: $text-primary;
+        background-color: $form-bg;
+        transition: all 0.2s ease;
+
+
+        &:focus {
+            outline: none;
+            border-color: $input-focus;
+            box-shadow: 0 0 0 3px rgba($input-focus, 0.1);
+        }
+    }
+
+    &__textarea {
+        resize: vertical;
+        min-height: 120px;
+        line-height: 1.6;
+        font-family: Arial, sans-serif;
+    }
+
+    &__select {
+        cursor: pointer;
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 6L11 1' stroke='%23333333' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 16px center;
+        padding-right: 44px;
+
+        option {
+            padding: 8px;
+        }
+    }
+
+    &__actions {
+        display: flex;
+        gap: 12px;
+        margin-top: 16px;
+    }
+
+    &__button {
+        flex: 1;
+        padding: 14px 24px;
+        border: none;
+        border-radius: 8px;
+        font-size: 15px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: all 0.2s ease;
+
+        &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        &:active {
+            transform: translateY(0);
+        }
+
+        &--create {
+            background-color: $success;
+            color: white;
+
+        }
+
+        &--draft {
+            background-color: $warning;
+            color: white;
+
+        }
+
+        &--archived {
+            background-color: $danger;
+            color: white;
+
+        }
+    }
+}
+
+// Responsive
+@media (max-width: 640px) {
+    .form-container {
+        padding: 24px;
+    }
+
+    .form-title {
+        font-size: 24px;
+        margin-bottom: 24px;
+    }
+
+    .form__actions {
+        flex-direction: column;
+    }
+
+    .form__button {
+        width: 100%;
+    }
+}
