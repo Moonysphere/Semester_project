@@ -20,8 +20,6 @@ class GetBackOffice extends AbstractController
             session_start();
         }
 
-
-
         $userRepo = new UserRepository();
         $characterRepo = new CharacterRepository();
         $placeRepo = new PlaceRepository();

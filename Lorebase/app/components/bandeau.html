@@ -1,111 +1,132 @@
-<div id="cookie-banner" class="cookie-banner" role="dialog" aria-modal="false" aria-label="Gestion des cookies"
-    aria-live="polite" hidden>
-    <div class="cookie-banner__inner">
+<div
+  id="cookie-banner"
+  class="cookie-banner"
+  role="dialog"
+  aria-modal="false"
+  aria-label="Gestion des cookies"
+  aria-live="polite"
+  hidden>
+  <div class="cookie-banner__inner">
+    <span class="cookie-banner__icon" aria-hidden="true">🍪</span>
 
-        <span class="cookie-banner__icon" aria-hidden="true">🍪</span>
-
-        <div class="cookie-banner__content">
-            <p class="cookie-banner__title">Ce site utilise des cookies</p>
-            <p class="cookie-banner__text">
-                Nous utilisons des cookies <strong>strictement nécessaires</strong>
-                (session, préférences d'affichage) et des cookies
-                <strong>analytiques</strong> pour mesurer l'audience.
-                Vous pouvez accepter ou refuser les cookies non essentiels.
-                <a href="/politique-confidentialite" class="cookie-banner__link">
-                    En savoir plus
-                </a>
-            </p>
-        </div>
-
-        <div class="cookie-banner__actions">
-            <button id="cookie-decline" class="cookie-banner__btn cookie-banner__btn--decline" type="button"
-                aria-label="Refuser les cookies non essentiels">
-                Refuser
-            </button>
-            <button id="cookie-accept" class="cookie-banner__btn cookie-banner__btn--accept" type="button"
-                aria-label="Accepter tous les cookies">
-                Accepter
-            </button>
-        </div>
-
+    <div class="cookie-banner__content">
+      <p class="cookie-banner__title">Ce site utilise des cookies</p>
+      <p class="cookie-banner__text">
+        Nous utilisons des cookies <strong>strictement nécessaires</strong>
+        (session, préférences d'affichage) et des cookies
+        <strong>analytiques</strong> pour mesurer l'audience. Vous pouvez
+        accepter ou refuser les cookies non essentiels.
+        <a href="/politique-confidentialite" class="cookie-banner__link">
+          En savoir plus
+        </a>
+      </p>
     </div>
+
+    <div class="cookie-banner__actions">
+      <button
+        id="cookie-decline"
+        class="cookie-banner__btn cookie-banner__btn--decline"
+        type="button"
+        aria-label="Refuser les cookies non essentiels">
+        Refuser
+      </button>
+      <button
+        id="cookie-accept"
+        class="cookie-banner__btn cookie-banner__btn--accept"
+        type="button"
+        aria-label="Accepter tous les cookies">
+        Accepter
+      </button>
+    </div>
+  </div>
 </div>
 
-
 <script>
-    (function () {
-        'use strict';
+  (function () {
+    "use strict";
 
-        var COOKIE_NAME = 'lorebase_cookie_consent';
-        var COOKIE_MONTHS = 13;
+    var COOKIE_NAME = "lorebase_cookie_consent";
+    var COOKIE_MONTHS = 13;
 
-        var banner = document.getElementById('cookie-banner');
-        var btnAccept = document.getElementById('cookie-accept');
-        var btnDecline = document.getElementById('cookie-decline');
+    var banner = document.getElementById("cookie-banner");
+    var btnAccept = document.getElementById("cookie-accept");
+    var btnDecline = document.getElementById("cookie-decline");
 
-        function getCookie(name) {
-            var match = document.cookie.match(
-                new RegExp('(?:^|; )' + name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '=([^;]*)')
-            );
-            return match ? decodeURIComponent(match[1]) : null;
+    function getCookie(name) {
+      var match = document.cookie.match(
+        new RegExp(
+          "(?:^|; )" + name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "=([^;]*)",
+        ),
+      );
+      return match ? decodeURIComponent(match[1]) : null;
+    }
+
+    function setCookie(name, value, months) {
+      var expires = new Date();
+      expires.setMonth(expires.getMonth() + months);
+      var secure = location.protocol === "https:" ? "; Secure" : "";
+      document.cookie =
+        name +
+        "=" +
+        encodeURIComponent(value) +
+        "; expires=" +
+        expires.toUTCString() +
+        "; path=/" +
+        "; SameSite=Lax" +
+        secure;
+    }
+
+    function hideBanner(callback) {
+      banner.classList.add("cookie-banner--hiding");
+      banner.addEventListener("animationend", function handler() {
+        banner.removeEventListener("animationend", handler);
+        banner.hidden = true;
+        banner.classList.remove("cookie-banner--hiding");
+        if (callback) callback();
+      });
+    }
+
+    function onAccept() {
+      setCookie(COOKIE_NAME, "accepted", COOKIE_MONTHS);
+      hideBanner();
+    }
+
+    function onDecline() {
+      setCookie(COOKIE_NAME, "declined", COOKIE_MONTHS);
+      hideBanner();
+    }
+
+    function init() {
+      var consent = getCookie(COOKIE_NAME);
+
+      if (consent === "accepted") {
+        loadAnalytics();
+        return;
+      }
+      if (consent === "declined") {
+        return;
+      }
+
+      banner.hidden = false;
+      btnAccept.addEventListener("click", onAccept);
+      btnDecline.addEventListener("click", onDecline);
+
+      document.addEventListener("keydown", function handler(e) {
+        if (e.key === "Escape") {
+          document.removeEventListener("keydown", handler);
+          onDecline();
         }
+      });
 
-        function setCookie(name, value, months) {
-            var expires = new Date();
-            expires.setMonth(expires.getMonth() + months);
-            var secure = location.protocol === 'https:' ? '; Secure' : '';
-            document.cookie =
-                name + '=' + encodeURIComponent(value) +
-                '; expires=' + expires.toUTCString() +
-                '; path=/' +
-                '; SameSite=Lax' +
-                secure;
-        }
+      setTimeout(function () {
+        btnDecline.focus();
+      }, 400);
+    }
 
-        function hideBanner(callback) {
-            banner.classList.add('cookie-banner--hiding');
-            banner.addEventListener('animationend', function handler() {
-                banner.removeEventListener('animationend', handler);
-                banner.hidden = true;
-                banner.classList.remove('cookie-banner--hiding');
-                if (callback) callback();
-            });
-        }
-
-        function onAccept() {
-            setCookie(COOKIE_NAME, 'accepted', COOKIE_MONTHS);
-            hideBanner(loadAnalytics);
-        }
-
-        function onDecline() {
-            setCookie(COOKIE_NAME, 'declined', COOKIE_MONTHS);
-            hideBanner();
-        }
-
-        function init() {
-            var consent = getCookie(COOKIE_NAME);
-
-            if (consent === 'accepted') { loadAnalytics(); return; }
-            if (consent === 'declined') { return; }
-
-            banner.hidden = false;
-            btnAccept.addEventListener('click', onAccept);
-            btnDecline.addEventListener('click', onDecline);
-
-            document.addEventListener('keydown', function handler(e) {
-                if (e.key === 'Escape') {
-                    document.removeEventListener('keydown', handler);
-                    onDecline();
-                }
-            });
-
-            setTimeout(function () { btnDecline.focus(); }, 400);
-        }
-
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', init);
-        } else {
-            init();
-        }
-    })();
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", init);
+    } else {
+      init();
+    }
+  })();
 </script>
