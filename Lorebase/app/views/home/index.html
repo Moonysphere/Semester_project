@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>
+    const theme = localStorage.getItem('theme') ||
+      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+  </script>
+  <link href="../src/style/css/framework.css" rel="stylesheet">
+  <link href="../src/style/css/home.css" rel="stylesheet">
+  <link rel="stylesheet" href="../src/style/css/responsive.css">
+  <link rel="stylesheet" href="../src/style/css/theme.css">
+  <title>Lorebase - Accueil</title>
+</head>
+
+<body class="has-sidebar">
+
+  <?php require "../components/sidebar.html"; ?>
+
+  <div class="main-content">
+
+    <section class="hero">
+      <h1>Bienvenue sur <span>Lorebase</span></h1>
+      <p>
+        Créez et gérez vos univers fictifs, personnages, et règles de jeu en un
+        seul endroit.
+      </p>
+
+      <?php if (!isset($user)): ?>
+      <a href="/register" class="button button--lg button--primary">
+        Commencer gratuitement
+      </a>
+      <?php endif; ?>
+    </section>
+
+  </div>
+
+  <?php require "../components/footer.html"; ?>
+  <?php require "../components/bandeau.html"; ?>
+
+</body>
+
+</html>

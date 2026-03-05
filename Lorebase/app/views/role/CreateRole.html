@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>
+    const theme = localStorage.getItem('theme') ||
+      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+  </script>
+  <title>Créer un role</title>
+  <link rel="stylesheet" href="../../src/style/css/framework.css">
+  <link rel="stylesheet" href="../../src/style/css/role/Createrole.css">
+  <link rel="stylesheet" href="../../src/style/css/theme.css">
+  <link rel="stylesheet" href="../../src/style/css/responsive.css">
+</head>
+
+<body>
+  <h1>Créer un nouveau role</h1>
+  <form method="POST" action="/role">
+    <div class="form-group">
+      <label for="name">Nom :</label>
+      <input type="text" id="name" name="name" required />
+    </div>
+    <div class="form-group">
+      <label for="role">Description :</label>
+      <input type="text" id="description" name="description" required />
+      <div class="actions">
+        <button class="create" type="submit" name="status" value="published">
+          Créer la place
+        </button>
+        <button class="brouillon" type="submit" name="status" value="draft">
+          Brouillon
+        </button>
+        </button>
+        <button class="archived" type="submit" name="status" value="archived">
+          Archiver
+        </button>
+      </div>
+  </form>
+  </div>
+</body>
+
+</html>

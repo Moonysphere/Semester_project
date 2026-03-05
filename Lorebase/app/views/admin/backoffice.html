@@ -1,0 +1,550 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Back Office Admin</title>
+  <script>
+    const theme =
+      localStorage.getItem("theme") ||
+      (window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light");
+    document.documentElement.setAttribute("data-theme", theme);
+  </script>
+  <link rel="stylesheet" href="../../src/style/css/framework.css" />
+  <link rel="stylesheet" href="../../src/style/css/admin/backoffice.css" />
+  <link rel="stylesheet" href="../../src/style/css/theme.css">
+  <link rel="stylesheet" href="../../src/style/css/responsive.css">
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <h1>🔐 Back Office Admin</h1>
+      <div class="user-info">
+        <span class="user-badge">Admin</span>
+        <form method="POST" action="/logout" style="display: inline">
+          <button type="submit" class="logout-btn">Se déconnecter</button>
+        </form>
+      </div>
+    </header>
+
+    <div class="nav-tabs">
+      <button class="nav-tab active" onclick="showSection('users')">
+        👥 Utilisateurs
+      </button>
+      <button class="nav-tab" onclick="showSection('characters')">
+        ⚔️ Personnages
+      </button>
+      <button class="nav-tab" onclick="showSection('places')">
+        🏰 Lieux
+      </button>
+      <button class="nav-tab" onclick="showSection('quests')">
+        📜 Quêtes
+      </button>
+      <button class="nav-tab" onclick="showSection('roles')">👑 Rôles</button>
+      📋 Règles
+      </button>
+      <button class="nav-tab" onclick="showSection('univers')">
+        🌍 Univers
+      </button>
+    </div>
+
+    <!-- SECTION UTILISATEURS -->
+    <div id="users" class="section active">
+      <h2>👥 Gestion des Utilisateurs</h2>
+
+      <div class="stats">
+        <div class="stat-card">
+          <h3>
+            <?= count($users) ?>
+          </h3>
+          <p>Utilisateurs</p>
+        </div>
+      </div>
+
+      <?php if (!empty($users)): ?>
+      <table>
+        <thead>
+          <tr>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Prénom</th>
+            <th>Nom</th>
+            <th>Rôle</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php foreach ($users as $user): ?>
+          <tr>
+            <td>
+              <?= htmlspecialchars($user->username) ?>
+            </td>
+            <td>
+              <?= htmlspecialchars($user->email) ?>
+            </td>
+            <td>
+              <?= htmlspecialchars($user->firstname ?? '-') ?>
+            </td>
+            <td>
+              <?= htmlspecialchars($user->lastname ?? '-') ?>
+            </td>
+            <td>
+              <span class="badge badge-<?= strtolower($user->role) ?>">
+                <?= ucfirst($user->role) ?>
+              </span>
+            </td>
+            <td>
+              <div class="actions">
+                <a href="/admin/user/<?= $user->email ?>" class="btn btn-edit">Voir entités</a>
+                <button class="btn btn-promote" onclick="
+                      openChangeRole(
+                        '<?= $user->email ?>',
+                        '<?= $user->role ?>',
+                      )
+                    ">
+                  Changer rôle
+                </button>
+                <button class="btn btn-delete" onclick="deleteUser('<?= $user->email ?>')">
+                  Supprimer
+                </button>
+              </div>
+            </td>
+          </tr>
+          <?php endforeach; ?>
+        </tbody>
+      </table>
+      <?php else: ?>
+      <div class="empty-state">
+        <p>Aucun utilisateur trouvé</p>
+      </div>
+      <?php endif; ?>
+    </div>
+
+    <!-- SECTION PERSONNAGES -->
+    <div id="characters" class="section">
+      <h2>⚔️ Gestion des Personnages</h2>
+
+      <div class="stats">
+        <div class="stat-card">
+          <h3>
+            <?= count($characters) ?>
+          </h3>
+          <p>Personnages</p>
+        </div>
+        <a href="/character/create" class="stat-card add-btn">+</a>
+      </div>
+
+      <?php if (!empty($characters)): ?>
+      <table>
+        <thead>
+          <tr>
+            <th>Nom</th>
+            <th>Slug</th>
+            <th>Statut</th>
+            <th>PV</th>
+            <th>Univers</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php foreach ($characters as $char): ?>
+          <tr>
+            <td>
+              <?= htmlspecialchars($char->name) ?>
+            </td>
+            <td>
+              <?= htmlspecialchars($char->slug) ?>
+            </td>
+            <td>
+              <span class="badge badge-<?= strtolower($char->status ?? 'draft') ?>">
+                <?= ucfirst($char->status ?? 'draft') ?>
+              </span>
+            </td>
+            <td>
+              <?= $char->pv ?? '-' ?>
+            </td>
+            <td>
+              <?= $char->univers_id ?? '-' ?>
+            </td>
+            <td>
+              <div class="actions">
+                <a href="/character/edit/<?= $char->slug ?>" class="btn btn-edit">Modifier</a>
+                <button class="btn btn-delete" onclick="deleteEntity('character', <?= $char->id ?>)">
+                  Supprimer
+                </button>
+              </div>
+            </td>
+          </tr>
+          <?php endforeach; ?>
+        </tbody>
+      </table>
+      <?php else: ?>
+      <div class="empty-state">
+        <p>Aucun personnage trouvé</p>
+      </div>
+      <?php endif; ?>
+    </div>
+
+    <!-- SECTION LIEUX -->
+    <div id="places" class="section">
+      <h2>🏰 Gestion des Lieux</h2>
+
+      <div class="stats">
+        <div class="stat-card">
+          <h3>
+            <?= count($places) ?>
+          </h3>
+          <p>Lieux</p>
+        </div>
+        <a href="/place/create" class="stat-card add-btn">+</a>
+      </div>
+
+      <?php if (!empty($places)): ?>
+      <table>
+        <thead>
+          <tr>
+            <th>Nom</th>
+            <th>Slug</th>
+            <th>Statut</th>
+            <th>Univers</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php foreach ($places as $place): ?>
+          <tr>
+            <td>
+              <?= htmlspecialchars($place->name) ?>
+            </td>
+            <td>
+              <?= htmlspecialchars($place->slug) ?>
+            </td>
+            <td>
+              <span class="badge badge-<?= strtolower($place->status ?? 'draft') ?>">
+                <?= ucfirst($place->status ?? 'draft') ?>
+              </span>
+            </td>
+            <td>
+              <?= $place->univers_id ?? '-' ?>
+            </td>
+            <td>
+              <div class="actions">
+                <a href="/place/edit/<?= $place->slug ?>" class="btn btn-edit">Modifier</a>
+                <button class="btn btn-delete" onclick="deleteEntity('place', <?= $place->id ?>)">
+                  Supprimer
+                </button>
+              </div>
+            </td>
+          </tr>
+          <?php endforeach; ?>
+        </tbody>
+      </table>
+      <?php else: ?>
+      <div class="empty-state">
+        <p>Aucun lieu trouvé</p>
+      </div>
+      <?php endif; ?>
+    </div>
+
+    <!-- SECTION QUÊTES -->
+    <div id="quests" class="section">
+      <h2>📜 Gestion des Quêtes</h2>
+
+      <div class="stats">
+        <div class="stat-card">
+          <h3>
+            <?= count($quests) ?>
+          </h3>
+          <p>Quêtes</p>
+        </div>
+        <a href="/quest/create" class="stat-card add-btn">+</a>
+      </div>
+
+      <?php if (!empty($quests)): ?>
+      <table>
+        <thead>
+          <tr>
+            <th>Nom</th>
+            <th>Slug</th>
+            <th>Statut</th>
+            <th>Lieu</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php foreach ($quests as $quest): ?>
+          <tr>
+            <td>
+              <?= htmlspecialchars($quest->name) ?>
+            </td>
+            <td>
+              <?= htmlspecialchars($quest->slug) ?>
+            </td>
+            <td>
+              <span class="badge badge-<?= strtolower($quest->status ?? 'draft') ?>">
+                <?= ucfirst($quest->status ?? 'draft') ?>
+              </span>
+            </td>
+            <td>
+              <?= $quest->place_id ?? '-' ?>
+            </td>
+            <td>
+              <div class="actions">
+                <a href="/quest/edit/<?= $quest->slug ?>" class="btn btn-edit">Modifier</a>
+                <button class="btn btn-delete" onclick="deleteEntity('quest', <?= $quest->id ?>)">
+                  Supprimer
+                </button>
+              </div>
+            </td>
+          </tr>
+          <?php endforeach; ?>
+        </tbody>
+      </table>
+      <?php else: ?>
+      <div class="empty-state">
+        <p>Aucune quête trouvée</p>
+      </div>
+      <?php endif; ?>
+    </div>
+
+    <!-- SECTION RÔLES -->
+    <div id="roles" class="section">
+      <h2>👑 Gestion des Rôles</h2>
+
+      <div class="stats">
+        <div class="stat-card">
+          <h3>
+            <?= count($roles) ?>
+          </h3>
+          <p>Rôles</p>
+        </div>
+        <a href="/role/create" class="stat-card add-btn">+</a>
+      </div>
+
+      <?php if (!empty($roles)): ?>
+      <table>
+        <thead>
+          <tr>
+            <th>Nom</th>
+            <th>Slug</th>
+            <th>Description</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php foreach ($roles as $role): ?>
+          <tr>
+            <td>
+              <?= htmlspecialchars($role->name) ?>
+            </td>
+            <td>
+              <?= htmlspecialchars($role->slug ?? '-') ?>
+            </td>
+            <td>
+              <?= htmlspecialchars(substr($role->description ?? '', 0, 50))
+                ?>...
+            </td>
+            <td>
+              <div class="actions">
+                <a href="/role/edit/<?= $role->slug ?>" class="btn btn-edit">Modifier</a>
+                <button class="btn btn-delete" onclick="deleteEntity('role', <?= $role->id ?>)">
+                  Supprimer
+                </button>
+              </div>
+            </td>
+          </tr>
+          <?php endforeach; ?>
+        </tbody>
+      </table>
+      <?php else: ?>
+      <div class="empty-state">
+        <p>Aucun rôle trouvé</p>
+      </div>
+      <?php endif; ?>
+    </div>
+
+    <!-- SECTION UNIVERS -->
+    <div id="univers" class="section">
+      <h2>🌍 Gestion des Univers</h2>
+
+      <div class="stats">
+        <div class="stat-card">
+          <h3>
+            <?= count($univers) ?>
+          </h3>
+          <p>Univers</p>
+        </div>
+        <a href="/univers/create" class="stat-card add-btn">+</a>
+      </div>
+
+      <?php if (!empty($univers)): ?>
+      <table>
+        <thead>
+          <tr>
+            <th>Nom</th>
+            <th>Slug</th>
+            <th>Statut</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php foreach ($univers as $univ): ?>
+          <tr>
+            <td>
+              <?= htmlspecialchars($univ->name) ?>
+            </td>
+            <td>
+              <?= htmlspecialchars($univ->slug) ?>
+            </td>
+            <td>
+              <span class="badge badge-<?= strtolower($univ->status ?? 'draft') ?>">
+                <?= ucfirst($univ->status ?? 'draft') ?>
+              </span>
+            </td>
+            <td>
+              <div class="actions">
+                <a href="/univers/edit/<?= $univ->slug ?>" class="btn btn-edit">Modifier</a>
+                <button class="btn btn-delete" onclick="deleteEntity('univers', <?= $univ->id ?>)">
+                  Supprimer
+                </button>
+              </div>
+            </td>
+          </tr>
+          <?php endforeach; ?>
+        </tbody>
+      </table>
+      <?php else: ?>
+      <div class="empty-state">
+        <p>Aucun univers trouvé</p>
+      </div>
+      <?php endif; ?>
+    </div>
+  </div>
+
+  <!-- MODAL CHANGER RÔLE -->
+  <div id="roleModal" class="modal">
+    <div class="modal-content">
+      <h3>Changer le rôle utilisateur</h3>
+      <input type="hidden" id="userEmail" />
+      <label>Nouveau rôle :</label>
+      <select id="newRole">
+        <option value="reader">Reader</option>
+        <option value="author">Author</option>
+        <option value="editor">Editor</option>
+        <option value="admin">Admin</option>
+      </select>
+      <div class="modal-buttons">
+        <button class="modal-btn-cancel" onclick="closeRoleModal()">
+          Annuler
+        </button>
+        <button class="modal-btn-save" onclick="saveNewRole()">
+          Sauvegarder
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function showSection(sectionId) {
+      document
+        .querySelectorAll(".section")
+        .forEach((s) => s.classList.remove("active"));
+      document
+        .querySelectorAll(".nav-tab")
+        .forEach((t) => t.classList.remove("active"));
+      document.getElementById(sectionId).classList.add("active");
+      event.target.classList.add("active");
+    }
+
+    function openChangeRole(email, currentRole) {
+      document.getElementById("userEmail").value = email;
+      document.getElementById("newRole").value = currentRole;
+      document.getElementById("roleModal").classList.add("active");
+    }
+
+    function closeRoleModal() {
+      document.getElementById("roleModal").classList.remove("active");
+    }
+
+    async function saveNewRole() {
+      const email = document.getElementById("userEmail").value;
+      const newRole = document.getElementById("newRole").value;
+
+      console.log("Envoi:", { email, role: newRole });
+
+      try {
+        const response = await fetch("/admin/user/role", {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, role: newRole }),
+        });
+
+        const result = await response.json();
+        console.log("Response:", result);
+
+        if (result.success) {
+          alert("Rôle mis à jour avec succès !");
+          location.reload();
+        } else {
+          alert(
+            "Erreur: " +
+            (result.error || result.message || "Erreur inconnue"),
+          );
+        }
+      } catch (error) {
+        console.error("Erreur:", error);
+        alert("Erreur réseau: " + error.message);
+      }
+
+      closeRoleModal();
+    }
+
+    async function deleteUser(email) {
+      if (!confirm("Êtes-vous sûr de vouloir supprimer cet utilisateur ?"))
+        return;
+
+      try {
+        const response = await fetch(`/admin/user/delete/${email}`, {
+          method: "DELETE",
+        });
+
+        if (response.ok) {
+          alert("Utilisateur supprimé");
+          location.reload();
+        } else {
+          alert("Erreur lors de la suppression");
+        }
+      } catch (error) {
+        console.error("Erreur:", error);
+        alert("Erreur réseau");
+      }
+    }
+
+    async function deleteEntity(type, id) {
+      if (!confirm("Êtes-vous sûr de vouloir supprimer cette entité ?"))
+        return;
+
+      try {
+        const response = await fetch(`/admin/${type}/delete/${id}`, {
+          method: "DELETE",
+        });
+
+        if (response.ok) {
+          alert("Entité supprimée");
+          location.reload();
+        } else {
+          alert("Erreur lors de la suppression");
+        }
+      } catch (error) {
+        console.error("Erreur:", error);
+        alert("Erreur réseau");
+      }
+    }
+  </script>
+</body>
+
+</html>

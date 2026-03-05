@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inscription - Lorebase</title>
+  <link rel="stylesheet" href="../../src/style/css/auth/register.css">
+  <link rel="stylesheet" href="../../src/style/css/framework.css">
+  <link rel="stylesheet" href="../../src/style/css/theme.css">
+  <link rel="stylesheet" href="../../src/style/css/responsive.css">
+</head>
+
+<body>
+  <div class="register-container">
+    <h1>📚 Inscription</h1>
+
+    <div id="message" class="message"></div>
+
+    <form id="registerForm">
+      <div class="form-group">
+        <label for="username">Nom d'utilisateur *</label>
+        <input type="text" id="username" name="username" required placeholder="Ex: axel_lore" />
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email *</label>
+        <input type="email" id="email" name="email" required placeholder="Ex: axel@example.com" />
+      </div>
+
+      <div class="form-group">
+        <label for="password">Mot de passe * (min. 8 caractères)</label>
+        <input type="password" id="password" name="password" required minlength="8" placeholder="••••••••" />
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="nom">Nom</label>
+          <input type="text" id="nom" name="nom" placeholder="Ex: BARBELLION" />
+        </div>
+
+        <div class="form-group">
+          <label for="prenom">Prénom</label>
+          <input type="text" id="prenom" name="prenom" placeholder="Ex: Axel" />
+        </div>
+      </div>
+
+      <button type="submit" class="btn-register" id="submitBtn">
+        Créer mon compte
+      </button>
+    </form>
+
+    <p class="login-link">Déjà inscrit ? <a href="/login">Se connecter</a></p>
+  </div>
+
+  <script>
+    const form = document.getElementById("registerForm");
+    const messageDiv = document.getElementById("message");
+    const submitBtn = document.getElementById("submitBtn");
+
+    // Traduction des erreurs
+    const errorMessages = {
+      username_required: "Le nom d'utilisateur est requis",
+      email_required: "L'email est requis",
+      email_invalid: "L'email n'est pas valide",
+      password_required: "Le mot de passe est requis",
+      password_too_short:
+        "Le mot de passe doit contenir au moins 8 caractères",
+      username_taken: "Ce nom d'utilisateur est déjà pris",
+      email_taken: "Cet email est déjà utilisé",
+      already_logged_in: "Vous êtes déjà connecté",
+      db_error: "Erreur serveur, veuillez réessayer",
+    };
+
+    function showMessage(type, messages) {
+      messageDiv.className = "message " + type;
+
+      if (Array.isArray(messages)) {
+        const translated = messages.map((msg) => errorMessages[msg] || msg);
+        messageDiv.innerHTML =
+          "<ul>" +
+          translated.map((m) => "<li>" + m + "</li>").join("") +
+          "</ul>";
+      } else {
+        messageDiv.textContent = messages;
+      }
+    }
+
+    function setLoading(loading) {
+      if (loading) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span class="loading"></span> Inscription...';
+      } else {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = "Créer mon compte";
+      }
+    }
+
+    form.addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      // Reset message
+      messageDiv.className = "message";
+      messageDiv.innerHTML = "";
+
+      setLoading(true);
+
+      const formData = {
+        username: document.getElementById("username").value.trim(),
+        email: document.getElementById("email").value.trim(),
+        password: document.getElementById("password").value,
+        nom: document.getElementById("nom").value.trim(),
+        prenom: document.getElementById("prenom").value.trim(),
+      };
+
+      try {
+        const response = await fetch("/register", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          showMessage("success", "Compte créé avec succès ! Redirection...");
+          setTimeout(() => {
+            window.location.href = "/login";
+          }, 1500);
+        } else {
+          showMessage("error", data.errors || ["Une erreur est survenue"]);
+        }
+      } catch (error) {
+        console.error("Erreur:", error);
+        showMessage("error", ["Erreur de connexion au serveur"]);
+      } finally {
+        setLoading(false);
+      }
+    });
+  </script>
+</body>
+
+</html>

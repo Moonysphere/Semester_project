@@ -1,0 +1,352 @@
+[
+  {
+    "path": "/",
+    "method": "GET",
+    "controller": "Homepage\\GetHomepageController"
+  },
+  {
+    "path": "/character",
+    "method": "GET",
+    "controller": "Character\\GetCharactersController"
+  },
+  {
+    "path": "/character/:slug",
+    "method": "GET",
+    "controller": "Character\\GetCharacterController"
+  },
+  {
+    "path": "/:username/character/create",
+    "method": "GET",
+    "controller": "Character\\GetCreateCharacterController"
+  },
+  {
+    "path": "/:username/character/:slug/edit",
+    "method": "GET",
+    "controller": "Character\\GetEditCharacterController"
+  },
+  {
+    "path": "/:username/character",
+    "method": "GET",
+    "controller": "Character\\GetUserCharactersController"
+  },
+  {
+    "path": "/:username/character/:slug",
+    "method": "GET",
+    "controller": "Character\\GetCharacterController"
+  },
+  {
+    "path": "/:username/character",
+    "method": "POST",
+    "controller": "Character\\PostCharacterController"
+  },
+  {
+    "path": "/:username/character/:id",
+    "method": "PATCH",
+    "controller": "Character\\PatchCharacterController"
+  },
+  {
+    "path": "/:username/character/:id",
+    "method": "DELETE",
+    "controller": "Character\\DeleteCharacterController"
+  },
+  {
+    "path": "/:username/quest/create",
+    "method": "GET",
+    "controller": "Quest\\GetCreateQuestController"
+  },
+  {
+    "path": "/:username/quest/:slug/edit",
+    "method": "GET",
+    "controller": "Quest\\GetEditQuestController"
+  },
+  {
+    "path": "/quest",
+    "method": "GET",
+    "controller": "Quest\\GetQuestsController"
+  },
+  {
+    "path": "/quest/:slug",
+    "method": "GET",
+    "controller": "Quest\\GetQuestController"
+  },
+  {
+    "path": "/:username/quest",
+    "method": "GET",
+    "controller": "Quest\\GetUserQuestsController"
+  },
+  {
+    "path": "/:username/quest/:slug",
+    "method": "GET",
+    "controller": "Quest\\GetQuestController"
+  },
+  {
+    "path": "/:username/quest",
+    "method": "POST",
+    "controller": "Quest\\PostQuestController"
+  },
+  {
+    "path": "/:username/quest/:id",
+    "method": "PATCH",
+    "controller": "Quest\\PatchQuestController"
+  },
+  {
+    "path": "/:username/quest/:id",
+    "method": "DELETE",
+    "controller": "Quest\\DeleteQuestController"
+  },
+  {
+    "path": "/:username/univers/create",
+    "method": "GET",
+    "controller": "Univers\\GetCreateUniversController"
+  },
+  {
+    "path": "/:username/univers/:slug/edit",
+    "method": "GET",
+    "controller": "Univers\\GetEditUnivers"
+  },
+  {
+    "path": "/univers",
+    "method": "GET",
+    "controller": "Univers\\GetUniversAllController"
+  },
+  {
+    "path": "/univers/:slug",
+    "method": "GET",
+    "controller": "Univers\\GetUniversController"
+  },
+  {
+    "path": "/:username/univers",
+    "method": "GET",
+    "controller": "Univers\\GetUserUniversController"
+  },
+  {
+    "path": "/:username/univers/:slug",
+    "method": "GET",
+    "controller": "Univers\\GetUniversController"
+  },
+  {
+    "path": "/:username/univers",
+    "method": "POST",
+    "controller": "Univers\\PostUniversController"
+  },
+  {
+    "path": "/:username/univers/:id",
+    "method": "PATCH",
+    "controller": "Univers\\PatchUniversController"
+  },
+  {
+    "path": "/:username/univers/:id",
+    "method": "DELETE",
+    "controller": "Univers\\DeleteUniversController"
+  },
+  {
+    "path": "/register",
+    "method": "POST",
+    "controller": "Auth\\RegisterController"
+  },
+  {
+    "path": "/register",
+    "method": "GET",
+    "controller": "Auth\\RegisterViewController"
+  },
+  {
+    "path": "/login",
+    "method": "POST",
+    "controller": "Auth\\LoginController"
+  },
+  {
+    "path": "/login",
+    "method": "GET",
+    "controller": "Auth\\LoginViewController"
+  },
+  {
+    "path": "/logout",
+    "method": "POST",
+    "controller": "Auth\\LogoutController"
+  },
+  {
+    "path": "/role/create",
+    "method": "GET",
+    "controller": "Role\\GetCreateRoleController"
+  },
+  {
+    "path": "/role/:slug/edit",
+    "method": "GET",
+    "controller": "Role\\GetEditRoleController"
+  },
+  {
+    "path": "/role",
+    "method": "GET",
+    "controller": "Role\\GetRolesController"
+  },
+  {
+    "path": "/role/:slug",
+    "method": "GET",
+    "controller": "Role\\GetRoleController"
+  },
+  {
+    "path": "/role",
+    "method": "POST",
+    "controller": "Role\\PostRoleController"
+  },
+  {
+    "path": "/role/:id",
+    "method": "PATCH",
+    "controller": "Role\\PatchRoleController"
+  },
+  {
+    "path": "/role/:id",
+    "method": "DELETE",
+    "controller": "Role\\DeleteRoleController"
+  },
+  {
+    "path": "/place/create",
+    "method": "GET",
+    "controller": "Place\\GetCreatePlaceController"
+  },
+  {
+    "path": "/:username/place/create",
+    "method": "GET",
+    "controller": "Place\\GetCreatePlaceController"
+  },
+  {
+    "path": "/place/:slug/edit",
+    "method": "GET",
+    "controller": "Place\\GetEditPlaceController"
+  },
+  {
+    "path": "/:username/place/:slug/edit",
+    "method": "GET",
+    "controller": "Place\\GetEditPlaceController"
+  },
+  {
+    "path": "/place",
+    "method": "GET",
+    "controller": "Place\\GetPlacesController"
+  },
+  {
+    "path": "/:username/place",
+    "method": "GET",
+    "controller": "Place\\GetUserPlacesController"
+  },
+  {
+    "path": "/place/:slug",
+    "method": "GET",
+    "controller": "Place\\GetPlaceController"
+  },
+  {
+    "path": "/:username/place/:slug",
+    "method": "GET",
+    "controller": "Place\\GetPlaceController"
+  },
+  {
+    "path": "/place",
+    "method": "POST",
+    "controller": "Place\\PostPlaceController"
+  },
+  {
+    "path": "/:username/place",
+    "method": "POST",
+    "controller": "Place\\PostPlaceController"
+  },
+  {
+    "path": "/place/:id",
+    "method": "PATCH",
+    "controller": "Place\\PatchPlaceController"
+  },
+  {
+    "path": "/:username/place/:id",
+    "method": "PATCH",
+    "controller": "Place\\PatchPlaceController"
+  },
+  {
+    "path": "/place/:id",
+    "method": "DELETE",
+    "controller": "Place\\DeletePlaceController"
+  },
+  {
+    "path": "/:username/place/:id",
+    "method": "DELETE",
+    "controller": "Place\\DeletePlaceController"
+  },
+  {
+    "path": "/api/quests",
+    "method": "GET",
+    "controller": "Api\\Quest\\GetApiQuestsController"
+  },
+  {
+    "path": "/api/quests/:slug",
+    "method": "GET",
+    "controller": "Api\\Quest\\GetApiQuestController"
+  },
+  {
+    "path": "/api/universes",
+    "method": "GET",
+    "controller": "Api\\Univers\\GetApiUniversController"
+  },
+  {
+    "path": "/api/universes/:slug",
+    "method": "GET",
+    "controller": "Api\\Univers\\GetApiUniversController"
+  },
+  {
+    "path": "/api/places",
+    "method": "GET",
+    "controller": "Api\\Place\\GetApiPlacesController"
+  },
+  {
+    "path": "/api/places/:slug",
+    "method": "GET",
+    "controller": "Api\\Place\\GetApiPlacesController"
+  },
+  {
+    "path": "/api/roles",
+    "method": "GET",
+    "controller": "Api\\Role\\GetApiRolesController"
+  },
+  {
+    "path": "/api/roles/:slug",
+    "method": "GET",
+    "controller": "Api\\Role\\GetApiRolesController"
+  },
+  {
+    "path": "/api/characters",
+    "method": "GET",
+    "controller": "Api\\Character\\GetApiCharactersController"
+  },
+  {
+    "path": "/api/characters/:slug",
+    "method": "GET",
+    "controller": "Api\\Character\\GetApiCharactersController"
+  },
+  {
+    "path": "/user/profile",
+    "method": "PATCH",
+    "controller": "Auth\\PatchUserController"
+  },
+  {
+    "path": "/user/profile",
+    "method": "GET",
+    "controller": "Auth\\GetProfileController"
+  },
+  {
+    "path": "/admin/backoffice",
+    "method": "GET",
+    "controller": "Admin\\GetBackOffice"
+  },
+  {
+    "path": "/admin/user/:email",
+    "method": "GET",
+    "controller": "Admin\\GetBackOfficeUser"
+  },
+  {
+    "path": "/admin/user/role",
+    "method": "PATCH",
+    "controller": "Admin\\PatchUserRole"
+  },
+  {
+    "path": "/sitemap.xml",
+    "method": "GET",
+    "controller": "Sitemap\\GetSitemapController"
+  }
+]

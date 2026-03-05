@@ -1,0 +1,57 @@
+@use "../partials/functions" as f;
+
+.button {
+  display: inline-block;
+  padding: f.rem(10) f.rem(16);
+  border-radius: f.rem(6);
+  border: none;
+  background-color: var(--color-secondary);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: f.rem(18);
+  text-decoration: none;
+  color: var(--white);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: var(--black-hover);
+  }
+
+  // Modif de couleur
+  &--secondary {
+    background-color: var(--color-secondary);
+
+    &:hover {
+      background-color: var(--secondary-hover);
+    }
+  }
+
+  &--primary {
+    background-color: var(--color-primary);
+
+    &:hover {
+      background-color: var(--primary-hover);
+    }
+  }
+
+  &--danger {
+    background-color: var(--red);
+
+    &:hover {
+      background-color: var(--red-hover);
+    }
+  }
+
+  // Modifiers de taille
+  &--lg {
+    padding: f.rem(16) f.rem(24);
+    font-size: f.rem(16);
+  }
+
+  &--sm {
+    font-size: f.rem(14);
+    line-height: f.rem(16);
+    padding: f.rem(8) f.rem(12);
+  }
+}

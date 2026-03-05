@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="../../src/style/css/auth/profile.css">
+  <link rel="stylesheet" href="../../src/style/css/framework.css">
+  <link rel="stylesheet" href="../../src/style/css/theme.css">
+  <link rel="stylesheet" href="../../src/style/css/responsive.css">
+  <title>Mon Profil</title>
+
+</head>
+
+<body>
+  <div class="container">
+    <h1>Mon Profil</h1>
+
+    <div id="message" class="message"></div>
+    <div id="loading" class="loading">
+      <div class="spinner"></div>
+      <p>Mise à jour en cours...</p>
+    </div>
+
+    <!-- Mode affichage -->
+    <div id="viewMode" class="profile-info">
+      <div class="info-group">
+        <span class="info-label">Nom d'utilisateur :</span>
+        <span class="info-value" id="displayUsername">
+          <?= htmlspecialchars($user->username) ?>
+        </span>
+      </div>
+      <div class="info-group">
+        <span class="info-label">Email :</span>
+        <span class="info-value" id="displayEmail">
+          <?= htmlspecialchars($user->email) ?>
+        </span>
+      </div>
+      <div class="info-group">
+        <span class="info-label">Prénom :</span>
+        <span class="info-value" id="displayFirstname">
+          <?= htmlspecialchars($user->firstname ?? 'Non défini') ?>
+        </span>
+      </div>
+      <div class="info-group">
+        <span class="info-label">Nom :</span>
+        <span class="info-value" id="displayLastname">
+          <?= htmlspecialchars($user->lastname ?? 'Non défini') ?>
+        </span>
+      </div>
+    </div>
+
+    <!-- Mode édition -->
+    <form id="editForm" style="display: none">
+      <div class="form-group active">
+        <label for="username">Nom d'utilisateur :</label>
+        <input type="text" id="username" name="username" value="<?= htmlspecialchars($user->username) ?>" required />
+      </div>
+      <div class="form-group active">
+        <label for="email">Email :</label>
+        <input type="email" id="email" name="email" value="<?= htmlspecialchars($user->email) ?>" required />
+      </div>
+      <div class="form-group active">
+        <label for="firstname">Prénom :</label>
+        <input type="text" id="firstname" name="firstname" value="<?= htmlspecialchars($user->firstname ?? '') ?>" />
+      </div>
+      <div class="form-group active">
+        <label for="lastname">Nom :</label>
+        <input type="text" id="lastname" name="lastname" value="<?= htmlspecialchars($user->lastname ?? '') ?>" />
+      </div>
+      <div class="form-group active">
+        <label for="password">Nouveau mot de passe (optionnel) :</label>
+        <input type="password" id="password" name="password" placeholder="Laisser vide pour ne pas changer" />
+      </div>
+      <div class="form-group active" id="currentPasswordGroup" style="display: none">
+        <label for="current_password">Mot de passe actuel :</label>
+        <input type="password" id="current_password" name="current_password"
+          placeholder="Requis si vous changez le mot de passe" />
+      </div>
+    </form>
+
+    <div class="buttons">
+      <button id="btnEdit" class="btn-edit" onclick="toggleEditMode()">
+        Modifier
+      </button>
+      <div id="editButtons" class="edit-buttons">
+        <button type="button" class="btn-save" onclick="saveProfile()">
+          Sauvegarder
+        </button>
+        <button type="button" class="btn-cancel" onclick="toggleEditMode()">
+          Annuler
+        </button>
+      </div>
+      <form method="POST" action="/logout" style="display: inline">
+        <button type="submit" class="btn-logout">Se déconnecter</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const viewMode = document.getElementById("viewMode");
+    const editForm = document.getElementById("editForm");
+    const btnEdit = document.getElementById("btnEdit");
+    const editButtons = document.getElementById("editButtons");
+    const passwordInput = document.getElementById("password");
+    const currentPasswordGroup = document.getElementById(
+      "currentPasswordGroup",
+    );
+    const messageDiv = document.getElementById("message");
+    const loadingDiv = document.getElementById("loading");
+
+    // Afficher/masquer le mode édition
+    function toggleEditMode() {
+      const isEditing = editForm.style.display !== "none";
+
+      if (isEditing) {
+        // Revenir au mode affichage
+        editForm.style.display = "none";
+        viewMode.style.display = "block";
+        btnEdit.style.display = "block";
+        editButtons.classList.remove("active");
+        clearMessage();
+      } else {
+        // Passer au mode édition
+        viewMode.style.display = "none";
+        editForm.style.display = "block";
+        btnEdit.style.display = "none";
+        editButtons.classList.add("active");
+      }
+    }
+
+    // Afficher/masquer le champ de mot de passe actuel
+    passwordInput.addEventListener("input", function () {
+      if (this.value.length > 0) {
+        currentPasswordGroup.style.display = "block";
+      } else {
+        currentPasswordGroup.style.display = "none";
+      }
+    });
+
+    // Sauvegarder le profil
+    async function saveProfile() {
+      const formData = new FormData(editForm);
+      const data = Object.fromEntries(formData);
+
+      // Supprimer les champs vides
+      Object.keys(data).forEach((key) => {
+        if (!data[key]) delete data[key];
+      });
+
+      loadingDiv.classList.add("active");
+      messageDiv.style.display = "none";
+
+      try {
+        const response = await fetch("/user/profile", {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+
+        const result = await response.json();
+
+        loadingDiv.classList.remove("active");
+
+        if (result.success) {
+          // Mettre à jour l'affichage
+          document.getElementById("displayUsername").textContent =
+            data.username ||
+            document.getElementById("displayUsername").textContent;
+          document.getElementById("displayEmail").textContent =
+            data.email || document.getElementById("displayEmail").textContent;
+          document.getElementById("displayFirstname").textContent =
+            data.firstname ||
+            document.getElementById("displayFirstname").textContent;
+          document.getElementById("displayLastname").textContent =
+            data.lastname ||
+            document.getElementById("displayLastname").textContent;
+
+          showMessage("Profil mis à jour avec succès !", "success");
+          toggleEditMode();
+        } else {
+          const errorMessages = result.errors
+            ? result.errors.join(", ")
+            : result.error;
+          showMessage("Erreur : " + errorMessages, "error");
+        }
+      } catch (error) {
+        loadingDiv.classList.remove("active");
+        console.error("Erreur:", error);
+        showMessage("Erreur réseau. Veuillez réessayer.", "error");
+      }
+    }
+
+    function showMessage(text, type) {
+      messageDiv.textContent = text;
+      messageDiv.className = "message " + type;
+      messageDiv.style.display = "block";
+
+      if (type === "success") {
+        setTimeout(() => clearMessage(), 3000);
+      }
+    }
+
+    function clearMessage() {
+      messageDiv.style.display = "none";
+      messageDiv.className = "message";
+    }
+  </script>
+</body>
+
+</html>

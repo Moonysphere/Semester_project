@@ -1,0 +1,25 @@
+services:
+  php-framework-php:
+    container_name: php-framework-php
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./app:/var/www/html
+      - ./log:/var/log/apache2/
+    ports:
+      - "8080:80"
+      - "8888:8000"
+
+  php-framework-postgres:
+    image: postgres:16
+    container_name: php-framework-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: db
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./postgres:/var/lib/postgres

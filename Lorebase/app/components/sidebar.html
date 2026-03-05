@@ -1,0 +1,240 @@
+<button class="sidebar-burger-mobile" id="sidebarBurger" aria-label="Ouvrir le menu" aria-expanded="false">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+    <line x1="3" y1="6" x2="21" y2="6" />
+    <line x1="3" y1="12" x2="21" y2="12" />
+    <line x1="3" y1="18" x2="21" y2="18" />
+  </svg>
+</button>
+
+<div class="sidebar-container" id="sidebarContainer">
+  <div class="sidebar" id="sidebar">
+
+    <div class="sidebar-header">
+      <div class="sidebar-logo">
+        <a href="/" class="sidebar-logo-link">
+          <img src="../public/src/assets/icon_sidebar/logo.svg" alt="Logo Lorebase">
+          <span class="sidebar-logo-text">Lorebase</span>
+        </a>
+      </div>
+      <button class="sidebar-toggle" id="sidebarToggle" aria-label="Réduire la sidebar">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z"></path>
+          <path d="M9 4v16"></path>
+          <path d="M14 10l2 2l-2 2"></path>
+        </svg>
+      </button>
+    </div>
+
+    <nav class="sidebar-menu">
+
+      <div class="sidebar-item" data-tooltip="Personnage">
+        <a href="/character" class="sidebar-link active">
+          <img src="../public/src/assets/icon_sidebar/icon_perso.svg" alt="Icône personnage" class="sidebar-icon">
+          <span class="sidebar-text">Personnage</span>
+        </a>
+      </div>
+
+      <div class="sidebar-item" data-tooltip="Place">
+        <a href="/place" class="sidebar-link">
+          <img src="../public/src/assets/icon_sidebar/icon_place.svg" alt="Icône place" class="sidebar-icon">
+          <span class="sidebar-text">Place</span>
+        </a>
+      </div>
+
+      <div class="sidebar-item" data-tooltip="Quête">
+        <a href="/quest" class="sidebar-link">
+          <img src="../public/src/assets/icon_sidebar/icon_rules.svg" alt="Icône règle" class="sidebar-icon">
+          <span class="sidebar-text">Quête</span>
+        </a>
+      </div>
+
+      <div class="sidebar-item" data-tooltip="Univers">
+        <a href="/univers" class="sidebar-link">
+          <img src="../public/src/assets/icon_sidebar/icon_uni.svg" alt="Icône univers" class="sidebar-icon">
+          <span class="sidebar-text">Univers</span>
+        </a>
+      </div>
+
+      <div class="sidebar-divider"></div>
+
+
+    </nav>
+
+    <div class="sidebar-footer" id="sidebarFooter">
+
+
+      <div class="sidebar-item" data-tooltip="Déconnexion">
+        <a href="/logout" class="sidebar-link">
+          <svg class="sidebar-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2">
+            <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2"></path>
+            <path d="M9 12h12l-3 -3"></path>
+            <path d="M18 15l3 -3"></path>
+          </svg>
+          <span class="sidebar-text">Déconnexion</span>
+        </a>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<script>
+  const sidebar = document.getElementById('sidebar');
+  const sidebarToggle = document.getElementById('sidebarToggle');
+  const sidebarContainer = document.getElementById('sidebarContainer');
+  const body = document.body;
+
+  const wasClosed = localStorage.getItem('sidebarClosed') === 'true';
+  if (wasClosed) {
+    sidebar.classList.add('closed');
+    body.classList.add('sidebar-closed');
+  }
+
+  sidebarToggle.addEventListener('click', () => {
+    sidebar.classList.toggle('closed');
+    body.classList.toggle('sidebar-closed');
+    localStorage.setItem('sidebarClosed', sidebar.classList.contains('closed'));
+  });
+
+  const sidebarBurger = document.getElementById('sidebarBurger');
+  const sidebarOverlay = document.getElementById('sidebarOverlay');
+
+  function openMobileSidebar() {
+    sidebarContainer.classList.add('mobile-open');
+    sidebarOverlay.classList.add('active');
+    sidebarBurger.setAttribute('aria-expanded', 'true');
+  }
+
+  function closeMobileSidebar() {
+    sidebarContainer.classList.remove('mobile-open');
+    sidebarOverlay.classList.remove('active');
+    sidebarBurger.setAttribute('aria-expanded', 'false');
+  }
+
+  sidebarBurger.addEventListener('click', () => {
+    sidebarContainer.classList.contains('mobile-open')
+      ? closeMobileSidebar()
+      : openMobileSidebar();
+  });
+
+  sidebarOverlay.addEventListener('click', closeMobileSidebar);
+
+  const links = document.querySelectorAll('.sidebar-link');
+  const currentPath = window.location.pathname;
+
+  links.forEach(link => {
+    if (link.href) {
+      const linkPath = new URL(link.href, location.origin).pathname;
+      if (linkPath === currentPath) {
+        links.forEach(l => l.classList.remove('active'));
+        link.classList.add('active');
+      }
+    }
+  });
+
+  links.forEach(link => {
+    link.addEventListener('click', function () {
+      links.forEach(l => l.classList.remove('active'));
+      this.classList.add('active');
+      localStorage.setItem('activeLink', this.href);
+    });
+  });
+</script>
+
+<script type="module">
+  class ThemeToggle {
+    constructor() {
+      this.theme = localStorage.getItem('theme') || this._getSystemTheme();
+      this.button = null;
+      this.init();
+    }
+
+    _getSystemTheme() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+
+    init() {
+      this.applyTheme(this.theme);
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => this._setup());
+      } else {
+        this._setup();
+      }
+    }
+
+    _setup() {
+      this.createButton();
+      this.setupEventListeners();
+    }
+
+    createButton() {
+      const footer = document.getElementById('sidebarFooter');
+      if (!footer) {
+        console.warn('[ThemeToggle] #sidebarFooter introuvable');
+        return;
+      }
+      if (document.getElementById('themeToggle')) {
+        console.warn('[ThemeToggle] Bouton déjà présent');
+        return;
+      }
+
+      const item = document.createElement('div');
+      item.classList.add('sidebar-item');
+      item.setAttribute('data-tooltip', this.theme === 'dark' ? 'Mode clair' : 'Mode sombre');
+
+      this.button = document.createElement('button');
+      this.button.classList.add('sidebar-link', 'sidebar-theme-toggle');
+      this.button.id = 'themeToggle';
+      this.button.setAttribute('aria-label', 'Changer le thème');
+
+      const icon = document.createElement('span');
+      icon.classList.add('sidebar-icon', 'sidebar-theme-icon');
+      icon.textContent = this.theme === 'dark' ? '☀️' : '🌙';
+
+      const label = document.createElement('span');
+      label.classList.add('sidebar-text');
+      label.textContent = this.theme === 'dark' ? 'Mode clair' : 'Mode sombre';
+
+      this.button.appendChild(icon);
+      this.button.appendChild(label);
+      item.appendChild(this.button);
+
+      footer.insertBefore(item, footer.firstChild);
+    }
+
+    setupEventListeners() {
+      if (this.button) {
+        this.button.addEventListener('click', () => this.toggleTheme());
+      }
+    }
+
+    toggleTheme() {
+      this.button.classList.add('rotating');
+
+      this.theme = this.theme === 'light' ? 'dark' : 'light';
+      this.applyTheme(this.theme);
+      localStorage.setItem('theme', this.theme);
+
+      const icon = this.button.querySelector('.sidebar-theme-icon');
+      const label = this.button.querySelector('.sidebar-text');
+      const item = this.button.closest('.sidebar-item');
+
+      if (icon) icon.textContent = this.theme === 'dark' ? '☀️' : '🌙';
+      if (label) label.textContent = this.theme === 'dark' ? 'Mode clair' : 'Mode sombre';
+      if (item) item.setAttribute('data-tooltip', this.theme === 'dark' ? 'Mode clair' : 'Mode sombre');
+
+      setTimeout(() => this.button.classList.remove('rotating'), 600);
+    }
+
+    applyTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+    }
+  }
+
+  new ThemeToggle();
+</script>

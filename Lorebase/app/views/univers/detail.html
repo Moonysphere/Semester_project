@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>
+    const theme = localStorage.getItem('theme') ||
+      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+  </script>
+  <title>
+    <?php echo htmlspecialchars($character->name); ?>
+  </title>
+  <link rel="stylesheet" href="../../src/style/css/framework.css">
+  <link rel="stylesheet" href="../../src/style/css/univers/detail.css">
+  <link rel="stylesheet" href="../../src/style/css/theme.css">
+  <link rel="stylesheet" href="../../src/style/css/responsive.css">
+</head>
+
+<body>
+  <div class="container">
+    <h1>
+      <?php echo htmlspecialchars($univers->name); ?>
+    </h1>
+
+    <div class="field">
+      <label>Description :</label>
+      <p>
+        <?php echo htmlspecialchars($univers->description); ?>
+      </p>
+    </div>
+
+    <div class="field">
+      <label>date de creation :</label>
+      <p>
+        <?php echo htmlspecialchars($univers->createdate?->format('Y-m-d') ??
+          ''); ?>
+      </p>
+    </div>
+    <div class="field">
+      <label>Status :</label>
+      <p>
+        <?php echo htmlspecialchars($univers->status); ?>
+      </p>
+    </div>
+    <div class="buttons">
+      <a href="/univers" class="btn btn-back">Retour</a>
+      <a href="/univers/<?php echo $univers->slug; ?>/edit" class="btn"
+        style="background-color: #ffc107; color: black">Modifier</a>
+      <button type="button" class="btn btn-delete" onclick="deleteCharacter(<?php echo $univers->id; ?>)">
+        Supprimer
+      </button>
+    </div>
+  </div>
+
+  <script>
+    function deleteCharacter(id) {
+      if (confirm("Êtes-vous sûr de vouloir supprimer ce personnage ?")) {
+        fetch(`/univers/${id}`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }).then((response) => {
+          if (response.ok) {
+            window.location.href = "/univers";
+          } else {
+            alert("Erreur lors de la suppression");
+          }
+        });
+      }
+    }
+  </script>
+</body>
+
+</html>

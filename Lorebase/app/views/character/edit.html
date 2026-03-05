@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Modifier
+    <?php echo htmlspecialchars($character->name); ?>
+  </title>
+  <script>
+    const theme = localStorage.getItem('theme') ||
+      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+  </script>
+  <link rel="stylesheet" href="../../src/style/css/framework.css">
+  <link rel="stylesheet" href="../../src/style/css/character/edit.css">
+  <link rel="stylesheet" href="../../src/style/css/theme.css">
+  <link rel="stylesheet" href="../../src/style/css/responsive.css">
+</head>
+
+<body>
+  <div class="container">
+    <h1>Modifier
+      <?php echo htmlspecialchars($character->name); ?>
+    </h1>
+    <form id="editForm">
+      <div class="form-group">
+        <label for="name">Nom :</label>
+        <input type="text" id="name" name="name" value="<?php echo htmlspecialchars($character->name); ?>" required />
+      </div>
+      <div class="form-group">
+        <label for="role_id">Rôle :</label>
+        <select id="role_id" name="role_id" required>
+          <option value="">-- Choisir un rôle --</option>
+          <?php foreach ($roles as $role): ?>
+          <option value="<?= $role->id ?>" title="<?= htmlspecialchars($role->description ?? '') ?>">
+            <?= htmlspecialchars($role->name) ?>
+          </option>
+          <?php endforeach; ?>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="origin">Origine :</label>
+        <input type="text" id="origin" name="origin" value="<?php echo htmlspecialchars($character->origin); ?>"
+          required />
+      </div>
+      <div class="form-group">
+        <label for="pv">Points de vie :</label>
+        <input type="number" id="pv" name="pv" value="<?php echo htmlspecialchars($character->pv); ?>" required />
+      </div>
+      <div class="form-group">
+        <label for="description">Description :</label>
+        <textarea id="description" name="description" required>
+<?php echo htmlspecialchars($character->description); ?></textarea>
+      </div>
+      <div class="form-group">
+        <label for="univers_id">Univers</label>
+        <select id="univers_id" name="univers_id" required>
+          <option value="">-- Choisir un univers --</option>
+          <?php foreach ($universes as $univers): ?>
+          <option value="<?= $univers->id ?>" title="<?= htmlspecialchars($univers->description ?? '') ?>">
+            <?= htmlspecialchars($univers->name) ?>
+          </option>
+          <?php endforeach; ?>
+        </select>
+      </div>
+      <div class="buttons">
+        <button type="submit" class="btn btn-submit" name="status" value="published">
+          Publier
+        </button>
+
+        <button type="submit" class="btn btn-draft" name="status" value="draft">
+          Brouillon
+        </button>
+
+        <button type="submit" class="btn btn-archived" name="status" value="archived">
+          Archiver
+        </button>
+      </div>
+    </form>
+
+    <!-- Bouton Annuler HORS du formulaire -->
+    <div class="buttons" style="margin-top: 10px">
+      <a href="/character/<?php echo $character->slug  ; ?>" class="btn btn-cancel">Annuler</a>
+    </div>
+  </div>
+  <script>
+    document
+      .getElementById("editForm")
+      .addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const submitter = e.submitter;
+        const statusValue = submitter ? submitter.value : null;
+
+        // Récupérer tous les champs du formulaire
+        const formData = new FormData(this);
+        const data = Object.fromEntries(formData);
+
+        // Si un bouton status est cliqué, ajouter/écraser le status
+        if (statusValue && submitter.name === "status") {
+          data.status = statusValue;
+        }
+
+        // Envoyer tous les champs + le status
+        fetch(`/character/<?php echo $character->id; ?>`, {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        })
+          .then(async (response) => {
+            if (!response.ok) {
+              throw new Error("Erreur serveur");
+            }
+            // Envoyer tous les champs + le status
+            const username =
+              '<?php echo htmlspecialchars($_SESSION["user"]["username"] ?? ""); ?>';
+            fetch(`/${username}/character/<?php echo $character->id; ?>`, {
+              method: "PATCH",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(data),
+            })
+              .then(async (response) => {
+                if (!response.ok) {
+                  throw new Error("Erreur serveur");
+                }
+
+                const result = await response.json();
+
+                window.location.href = `/character/${result.slug}`;
+              })
+              .catch((error) => {
+                console.error("Erreur:", error);
+                alert("Erreur lors de la modification");
+              });
+          });
+  </script>
+</body>
+
+</html>
